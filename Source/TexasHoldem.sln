@@ -11,7 +11,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AI", "AI", "{213AAF11-5E1C-
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{42762B9F-D044-43B8-B834-79C455907AD2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TexasHoldem.Tests", "Tests\TexasHoldem.Tests\TexasHoldem.Tests.csproj", "{9FFA4BF2-F50F-43EE-8DBE-B88DED9E0E9F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TexasHoldem.UI.Console", "UI\TexasHoldem.UI.Console\TexasHoldem.UI.Console.csproj", "{89E963BC-4E4A-4DC3-933B-FFFF63886C24}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TexasHoldem.Logic.Tests", "Tests\TexasHoldem.Logic.Tests\TexasHoldem.Logic.Tests.csproj", "{9FFA4BF2-F50F-43EE-8DBE-B88DED9E0E9F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TexasHoldem.AI.DummyPlayer", "AI\TexasHoldem.AI.DummyPlayer\TexasHoldem.AI.DummyPlayer.csproj", "{8F8A872B-A022-4085-AABC-D3BC12B7C1D8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,15 +27,25 @@ Global
 		{BCF99E8B-2025-444F-83C7-24542FCF33DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BCF99E8B-2025-444F-83C7-24542FCF33DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BCF99E8B-2025-444F-83C7-24542FCF33DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89E963BC-4E4A-4DC3-933B-FFFF63886C24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89E963BC-4E4A-4DC3-933B-FFFF63886C24}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89E963BC-4E4A-4DC3-933B-FFFF63886C24}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89E963BC-4E4A-4DC3-933B-FFFF63886C24}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9FFA4BF2-F50F-43EE-8DBE-B88DED9E0E9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9FFA4BF2-F50F-43EE-8DBE-B88DED9E0E9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9FFA4BF2-F50F-43EE-8DBE-B88DED9E0E9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9FFA4BF2-F50F-43EE-8DBE-B88DED9E0E9F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F8A872B-A022-4085-AABC-D3BC12B7C1D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F8A872B-A022-4085-AABC-D3BC12B7C1D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F8A872B-A022-4085-AABC-D3BC12B7C1D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F8A872B-A022-4085-AABC-D3BC12B7C1D8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{89E963BC-4E4A-4DC3-933B-FFFF63886C24} = {4FD9DCC0-C03A-48A4-AC10-BE144B0270A8}
 		{9FFA4BF2-F50F-43EE-8DBE-B88DED9E0E9F} = {42762B9F-D044-43B8-B834-79C455907AD2}
+		{8F8A872B-A022-4085-AABC-D3BC12B7C1D8} = {213AAF11-5E1C-4C23-ABAE-3324EBA1C3A6}
 	EndGlobalSection
 EndGlobal

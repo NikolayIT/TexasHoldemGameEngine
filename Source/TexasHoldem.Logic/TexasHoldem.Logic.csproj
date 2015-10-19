@@ -41,6 +41,16 @@
     <!-- A reference to the entire .NET Framework is automatically included -->
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cards\Card.cs" />
+    <Compile Include="Cards\CardExtensions.cs" />
+    <Compile Include="Cards\CardSuit.cs" />
+    <Compile Include="Cards\CardType.cs" />
+    <Compile Include="Cards\Deck.cs" />
+    <Compile Include="Cards\IDeck.cs" />
+    <Compile Include="Extensions\EnumerableExtensions.cs" />
+    <Compile Include="Extensions\RandomProvider.cs" />
+    <Compile Include="IDeepCloneable{T}.cs" />
+    <Compile Include="InternalGameException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />

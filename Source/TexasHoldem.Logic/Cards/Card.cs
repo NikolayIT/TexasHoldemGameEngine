@@ -17,8 +17,8 @@
 
         public static Card FromHashCode(int hashCode)
         {
-            var suitId = (hashCode - 1) / 13;
-            return new Card((CardSuit)suitId, (CardType)(hashCode - (suitId * 13)));
+            var suitId = hashCode / 13;
+            return new Card((CardSuit)suitId, (CardType)(hashCode - (suitId * 13) + 2));
         }
 
         public override bool Equals(object obj)
@@ -31,7 +31,7 @@
         {
             unchecked
             {
-                return ((int)this.Suit * 13) + (int)this.Type;
+                return ((int)this.Suit * 13) + (int)this.Type - 2;
             }
         }
 

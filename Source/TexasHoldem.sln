@@ -5,7 +5,13 @@ VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TexasHoldem.Logic", "TexasHoldem.Logic\TexasHoldem.Logic.csproj", "{BCF99E8B-2025-444F-83C7-24542FCF33DF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TexasHoldem.Tests", "TexasHoldem.Tests\TexasHoldem.Tests.csproj", "{9FFA4BF2-F50F-43EE-8DBE-B88DED9E0E9F}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{4FD9DCC0-C03A-48A4-AC10-BE144B0270A8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AI", "AI", "{213AAF11-5E1C-4C23-ABAE-3324EBA1C3A6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{42762B9F-D044-43B8-B834-79C455907AD2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TexasHoldem.Tests", "Tests\TexasHoldem.Tests\TexasHoldem.Tests.csproj", "{9FFA4BF2-F50F-43EE-8DBE-B88DED9E0E9F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,5 +30,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9FFA4BF2-F50F-43EE-8DBE-B88DED9E0E9F} = {42762B9F-D044-43B8-B834-79C455907AD2}
 	EndGlobalSection
 EndGlobal

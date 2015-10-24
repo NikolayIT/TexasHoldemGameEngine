@@ -52,11 +52,17 @@
     <Compile Include="GameMechanics\HandLogic.cs" />
     <Compile Include="GameMechanics\ITexasHoldemGame.cs" />
     <Compile Include="GameMechanics\TexasHoldemGame.cs" />
+    <Compile Include="Helpers\HandEvaluator.cs" />
+    <Compile Include="HandRankType.cs" />
     <Compile Include="IDeepCloneable{T}.cs" />
     <Compile Include="InternalGameException.cs" />
+    <Compile Include="Players\BasePlayer.cs" />
+    <Compile Include="Players\InternalPlayer.cs" />
     <Compile Include="Players\IPlayer.cs" />
-    <Compile Include="Players\PlayerContext.cs" />
+    <Compile Include="Players\GetTurnContext.cs" />
+    <Compile Include="Players\PlayerDecorator.cs" />
     <Compile Include="Players\PlayerTurn.cs" />
+    <Compile Include="Players\StartHandContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

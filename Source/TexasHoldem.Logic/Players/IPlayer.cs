@@ -4,9 +4,9 @@
     {
         void StartGame();
 
-        void StartHand();
+        void StartHand(StartHandContext context);
 
-        PlayerTurn GetTurn(PlayerContext context);
+        PlayerTurn GetTurn(GetTurnContext context);
 
         void EndHand();
 

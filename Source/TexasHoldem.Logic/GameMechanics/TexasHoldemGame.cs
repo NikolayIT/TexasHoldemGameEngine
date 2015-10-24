@@ -1,18 +1,23 @@
 ﻿namespace TexasHoldem.Logic.GameMechanics
 {
     using System.Collections.Generic;
+    using System.Linq;
 
     using TexasHoldem.Logic.Players;
 
     public class TexasHoldemGame : ITexasHoldemGame
     {
-        private readonly IList<IPlayer> players;
+        private readonly IList<InternalPlayer> players;
 
         private int roundNumber = 0;
 
-        public TexasHoldemGame(IList<IPlayer> players)
+        public TexasHoldemGame(ICollection<IPlayer> players, int initialMoney = 1000)
         {
-            this.players = players;
+            this.players = new List<InternalPlayer>(players.Count);
+            foreach (var player in players)
+            {
+                this.players.Add(new InternalPlayer(player, initialMoney));
+            }
         }
 
         public void Start()
@@ -27,7 +32,8 @@
 
         private bool AtLeastTwoPlayersHaveMoney()
         {
-            return true;
+            var playersWithMoney = this.players.Count(x => x.Money > 0);
+            return playersWithMoney >= 2;
         }
     }
 }

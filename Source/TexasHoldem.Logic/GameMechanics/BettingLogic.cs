@@ -6,7 +6,7 @@
     using TexasHoldem.Logic.Helpers;
     using TexasHoldem.Logic.Players;
 
-    internal class TwoPlayersBettingLogic
+    internal class BettingLogic
     {
         private static IActionValidator actionValidator = new ActionValidator();
 
@@ -16,9 +16,9 @@
 
         private int pot;
 
-        public TwoPlayersBettingLogic(InternalPlayer firstPlayer, InternalPlayer secondPlayer, int smallBlind)
+        public BettingLogic(IList<InternalPlayer> players, int smallBlind)
         {
-            this.allPlayers = new[] { firstPlayer, secondPlayer };
+            this.allPlayers = players;
             this.smallBlind = smallBlind;
             this.pot = 0;
         }
@@ -42,7 +42,7 @@
 
             while (true)
             {
-                var player = this.allPlayers[playerIndex % 2];
+                var player = this.allPlayers[playerIndex % this.allPlayers.Count];
                 var getTurnContext = new GetTurnContext(
                     communityCards,
                     gameRoundType,

@@ -5,40 +5,41 @@
     using TexasHoldem.Logic.Cards;
     using TexasHoldem.Logic.Players;
 
-    internal class TwoPlayersHandLogic
+    internal class HandLogic
     {
         private readonly int handNumber;
 
         private readonly int smallBlind;
 
-        private readonly IList<InternalPlayer> allPlayers;
+        private readonly IList<InternalPlayer> players;
 
         private readonly Deck deck;
 
         private readonly ICollection<Card> communityCards;
 
-        private readonly TwoPlayersBettingLogic bettingLogic;
+        private readonly BettingLogic bettingLogic;
 
-        public TwoPlayersHandLogic(InternalPlayer firstPlayer, InternalPlayer secondPlayer, int handNumber, int smallBlind)
+        public HandLogic(IList<InternalPlayer> players, int handNumber, int smallBlind)
         {
             this.handNumber = handNumber;
             this.smallBlind = smallBlind;
-            this.allPlayers = new[] { firstPlayer, secondPlayer };
+            this.players = players;
             this.deck = new Deck();
             this.communityCards = new List<Card>(5);
-            this.bettingLogic = new TwoPlayersBettingLogic(firstPlayer, secondPlayer, smallBlind);
+            this.bettingLogic = new BettingLogic(this.players, smallBlind);
         }
 
         public void Play()
         {
             // Start the hand and deal cards to each player
-            foreach (var player in this.allPlayers)
+            foreach (var player in this.players)
             {
                 var startHandContext = new StartHandContext(
                     this.deck.GetNextCard(),
                     this.deck.GetNextCard(),
                     this.handNumber,
-                    this.smallBlind);
+                    this.smallBlind,
+                    this.players[0].Name);
                 player.StartHand(startHandContext);
             }
 
@@ -56,7 +57,7 @@
 
             // Determine winner and give him/them the pot
             this.DetermineWinner();
-            foreach (var player in this.allPlayers)
+            foreach (var player in this.players)
             {
                 player.EndHand();
             }
@@ -64,7 +65,7 @@
 
         private void PlayRound(GameRoundType gameRoundType, int communityCardsCount)
         {
-            foreach (var player in this.allPlayers)
+            foreach (var player in this.players)
             {
                 player.StartRound(new StartRoundContext(gameRoundType));
             }
@@ -76,7 +77,7 @@
 
             this.bettingLogic.Start(gameRoundType, this.communityCards);
 
-            foreach (var player in this.allPlayers)
+            foreach (var player in this.players)
             {
                 player.EndRound();
             }

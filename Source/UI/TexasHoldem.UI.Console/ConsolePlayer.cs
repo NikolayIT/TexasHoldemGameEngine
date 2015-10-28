@@ -6,25 +6,40 @@
 
     public class ConsolePlayer : BasePlayer
     {
+        private const ConsoleColor PlayerBoxColor = ConsoleColor.DarkGreen;
+
         private readonly int row;
 
-        public ConsolePlayer(int row)
+        private readonly int width;
+
+        public ConsolePlayer(int row, int width, int commonRow)
         {
             this.row = row;
+            this.width = width;
             this.Name = "ConsolePlayerLine" + row;
+
+            ConsoleHelper.WriteOnConsole(commonRow, 0, "Common roooowwww!");
+            this.DrawGameBox();
         }
 
         public override string Name { get; }
 
         public override void StartHand(StartHandContext context)
         {
-            WriteOnConsole(this.row, 1, context.FirstCard + "  ");
-            WriteOnConsole(this.row, 6, context.SecondCard + "  ");
+            ConsoleHelper.WriteOnConsole(this.row + 1, 2, this.MoneyLeft + "       ");
+            ConsoleHelper.WriteOnConsole(this.row + 1, 10, context.FirstCard + "  ");
+            ConsoleHelper.WriteOnConsole(this.row + 1, 15, context.SecondCard + "  ");
+        }
+
+        public override void StartRound(StartRoundContext context)
+        {
+            ConsoleHelper.WriteOnConsole(this.row + 1, this.width - 11, context.RoundType + "   ");
+            base.StartRound(context);
         }
 
         public override PlayerAction GetTurn(GetTurnContext context)
         {
-            WriteOnConsole(this.row + 1, 1, "Select action [C]heck/[C]all, [R]aise, [F]old, [A]ll-in");
+            ConsoleHelper.WriteOnConsole(this.row + 2, 2, "Select action [C]heck/[C]all, [R]aise, [F]old, [A]ll-in");
             while (true)
             {
                 var key = Console.ReadKey(true);
@@ -50,19 +65,26 @@
                 // TODO: Check if the action is valid
                 if (action != null)
                 {
-                    WriteOnConsole(this.row + 1, 1, new string(' ', 59));
-                    WriteOnConsole(this.row + 2, 1, action.Type + "    ");
+                    ConsoleHelper.WriteOnConsole(this.row + 2, 2, new string(' ', this.width - 3));
+                    ConsoleHelper.WriteOnConsole(this.row + 3, 2, action + "    ");
                     return action;
                 }
             }
         }
 
-        private static void WriteOnConsole(int row, int col, string text, ConsoleColor foregroundColor = ConsoleColor.Gray, ConsoleColor backgroundColor = ConsoleColor.Black)
+        private void DrawGameBox()
         {
-            Console.ForegroundColor = foregroundColor;
-            Console.BackgroundColor = backgroundColor;
-            Console.SetCursorPosition(col, row);
-            Console.Write(text);
+            ConsoleHelper.WriteOnConsole(this.row, 0, new string('═', this.width), PlayerBoxColor);
+            ConsoleHelper.WriteOnConsole(this.row + 4, 0, new string('═', this.width), PlayerBoxColor);
+            ConsoleHelper.WriteOnConsole(this.row, 0, "╔", PlayerBoxColor);
+            ConsoleHelper.WriteOnConsole(this.row, this.width - 1, "╗", PlayerBoxColor);
+            ConsoleHelper.WriteOnConsole(this.row + 4, 0, "╚", PlayerBoxColor);
+            ConsoleHelper.WriteOnConsole(this.row + 4, this.width - 1, "╝", PlayerBoxColor);
+            for (var i = 1; i < 4; i++)
+            {
+                ConsoleHelper.WriteOnConsole(this.row + i, 0, "║", PlayerBoxColor);
+                ConsoleHelper.WriteOnConsole(this.row + i, this.width - 1, "║", PlayerBoxColor);
+            }
         }
     }
 }

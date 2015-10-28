@@ -48,8 +48,8 @@
                 throw new ArgumentException($"Both players have the same name: \"{firstPlayer.Name}\"");
             }
 
-            this.firstPlayer = new InternalPlayer(firstPlayer, initialMoney);
-            this.secondPlayer = new InternalPlayer(secondPlayer, initialMoney);
+            this.firstPlayer = new InternalPlayer(firstPlayer);
+            this.secondPlayer = new InternalPlayer(secondPlayer);
             this.allPlayers = new List<InternalPlayer> { this.firstPlayer, this.secondPlayer };
             this.initialMoney = initialMoney;
             this.handNumber = 0;

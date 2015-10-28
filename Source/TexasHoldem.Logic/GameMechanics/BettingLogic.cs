@@ -27,8 +27,6 @@
         public void Start(GameRoundType gameRoundType, ICollection<Card> communityCards)
         {
             var bets = new List<PlayerActionAndName>();
-            var potBeforeRound = this.pot;
-
             if (gameRoundType == GameRoundType.PreFlop)
             {
                 this.Bet(this.allPlayers[0], this.smallBlind);
@@ -38,8 +36,9 @@
                 bets.Add(new PlayerActionAndName(this.allPlayers[1].Name, PlayerAction.Raise(this.smallBlind * 2)));
             }
 
+            var potBeforeRound = this.pot;
             var playerIndex = 1;
-            while (this.allPlayers.Count(x => x.InHand) >= 2 && this.allPlayers.Any(x => !x.CallOrCheck))
+            while (this.allPlayers.Count(x => x.InHand) >= 2 && this.allPlayers.Any(x => x.ShouldPlayInRound))
             {
                 playerIndex++;
                 var player = this.allPlayers[playerIndex % this.allPlayers.Count];
@@ -48,35 +47,37 @@
                     continue;
                 }
 
-                var getTurnContext = new GetTurnContext(
-                    communityCards,
-                    gameRoundType,
-                    potBeforeRound,
-                    bets.AsReadOnly(),
-                    this.pot);
-                var action = player.GetTurn(getTurnContext);
+                var action =
+                    player.GetTurn(
+                        new GetTurnContext(communityCards, gameRoundType, potBeforeRound, bets.AsReadOnly(), this.pot));
 
                 bets.Add(new PlayerActionAndName(player.Name, action));
 
                 if (action.Type == PlayerActionType.Raise)
                 {
-                    player.CallOrCheck = false;
+                    foreach (var playerToUpdate in this.allPlayers)
+                    {
+                        playerToUpdate.ShouldPlayInRound = true;
+                    }
+
                     this.Bet(player, action.Money);
                 }
                 else if (action.Type == PlayerActionType.Call)
                 {
-                    player.CallOrCheck = true;
+                    player.ShouldPlayInRound = true;
                     this.Bet(player, action.Money);
                 }
                 else if (action.Type == PlayerActionType.Check)
                 {
                     // TODO: Is OK to check?
-                    player.CallOrCheck = true;
+                    player.ShouldPlayInRound = true;
                 }
                 else
                 {
                     player.InHand = false;
                 }
+
+                player.ShouldPlayInRound = false;
             }
         }
 

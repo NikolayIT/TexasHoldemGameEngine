@@ -4,10 +4,9 @@
 
     internal class InternalPlayer : PlayerDecorator
     {
-        public InternalPlayer(IPlayer player, int initialMoney)
+        public InternalPlayer(IPlayer player)
             : base(player)
         {
-            this.Money = initialMoney;
         }
 
         public int Money { get; set; }
@@ -18,7 +17,13 @@
 
         public bool InHand { get; set; }
 
-        public bool CallOrCheck { get; set; }
+        public bool ShouldPlayInRound { get; set; }
+
+        public override void StartGame(StartGameContext context)
+        {
+            this.Money = context.StartMoney;
+            base.StartGame(context);
+        }
 
         public override void StartHand(StartHandContext context)
         {
@@ -29,7 +34,11 @@
 
         public override void StartRound(StartRoundContext context)
         {
-            this.CallOrCheck = false;
+            if (this.InHand)
+            {
+                this.ShouldPlayInRound = true;
+            }
+
             base.StartRound(context);
         }
 

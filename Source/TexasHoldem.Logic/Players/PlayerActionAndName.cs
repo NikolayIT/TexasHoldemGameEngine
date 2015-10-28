@@ -1,6 +1,6 @@
 ﻿namespace TexasHoldem.Logic.Players
 {
-    public class PlayerActionAndName
+    public struct PlayerActionAndName
     {
         public PlayerActionAndName(string playerName, PlayerAction action)
         {

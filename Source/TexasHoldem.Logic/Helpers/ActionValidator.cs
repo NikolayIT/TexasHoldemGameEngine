@@ -1,12 +1,14 @@
 ﻿namespace TexasHoldem.Logic.Helpers
 {
+    using System.Collections.Generic;
+
     using TexasHoldem.Logic.Players;
 
     public class ActionValidator : IActionValidator
     {
-        public bool IsValid(GetTurnContext context)
+        public bool IsValid(ICollection<PlayerActionAndName> previousActions, PlayerActionAndName action, int playerMoney)
         {
-            throw new System.NotImplementedException();
+            return true;
         }
     }
 }

@@ -172,7 +172,8 @@
                     },
             };
 
-        [Test, TestCaseSource(nameof(GetRankTypeCases))]
+        [Test]
+        [TestCaseSource(nameof(GetRankTypeCases))]
         public void GetRankTypeShouldWorkCorrectly(HandRankType expectedHandRankType, ICollection<Card> cards)
         {
             var handEvaluator = new HandEvaluator();

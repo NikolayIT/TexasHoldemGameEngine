@@ -42,42 +42,22 @@
             }
 
             // 1. pre-flop -> blinds -> betting
-            this.PreFlop();
+            this.PlayRound(GameRoundType.PreFlop, 0, true);
 
             // 2. flop -> 3 cards -> betting
-            this.PlayRound(GameRoundType.Flop, 3);
+            this.PlayRound(GameRoundType.Flop, 3, false);
 
             // 3. turn -> 1 card -> betting
-            this.PlayRound(GameRoundType.Turn, 1);
+            this.PlayRound(GameRoundType.Turn, 1, false);
 
             // 4. river -> 1 card -> betting
-            this.PlayRound(GameRoundType.River, 1);
+            this.PlayRound(GameRoundType.River, 1, false);
 
             // 5. determine winner and give him/them the pot
             this.DetermineWinner();
             foreach (var player in this.allPlayers)
             {
                 player.EndHand();
-            }
-        }
-
-        private void PreFlop()
-        {
-            foreach (var player in this.allPlayers)
-            {
-                player.StartRound(new StartRoundContext(GameRoundType.PreFlop));
-            }
-
-            // Blinds
-            this.Bet(this.allPlayers[0], this.smallBlind);
-            this.Bet(this.allPlayers[1], this.smallBlind * 2);
-
-            // Place pre-flop bets
-            this.Betting();
-
-            foreach (var player in this.allPlayers)
-            {
-                player.EndRound();
             }
         }
 
@@ -88,7 +68,7 @@
             this.pot += amount;
         }
 
-        private void PlayRound(GameRoundType gameRoundType, int communityCardsCount)
+        private void PlayRound(GameRoundType gameRoundType, int communityCardsCount, bool takeBlinds)
         {
             foreach (var player in this.allPlayers)
             {
@@ -100,7 +80,7 @@
                 this.communityCards.Add(this.deck.GetNextCard());
             }
 
-            this.Betting();
+            this.Betting(takeBlinds);
 
             foreach (var player in this.allPlayers)
             {
@@ -109,17 +89,27 @@
         }
 
         // TODO: Implement
-        private void Betting()
+        private void Betting(bool takeBlinds)
         {
             var potBeforeRound = this.pot;
             var bets = new List<PlayerActionAndName>();
             var playerIndex = 0;
+
+            if (takeBlinds)
+            {
+                this.Bet(this.allPlayers[0], this.smallBlind);
+                bets.Add(new PlayerActionAndName(this.allPlayers[0].Name, PlayerAction.Raise(this.smallBlind)));
+                playerIndex++;
+
+                this.Bet(this.allPlayers[1], this.smallBlind * 2);
+                bets.Add(new PlayerActionAndName(this.allPlayers[1].Name, PlayerAction.Raise(this.smallBlind * 2)));
+                playerIndex++;
+            }
+
             while (true)
             {
                 var player = this.allPlayers[playerIndex % this.allPlayers.Count];
-
                 var getTurnContext = new GetTurnContext(this.communityCards, potBeforeRound, bets.AsReadOnly());
-
                 var action = player.GetTurn(getTurnContext);
 
                 bets.Add(new PlayerActionAndName(player.Name, action));

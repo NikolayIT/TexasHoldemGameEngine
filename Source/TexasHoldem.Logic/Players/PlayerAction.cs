@@ -40,5 +40,10 @@
         {
             return new PlayerAction(toAmount);
         }
+
+        public override string ToString()
+        {
+            return $"{this.Type}({this.Money})";
+        }
     }
 }

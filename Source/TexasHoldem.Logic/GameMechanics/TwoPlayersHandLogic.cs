@@ -27,17 +27,7 @@
 
         public void Play()
         {
-            this.StartHandAndDealCards();
-            this.PreFlop();
-            this.Flop();
-            this.Turn();
-            this.River();
-            this.EndHandAndDetermineWinner();
-        }
-
-        // 0. Start the hand and deal cards to each player
-        private void StartHandAndDealCards()
-        {
+            // 0. Start the hand and deal cards to each player
             foreach (var player in this.allPlayers)
             {
                 var startHandContext = new StartHandContext
@@ -47,9 +37,27 @@
                 };
                 player.StartHand(startHandContext);
             }
+
+            // 1. pre-flop -> blinds -> betting
+            this.PreFlop();
+
+            // 2. flop -> 3 cards -> betting
+            this.PlayRound(GameRoundType.Flop, 3);
+
+            // 3. turn -> 1 card -> betting
+            this.PlayRound(GameRoundType.Turn, 1);
+
+            // 4. river -> 1 card -> betting
+            this.PlayRound(GameRoundType.River, 1);
+
+            // 5. determine winner and give him/them the pot
+            this.DetermineWinner();
+            foreach (var player in this.allPlayers)
+            {
+                player.EndHand();
+            }
         }
 
-        // 1. pre-flop -> blinds -> betting
         private void PreFlop()
         {
             foreach (var player in this.allPlayers)
@@ -78,15 +86,14 @@
             }
         }
 
-        // 2. flop -> 3 cards -> betting
-        private void Flop()
+        private void PlayRound(GameRoundType gameRoundType, int communityCardsCount)
         {
             foreach (var player in this.allPlayers)
             {
-                player.StartRound(new StartRoundContext(GameRoundType.Flop));
+                player.StartRound(new StartRoundContext(gameRoundType));
             }
 
-            for (var i = 0; i < 3; i++)
+            for (var i = 0; i < communityCardsCount; i++)
             {
                 this.communityCards.Add(this.deck.GetNextCard());
             }
@@ -96,50 +103,6 @@
             foreach (var player in this.allPlayers)
             {
                 player.EndRound();
-            }
-        }
-
-        // 3. turn -> 1 card -> betting
-        private void Turn()
-        {
-            foreach (var player in this.allPlayers)
-            {
-                player.StartRound(new StartRoundContext(GameRoundType.Turn));
-            }
-
-            this.communityCards.Add(this.deck.GetNextCard());
-            this.Betting();
-
-            foreach (var player in this.allPlayers)
-            {
-                player.EndRound();
-            }
-        }
-
-        // 4. river -> 1 card -> betting
-        private void River()
-        {
-            foreach (var player in this.allPlayers)
-            {
-                player.StartRound(new StartRoundContext(GameRoundType.River));
-            }
-
-            this.communityCards.Add(this.deck.GetNextCard());
-            this.Betting();
-
-            foreach (var player in this.allPlayers)
-            {
-                player.EndRound();
-            }
-        }
-
-        // 5. determine winner and give him/them the pot
-        private void EndHandAndDetermineWinner()
-        {
-            // TODO: Implement
-            foreach (var player in this.allPlayers)
-            {
-                player.EndHand();
             }
         }
 
@@ -157,6 +120,11 @@
 
                 playerIndex++;
             }
+        }
+
+        private void DetermineWinner()
+        {
+            // TODO: Implement
         }
     }
 }

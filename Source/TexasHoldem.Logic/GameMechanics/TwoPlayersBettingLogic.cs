@@ -3,38 +3,40 @@
     using System.Collections.Generic;
 
     using TexasHoldem.Logic.Cards;
+    using TexasHoldem.Logic.Helpers;
     using TexasHoldem.Logic.Players;
 
     internal class TwoPlayersBettingLogic
     {
-        private readonly IList<InternalPlayer> allPlayers;
+        private static IActionValidator actionValidator = new ActionValidator();
 
-        private readonly List<PlayerActionAndName> bets;
+        private readonly IList<InternalPlayer> allPlayers;
 
         private readonly int smallBlind;
 
-        private int pot = 0;
+        private int pot;
 
         public TwoPlayersBettingLogic(InternalPlayer firstPlayer, InternalPlayer secondPlayer, int smallBlind)
         {
             this.allPlayers = new[] { firstPlayer, secondPlayer };
             this.smallBlind = smallBlind;
-            this.bets = new List<PlayerActionAndName>();
+            this.pot = 0;
         }
 
         public void Start(GameRoundType gameRoundType, ICollection<Card> communityCards)
         {
+            var bets = new List<PlayerActionAndName>();
             var potBeforeRound = this.pot;
             var playerIndex = 0;
 
             if (gameRoundType == GameRoundType.PreFlop)
             {
                 this.Bet(this.allPlayers[0], this.smallBlind);
-                this.bets.Add(new PlayerActionAndName(this.allPlayers[0].Name, PlayerAction.Raise(this.smallBlind)));
+                bets.Add(new PlayerActionAndName(this.allPlayers[0].Name, PlayerAction.Raise(this.smallBlind)));
                 playerIndex++;
 
                 this.Bet(this.allPlayers[1], this.smallBlind * 2);
-                this.bets.Add(new PlayerActionAndName(this.allPlayers[1].Name, PlayerAction.Raise(this.smallBlind * 2)));
+                bets.Add(new PlayerActionAndName(this.allPlayers[1].Name, PlayerAction.Raise(this.smallBlind * 2)));
                 playerIndex++;
             }
 
@@ -45,11 +47,11 @@
                     communityCards,
                     gameRoundType,
                     potBeforeRound,
-                    this.bets.AsReadOnly(),
+                    bets.AsReadOnly(),
                     this.pot);
                 var action = player.GetTurn(getTurnContext);
 
-                this.bets.Add(new PlayerActionAndName(player.Name, action));
+                bets.Add(new PlayerActionAndName(player.Name, action));
 
                 if (action.Type == PlayerActionType.Raise)
                 {

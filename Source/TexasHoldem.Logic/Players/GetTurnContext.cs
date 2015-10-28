@@ -6,14 +6,21 @@
 
     public class GetTurnContext
     {
-        public GetTurnContext(ICollection<Card> communityCards, int potBeforeThisRound, ICollection<PlayerActionAndName> bets)
+        public GetTurnContext(
+            ICollection<Card> communityCards,
+            GameRoundType roundType,
+            int potBeforeThisRound,
+            ICollection<PlayerActionAndName> bets)
         {
             this.CommunityCards = communityCards;
+            this.RoundType = roundType;
             this.PotBeforeThisRound = potBeforeThisRound;
             this.Bets = bets;
         }
 
         public ICollection<Card> CommunityCards { get; }
+
+        public GameRoundType RoundType { get; set; }
 
         public int PotBeforeThisRound { get; set; }
 

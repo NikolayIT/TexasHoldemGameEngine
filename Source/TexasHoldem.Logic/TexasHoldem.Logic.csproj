@@ -62,7 +62,7 @@
     <Compile Include="InternalGameException.cs" />
     <Compile Include="Players\BasePlayer.cs" />
     <Compile Include="Players\EndGameContext.cs" />
-    <Compile Include="Players\InternalPlayer.cs" />
+    <Compile Include="GameMechanics\InternalPlayer.cs" />
     <Compile Include="Players\IPlayer.cs" />
     <Compile Include="Players\GetTurnContext.cs" />
     <Compile Include="Players\PlayerActionAndName.cs" />

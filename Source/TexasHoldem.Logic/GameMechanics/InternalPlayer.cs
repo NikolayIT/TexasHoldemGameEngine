@@ -1,5 +1,7 @@
-﻿namespace TexasHoldem.Logic.Players
+﻿namespace TexasHoldem.Logic.GameMechanics
 {
+    using TexasHoldem.Logic.Players;
+
     internal class InternalPlayer : PlayerDecorator
     {
         public InternalPlayer(IPlayer player, int initialMoney)
@@ -14,10 +16,21 @@
 
         public int CurrentlyInPot { get; private set; }
 
+        public bool InHand { get; set; }
+
+        public bool CallOrCheck { get; set; }
+
         public override void StartHand(StartHandContext context)
         {
             this.CurrentlyInPot = 0;
+            this.InHand = true;
             base.StartHand(context);
+        }
+
+        public override void StartRound(StartRoundContext context)
+        {
+            this.CallOrCheck = false;
+            base.StartRound(context);
         }
 
         public override void EndRound()

@@ -55,10 +55,10 @@
             // River -> 1 card -> betting
             this.PlayRound(GameRoundType.River, 1);
 
-            // Determine winner and give him/them the pot
-            this.DetermineWinner();
+            // TODO: Determine winner and give him/them the pot
             foreach (var player in this.players)
             {
+                // TODO: Showdown
                 player.EndHand();
             }
         }
@@ -81,12 +81,6 @@
             {
                 player.EndRound();
             }
-        }
-
-        private void DetermineWinner()
-        {
-            // TODO: Implement
-            // TODO: Showdown
         }
     }
 }

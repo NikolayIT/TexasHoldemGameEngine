@@ -1,6 +1,7 @@
 ﻿namespace TexasHoldem.Logic.GameMechanics
 {
     using System.Collections.Generic;
+    using System.Linq;
 
     using TexasHoldem.Logic.Cards;
     using TexasHoldem.Logic.Helpers;
@@ -27,22 +28,26 @@
         {
             var bets = new List<PlayerActionAndName>();
             var potBeforeRound = this.pot;
-            var playerIndex = 0;
 
             if (gameRoundType == GameRoundType.PreFlop)
             {
                 this.Bet(this.allPlayers[0], this.smallBlind);
                 bets.Add(new PlayerActionAndName(this.allPlayers[0].Name, PlayerAction.Raise(this.smallBlind)));
-                playerIndex++;
 
                 this.Bet(this.allPlayers[1], this.smallBlind * 2);
                 bets.Add(new PlayerActionAndName(this.allPlayers[1].Name, PlayerAction.Raise(this.smallBlind * 2)));
-                playerIndex++;
             }
 
-            while (true)
+            var playerIndex = 1;
+            while (this.allPlayers.Count(x => x.InHand) >= 2 && this.allPlayers.Any(x => !x.CallOrCheck))
             {
+                playerIndex++;
                 var player = this.allPlayers[playerIndex % this.allPlayers.Count];
+                if (!player.InHand)
+                {
+                    continue;
+                }
+
                 var getTurnContext = new GetTurnContext(
                     communityCards,
                     gameRoundType,
@@ -55,23 +60,23 @@
 
                 if (action.Type == PlayerActionType.Raise)
                 {
+                    player.CallOrCheck = false;
                     this.Bet(player, action.Money);
                 }
                 else if (action.Type == PlayerActionType.Call)
                 {
+                    player.CallOrCheck = true;
                     this.Bet(player, action.Money);
                 }
                 else if (action.Type == PlayerActionType.Check)
                 {
                     // TODO: Is OK to check?
+                    player.CallOrCheck = true;
                 }
                 else
                 {
-                    // Fold
-                    break;
+                    player.InHand = false;
                 }
-
-                playerIndex++;
             }
         }
 

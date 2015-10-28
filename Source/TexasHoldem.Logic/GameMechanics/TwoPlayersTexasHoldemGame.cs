@@ -11,20 +11,22 @@
 
         private readonly InternalPlayer secondPlayer;
 
+        private readonly int initialMoney;
+
         private int roundNumber;
 
         public TwoPlayersTexasHoldemGame(IPlayer firstPlayer, IPlayer secondPlayer, int initialMoney = 1000)
         {
             this.firstPlayer = new InternalPlayer(firstPlayer, initialMoney);
             this.secondPlayer = new InternalPlayer(secondPlayer, initialMoney);
+            this.initialMoney = initialMoney;
             this.roundNumber = 0;
         }
 
         public void Start()
         {
-            // TODO: Pass initial money
-            this.firstPlayer.StartGame();
-            this.secondPlayer.StartGame();
+            this.firstPlayer.StartGame(new StartGameContext(this.initialMoney));
+            this.secondPlayer.StartGame(new StartGameContext(this.initialMoney));
 
             while (this.AllPlayersHaveMoney())
             {
@@ -36,8 +38,8 @@
                 hand.Play();
             }
 
-            this.firstPlayer.EndGame();
-            this.secondPlayer.EndGame();
+            this.firstPlayer.EndGame(new EndGameContext());
+            this.secondPlayer.EndGame(new EndGameContext());
         }
 
         private bool AllPlayersHaveMoney()

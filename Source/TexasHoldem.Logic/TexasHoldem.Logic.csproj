@@ -58,13 +58,16 @@
     <Compile Include="IDeepCloneable{T}.cs" />
     <Compile Include="InternalGameException.cs" />
     <Compile Include="Players\BasePlayer.cs" />
+    <Compile Include="Players\EndGameContext.cs" />
     <Compile Include="Players\InternalPlayer.cs" />
     <Compile Include="Players\IPlayer.cs" />
     <Compile Include="Players\GetTurnContext.cs" />
     <Compile Include="Players\PlayerDecorator.cs" />
     <Compile Include="Players\PlayerTurn.cs" />
     <Compile Include="Players\PlayerTurnType.cs" />
+    <Compile Include="Players\StartGameContext.cs" />
     <Compile Include="Players\StartHandContext.cs" />
+    <Compile Include="Players\StartRoundContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

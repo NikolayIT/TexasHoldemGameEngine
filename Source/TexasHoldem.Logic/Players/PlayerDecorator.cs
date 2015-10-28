@@ -11,9 +11,9 @@
 
         protected IPlayer Player { get; }
 
-        public virtual void StartGame()
+        public virtual void StartGame(StartGameContext context)
         {
-            this.Player.StartGame();
+            this.Player.StartGame(context);
         }
 
         public virtual void StartHand(StartHandContext context)
@@ -21,9 +21,9 @@
             this.Player.StartHand(context);
         }
 
-        public virtual void StartRound()
+        public virtual void StartRound(StartRoundContext context)
         {
-            this.Player.StartRound();
+            this.Player.StartRound(context);
         }
 
         public virtual PlayerTurn GetTurn(GetTurnContext context)
@@ -41,9 +41,9 @@
             this.Player.EndHand();
         }
 
-        public virtual void EndGame()
+        public virtual void EndGame(EndGameContext context)
         {
-            this.Player.EndGame();
+            this.Player.EndGame(context);
         }
     }
 }

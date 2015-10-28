@@ -54,7 +54,7 @@
         {
             foreach (var player in this.allPlayers)
             {
-                player.StartRound();
+                player.StartRound(new StartRoundContext(GameRoundType.PreFlop));
             }
 
             // Small blind
@@ -83,7 +83,7 @@
         {
             foreach (var player in this.allPlayers)
             {
-                player.StartRound();
+                player.StartRound(new StartRoundContext(GameRoundType.Flop));
             }
 
             for (var i = 0; i < 3; i++)
@@ -104,7 +104,7 @@
         {
             foreach (var player in this.allPlayers)
             {
-                player.StartRound();
+                player.StartRound(new StartRoundContext(GameRoundType.Turn));
             }
 
             this.communityCards.Add(this.deck.GetNextCard());
@@ -121,7 +121,7 @@
         {
             foreach (var player in this.allPlayers)
             {
-                player.StartRound();
+                player.StartRound(new StartRoundContext(GameRoundType.River));
             }
 
             this.communityCards.Add(this.deck.GetNextCard());

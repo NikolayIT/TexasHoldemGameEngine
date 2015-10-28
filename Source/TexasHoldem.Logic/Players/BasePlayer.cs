@@ -4,7 +4,7 @@
     {
         public abstract string Name { get; }
 
-        public virtual void StartGame()
+        public virtual void StartGame(StartGameContext context)
         {
         }
 
@@ -12,7 +12,7 @@
         {
         }
 
-        public virtual void StartRound()
+        public virtual void StartRound(StartRoundContext context)
         {
         }
 
@@ -26,7 +26,7 @@
         {
         }
 
-        public virtual void EndGame()
+        public virtual void EndGame(EndGameContext context)
         {
         }
     }

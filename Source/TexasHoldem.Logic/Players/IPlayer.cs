@@ -4,11 +4,11 @@
     {
         string Name { get; }
 
-        void StartGame();
+        void StartGame(StartGameContext context);
 
         void StartHand(StartHandContext context);
 
-        void StartRound();
+        void StartRound(StartRoundContext context);
 
         PlayerTurn GetTurn(GetTurnContext context);
 
@@ -16,6 +16,6 @@
 
         void EndHand();
 
-        void EndGame();
+        void EndGame(EndGameContext context);
     }
 }

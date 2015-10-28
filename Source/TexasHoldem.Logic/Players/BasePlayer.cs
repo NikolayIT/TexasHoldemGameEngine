@@ -2,9 +2,9 @@
 {
     public abstract class BasePlayer : IPlayer
     {
-        protected int MoneyLeft { get; set; }
-
         public abstract string Name { get; }
+
+        protected int MoneyLeft { get; set; }
 
         public virtual void StartGame(StartGameContext context)
         {

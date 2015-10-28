@@ -24,8 +24,9 @@
 
         public override PlayerTurn GetTurn(GetTurnContext context)
         {
-            WriteOnConsole(this.row + 1, 1, "Select action [C]heck, [R]aise, [F]old");
+            WriteOnConsole(this.row + 1, 1, "Select action [C]heck/[C]all, [R]aise, [F]old");
             Console.ReadLine();
+            return PlayerTurn.Fold();
         }
 
         private static void WriteOnConsole(int row, int col, string text, ConsoleColor foregroundColor = ConsoleColor.Gray, ConsoleColor backgroundColor = ConsoleColor.Black)

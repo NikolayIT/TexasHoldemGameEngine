@@ -62,6 +62,7 @@
     <Compile Include="Players\GetTurnContext.cs" />
     <Compile Include="Players\PlayerDecorator.cs" />
     <Compile Include="Players\PlayerTurn.cs" />
+    <Compile Include="Players\PlayerTurnType.cs" />
     <Compile Include="Players\StartHandContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

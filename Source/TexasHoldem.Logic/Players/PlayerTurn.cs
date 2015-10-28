@@ -37,9 +37,9 @@
             return CallObject;
         }
 
-        public static PlayerTurn Raise(int money)
+        public static PlayerTurn Raise(int toAmount)
         {
-            return new PlayerTurn(money);
+            return new PlayerTurn(toAmount);
         }
     }
 }

@@ -24,9 +24,38 @@
 
         public override PlayerTurn GetTurn(GetTurnContext context)
         {
-            WriteOnConsole(this.row + 1, 1, "Select action [C]heck/[C]all, [R]aise, [F]old");
-            Console.ReadLine();
-            return PlayerTurn.Fold();
+            WriteOnConsole(this.row + 1, 1, "Select action [C]heck/[C]all, [R]aise, [F]old, [A]ll-in");
+            while (true)
+            {
+                var key = Console.ReadKey(true);
+                PlayerTurn turn = null;
+                if (key.Key == ConsoleKey.C)
+                {
+                    // TODO: Check or Call?
+                    turn = PlayerTurn.Check();
+                }
+                else if (key.Key == ConsoleKey.R)
+                {
+                    // TODO: Ask the raise amount!
+                    turn = PlayerTurn.Raise(10);
+                }
+                else if (key.Key == ConsoleKey.F)
+                {
+                    turn = PlayerTurn.Fold();
+                }
+                else if (key.Key == ConsoleKey.A)
+                {
+                    turn = PlayerTurn.Raise(this.MoneyLeft);
+                }
+
+                // TODO: Check if the turn is valid
+                if (turn != null)
+                {
+                    WriteOnConsole(this.row + 1, 1, new string(' ', 59));
+                    WriteOnConsole(this.row + 2, 1, turn.Type + "    ");
+                    return turn;
+                }
+            }
         }
 
         private static void WriteOnConsole(int row, int col, string text, ConsoleColor foregroundColor = ConsoleColor.Gray, ConsoleColor backgroundColor = ConsoleColor.Black)

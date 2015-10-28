@@ -9,21 +9,25 @@
         public GetTurnContext(
             ICollection<Card> communityCards,
             GameRoundType roundType,
-            int potBeforeThisRound,
-            ICollection<PlayerActionAndName> bets)
+            int potBeforeTheRound,
+            ICollection<PlayerActionAndName> bets,
+            int currentPot)
         {
             this.CommunityCards = communityCards;
             this.RoundType = roundType;
-            this.PotBeforeThisRound = potBeforeThisRound;
+            this.PotBeforeTheRound = potBeforeTheRound;
             this.Bets = bets;
+            this.CurrentPot = currentPot;
         }
 
         public ICollection<Card> CommunityCards { get; }
 
-        public GameRoundType RoundType { get; set; }
+        public GameRoundType RoundType { get; }
 
-        public int PotBeforeThisRound { get; set; }
+        public int PotBeforeTheRound { get; }
 
-        public ICollection<PlayerActionAndName> Bets { get; set; }
+        public ICollection<PlayerActionAndName> Bets { get; }
+
+        public int CurrentPot { get; }
     }
 }

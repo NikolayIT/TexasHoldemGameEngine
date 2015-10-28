@@ -12,20 +12,18 @@
 
         private readonly IList<InternalPlayer> allPlayers;
 
-        private readonly int smallBlind;
-
         private readonly Deck deck;
 
         private readonly ICollection<Card> communityCards;
 
-        private int pot = 0;
+        private readonly TwoPlayersBettingLogic bettingLogic;
 
         public TwoPlayersHandLogic(InternalPlayer firstPlayer, InternalPlayer secondPlayer, int smallBlind)
         {
             this.allPlayers = new[] { firstPlayer, secondPlayer };
-            this.smallBlind = smallBlind;
             this.deck = new Deck();
             this.communityCards = new List<Card>(5);
+            this.bettingLogic = new TwoPlayersBettingLogic(firstPlayer, secondPlayer, smallBlind);
         }
 
         public void Play()
@@ -61,13 +59,6 @@
             }
         }
 
-        private void Bet(InternalPlayer player, int amount)
-        {
-            // TODO: What if small blind is bigger than player's money?
-            player.Bet(amount);
-            this.pot += amount;
-        }
-
         private void PlayRound(GameRoundType gameRoundType, int communityCardsCount)
         {
             foreach (var player in this.allPlayers)
@@ -80,63 +71,11 @@
                 this.communityCards.Add(this.deck.GetNextCard());
             }
 
-            this.Betting(gameRoundType);
+            this.bettingLogic.Start(gameRoundType, this.communityCards);
 
             foreach (var player in this.allPlayers)
             {
                 player.EndRound();
-            }
-        }
-
-        // TODO: Implement
-        private void Betting(GameRoundType gameRoundType)
-        {
-            var potBeforeRound = this.pot;
-            var bets = new List<PlayerActionAndName>();
-            var playerIndex = 0;
-
-            if (gameRoundType == GameRoundType.PreFlop)
-            {
-                this.Bet(this.allPlayers[0], this.smallBlind);
-                bets.Add(new PlayerActionAndName(this.allPlayers[0].Name, PlayerAction.Raise(this.smallBlind)));
-                playerIndex++;
-
-                this.Bet(this.allPlayers[1], this.smallBlind * 2);
-                bets.Add(new PlayerActionAndName(this.allPlayers[1].Name, PlayerAction.Raise(this.smallBlind * 2)));
-                playerIndex++;
-            }
-
-            while (true)
-            {
-                var player = this.allPlayers[playerIndex % this.allPlayers.Count];
-                var getTurnContext = new GetTurnContext(
-                    this.communityCards,
-                    gameRoundType,
-                    potBeforeRound,
-                    bets.AsReadOnly());
-                var action = player.GetTurn(getTurnContext);
-
-                bets.Add(new PlayerActionAndName(player.Name, action));
-
-                if (action.Type == PlayerActionType.Raise)
-                {
-                    this.Bet(player, action.Money);
-                }
-                else if (action.Type == PlayerActionType.Call)
-                {
-                    this.Bet(player, action.Money);
-                }
-                else if (action.Type == PlayerActionType.Check)
-                {
-                    // TODO: Is OK to check?
-                }
-                else
-                {
-                    // Fold
-                    break;
-                }
-
-                playerIndex++;
             }
         }
 

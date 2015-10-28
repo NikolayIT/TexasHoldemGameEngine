@@ -8,10 +8,10 @@
     {
         private readonly int row;
 
-        public ConsolePlayer(int row, string name = "Console Player")
+        public ConsolePlayer(int row)
         {
             this.row = row;
-            this.Name = name;
+            this.Name = "ConsolePlayerLine" + row;
         }
 
         public override string Name { get; }
@@ -29,23 +29,22 @@
             {
                 var key = Console.ReadKey(true);
                 PlayerAction action = null;
-                if (key.Key == ConsoleKey.C)
+                switch (key.Key)
                 {
-                    // TODO: Check or Call?
-                    action = PlayerAction.Check();
-                }
-                else if (key.Key == ConsoleKey.R)
-                {
-                    // TODO: Ask the raise amount!
-                    action = PlayerAction.Raise(10);
-                }
-                else if (key.Key == ConsoleKey.F)
-                {
-                    action = PlayerAction.Fold();
-                }
-                else if (key.Key == ConsoleKey.A)
-                {
-                    action = PlayerAction.Raise(this.MoneyLeft);
+                    case ConsoleKey.C:
+                        // TODO: Check or Call?
+                        action = PlayerAction.Check();
+                        break;
+                    case ConsoleKey.R:
+                        // TODO: Ask the raise amount!
+                        action = PlayerAction.Raise(10);
+                        break;
+                    case ConsoleKey.F:
+                        action = PlayerAction.Fold();
+                        break;
+                    case ConsoleKey.A:
+                        action = PlayerAction.Raise(this.MoneyLeft);
+                        break;
                 }
 
                 // TODO: Check if the action is valid

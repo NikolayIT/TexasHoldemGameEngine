@@ -64,6 +64,7 @@
     <Compile Include="Players\InternalPlayer.cs" />
     <Compile Include="Players\IPlayer.cs" />
     <Compile Include="Players\GetTurnContext.cs" />
+    <Compile Include="Players\PlayerActionAndName.cs" />
     <Compile Include="Players\PlayerDecorator.cs" />
     <Compile Include="Players\PlayerAction.cs" />
     <Compile Include="Players\PlayerActionType.cs" />

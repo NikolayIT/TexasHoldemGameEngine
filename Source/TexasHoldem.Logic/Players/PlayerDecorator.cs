@@ -1,13 +1,13 @@
 ﻿namespace TexasHoldem.Logic.Players
 {
-    using TexasHoldem.Logic.Cards;
-
     public class PlayerDecorator : IPlayer
     {
         protected PlayerDecorator(IPlayer player)
         {
             this.Player = player;
         }
+
+        public string Name => this.Player.Name;
 
         protected IPlayer Player { get; }
 

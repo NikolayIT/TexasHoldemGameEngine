@@ -36,7 +36,11 @@
         {
             foreach (var player in this.players)
             {
-                var startHandContext = new StartHandContext();
+                var startHandContext = new StartHandContext
+                                           {
+                                               FirstCard = this.deck.GetNextCard(),
+                                               SecondCard = this.deck.GetNextCard()
+                                           };
                 player.StartHand(startHandContext);
             }
         }

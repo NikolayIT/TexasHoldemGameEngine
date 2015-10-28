@@ -2,6 +2,8 @@
 {
     public interface IPlayer
     {
+        string Name { get; }
+
         void StartGame();
 
         void StartHand(StartHandContext context);

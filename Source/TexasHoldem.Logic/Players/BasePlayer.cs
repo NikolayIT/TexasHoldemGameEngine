@@ -2,14 +2,24 @@
 {
     public abstract class BasePlayer : IPlayer
     {
-        public abstract void StartGame();
+        public abstract string Name { get; }
 
-        public abstract void StartHand(StartHandContext context);
+        public virtual void StartGame()
+        {
+        }
+
+        public virtual void StartHand(StartHandContext context)
+        {
+        }
 
         public abstract PlayerTurn GetTurn(GetTurnContext context);
 
-        public abstract void EndHand();
+        public virtual void EndHand()
+        {
+        }
 
-        public abstract void EndGame();
+        public virtual void EndGame()
+        {
+        }
     }
 }

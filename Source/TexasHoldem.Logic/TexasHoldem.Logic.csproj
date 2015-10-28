@@ -49,9 +49,10 @@
     <Compile Include="Cards\IDeck.cs" />
     <Compile Include="Extensions\EnumerableExtensions.cs" />
     <Compile Include="Extensions\RandomProvider.cs" />
-    <Compile Include="GameMechanics\HandLogic.cs" />
+    <Compile Include="GameMechanics\TwoPlayersHandLogic.cs" />
     <Compile Include="GameMechanics\ITexasHoldemGame.cs" />
-    <Compile Include="GameMechanics\TexasHoldemGame.cs" />
+    <Compile Include="GameMechanics\TwoPlayersTexasHoldemGame.cs" />
+    <Compile Include="GameRoundType.cs" />
     <Compile Include="Helpers\HandEvaluator.cs" />
     <Compile Include="HandRankType.cs" />
     <Compile Include="IDeepCloneable{T}.cs" />

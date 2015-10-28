@@ -12,7 +12,15 @@
         {
         }
 
+        public virtual void StartRound()
+        {
+        }
+
         public abstract PlayerTurn GetTurn(GetTurnContext context);
+
+        public virtual void EndRound()
+        {
+        }
 
         public virtual void EndHand()
         {

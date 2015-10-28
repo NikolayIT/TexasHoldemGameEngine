@@ -5,9 +5,9 @@
     using TexasHoldem.Logic.Cards;
     using TexasHoldem.Logic.Players;
 
-    internal class HandLogic
+    internal class TwoPlayersHandLogic
     {
-        private readonly IList<InternalPlayer> players;
+        private readonly IList<InternalPlayer> allPlayers;
 
         private readonly int smallBlind;
 
@@ -15,18 +15,12 @@
 
         private readonly ICollection<Card> communityCards;
 
-        private readonly int firstToPlay;
-
         private int pot = 0;
 
-        public HandLogic(IList<InternalPlayer> players, int roundNumber, int smallBlind)
+        public TwoPlayersHandLogic(InternalPlayer firstPlayer, InternalPlayer secondPlayer, int smallBlind)
         {
-            this.players = players;
+            this.allPlayers = new[] { firstPlayer, secondPlayer };
             this.smallBlind = smallBlind;
-
-            // TODO: This logic is OK for 2 players but should be improved. What happens when one player drops?
-            this.firstToPlay = (roundNumber - 1) % this.players.Count;
-
             this.deck = new Deck();
             this.communityCards = new List<Card>(5);
         }
@@ -38,13 +32,13 @@
             this.Flop();
             this.Turn();
             this.River();
-            this.DetermineWinner();
+            this.EndHandAndDetermineWinner();
         }
 
         // 0. Start the hand and deal cards to each player
         private void StartHandAndDealCards()
         {
-            foreach (var player in this.players)
+            foreach (var player in this.allPlayers)
             {
                 var startHandContext = new StartHandContext
                 {
@@ -58,73 +52,110 @@
         // 1. pre-flop -> blinds -> betting
         private void PreFlop()
         {
-            var nextToPlay = this.firstToPlay;
+            foreach (var player in this.allPlayers)
+            {
+                player.StartRound();
+            }
 
             // Small blind
             // TODO: What if small blind is bigger than player's money?
-            var smallBlindPlayer = this.players[nextToPlay % this.players.Count];
-            smallBlindPlayer.Money -= this.smallBlind;
+            var smallBlindPlayer = this.allPlayers[0];
+            smallBlindPlayer.Bet(this.smallBlind);
             this.pot += this.smallBlind;
-            nextToPlay++;
 
             // Big blind
             // TODO: What if small blind is bigger than player's money?
-            var bigBlindPlayer = this.players[nextToPlay % this.players.Count];
-            bigBlindPlayer.Money -= this.smallBlind * 2;
+            var bigBlindPlayer = this.allPlayers[1];
+            bigBlindPlayer.Bet(this.smallBlind * 2);
             this.pot += this.smallBlind * 2;
-            nextToPlay++;
 
-            this.Betting(nextToPlay, this.smallBlind * 2);
+            // Place pre-flop bets
+            this.Betting();
+
+            foreach (var player in this.allPlayers)
+            {
+                player.EndRound();
+            }
         }
 
         // 2. flop -> 3 cards -> betting
         private void Flop()
         {
+            foreach (var player in this.allPlayers)
+            {
+                player.StartRound();
+            }
+
             for (var i = 0; i < 3; i++)
             {
                 this.communityCards.Add(this.deck.GetNextCard());
             }
 
-            var nextToPlay = this.firstToPlay;
-            this.Betting(nextToPlay, 0);
+            this.Betting();
+
+            foreach (var player in this.allPlayers)
+            {
+                player.EndRound();
+            }
         }
 
         // 3. turn -> 1 card -> betting
         private void Turn()
         {
-            this.communityCards.Add(this.deck.GetNextCard());
+            foreach (var player in this.allPlayers)
+            {
+                player.StartRound();
+            }
 
-            var nextToPlay = this.firstToPlay;
-            this.Betting(nextToPlay, 0);
+            this.communityCards.Add(this.deck.GetNextCard());
+            this.Betting();
+
+            foreach (var player in this.allPlayers)
+            {
+                player.EndRound();
+            }
         }
 
         // 4. river -> 1 card -> betting
         private void River()
         {
-            this.communityCards.Add(this.deck.GetNextCard());
+            foreach (var player in this.allPlayers)
+            {
+                player.StartRound();
+            }
 
-            var nextToPlay = this.firstToPlay;
-            this.Betting(nextToPlay, 0);
+            this.communityCards.Add(this.deck.GetNextCard());
+            this.Betting();
+
+            foreach (var player in this.allPlayers)
+            {
+                player.EndRound();
+            }
         }
 
         // 5. determine winner and give him/them the pot
-        private void DetermineWinner()
+        private void EndHandAndDetermineWinner()
         {
             // TODO: Implement
+            foreach (var player in this.allPlayers)
+            {
+                player.EndHand();
+            }
         }
 
-        private void Betting(int firstToBet, int currentMaxBet)
+        private void Betting()
         {
             // TODO: Implement
+            var playerIndex = 0;
             while (true)
             {
-                var player = this.players[firstToBet % this.players.Count];
+                var player = this.allPlayers[playerIndex % this.allPlayers.Count];
 
                 var getTurnContext = new GetTurnContext(this.communityCards);
 
                 var turn = player.GetTurn(getTurnContext);
 
-                firstToBet++;
+                playerIndex++;
             }
         }
     }

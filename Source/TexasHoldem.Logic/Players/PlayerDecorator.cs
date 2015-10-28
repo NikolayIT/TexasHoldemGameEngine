@@ -16,22 +16,32 @@
             this.Player.StartGame();
         }
 
-        public void StartHand(StartHandContext context)
+        public virtual void StartHand(StartHandContext context)
         {
             this.Player.StartHand(context);
         }
 
-        public PlayerTurn GetTurn(GetTurnContext context)
+        public virtual void StartRound()
+        {
+            this.Player.StartRound();
+        }
+
+        public virtual PlayerTurn GetTurn(GetTurnContext context)
         {
             return this.Player.GetTurn(context);
         }
 
-        public void EndHand()
+        public virtual void EndRound()
+        {
+            this.Player.EndRound();
+        }
+
+        public virtual void EndHand()
         {
             this.Player.EndHand();
         }
 
-        public void EndGame()
+        public virtual void EndGame()
         {
             this.Player.EndGame();
         }

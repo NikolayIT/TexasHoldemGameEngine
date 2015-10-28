@@ -8,7 +8,11 @@
 
         void StartHand(StartHandContext context);
 
+        void StartRound();
+
         PlayerTurn GetTurn(GetTurnContext context);
+
+        void EndRound();
 
         void EndHand();
 

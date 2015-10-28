@@ -1,5 +1,6 @@
 ﻿namespace TexasHoldem.Logic.Players
 {
+    // TODO: Rename to PlayerAction
     public class PlayerTurn
     {
         private static readonly PlayerTurn FoldObject = new PlayerTurn(PlayerTurnType.Fold);

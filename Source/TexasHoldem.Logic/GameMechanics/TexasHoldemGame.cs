@@ -25,7 +25,8 @@
             while (this.AtLeastTwoPlayersHaveMoney())
             {
                 this.roundNumber++;
-                var hand = new HandLogic(this.players, this.roundNumber);
+                var smallBlind = (((this.roundNumber - 1) / 10) + 1) * 2;
+                var hand = new HandLogic(this.players, this.roundNumber, smallBlind);
                 hand.Play();
             }
         }

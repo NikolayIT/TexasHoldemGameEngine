@@ -26,7 +26,7 @@
             this.Player.StartRound(context);
         }
 
-        public virtual PlayerTurn GetTurn(GetTurnContext context)
+        public virtual PlayerAction GetTurn(GetTurnContext context)
         {
             return this.Player.GetTurn(context);
         }

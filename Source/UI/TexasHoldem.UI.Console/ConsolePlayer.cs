@@ -22,38 +22,38 @@
             WriteOnConsole(this.row, 6, context.SecondCard + "  ");
         }
 
-        public override PlayerTurn GetTurn(GetTurnContext context)
+        public override PlayerAction GetTurn(GetTurnContext context)
         {
             WriteOnConsole(this.row + 1, 1, "Select action [C]heck/[C]all, [R]aise, [F]old, [A]ll-in");
             while (true)
             {
                 var key = Console.ReadKey(true);
-                PlayerTurn turn = null;
+                PlayerAction action = null;
                 if (key.Key == ConsoleKey.C)
                 {
                     // TODO: Check or Call?
-                    turn = PlayerTurn.Check();
+                    action = PlayerAction.Check();
                 }
                 else if (key.Key == ConsoleKey.R)
                 {
                     // TODO: Ask the raise amount!
-                    turn = PlayerTurn.Raise(10);
+                    action = PlayerAction.Raise(10);
                 }
                 else if (key.Key == ConsoleKey.F)
                 {
-                    turn = PlayerTurn.Fold();
+                    action = PlayerAction.Fold();
                 }
                 else if (key.Key == ConsoleKey.A)
                 {
-                    turn = PlayerTurn.Raise(this.MoneyLeft);
+                    action = PlayerAction.Raise(this.MoneyLeft);
                 }
 
-                // TODO: Check if the turn is valid
-                if (turn != null)
+                // TODO: Check if the action is valid
+                if (action != null)
                 {
                     WriteOnConsole(this.row + 1, 1, new string(' ', 59));
-                    WriteOnConsole(this.row + 2, 1, turn.Type + "    ");
-                    return turn;
+                    WriteOnConsole(this.row + 2, 1, action.Type + "    ");
+                    return action;
                 }
             }
         }

@@ -1,6 +1,6 @@
 ﻿namespace TexasHoldem.Logic.Players
 {
-    public enum PlayerTurnType
+    public enum PlayerActionType
     {
         Fold = 0,
         Check = 1,

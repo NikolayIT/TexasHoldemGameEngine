@@ -1,8 +1,5 @@
 ﻿namespace TexasHoldem.Logic.GameMechanics
 {
-    using System.Collections.Generic;
-    using System.Linq;
-
     using TexasHoldem.Logic.Players;
 
     public class TwoPlayersTexasHoldemGame : ITexasHoldemGame

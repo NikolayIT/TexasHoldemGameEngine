@@ -19,7 +19,7 @@
         {
         }
 
-        public abstract PlayerTurn GetTurn(GetTurnContext context);
+        public abstract PlayerAction GetTurn(GetTurnContext context);
 
         public virtual void EndRound()
         {

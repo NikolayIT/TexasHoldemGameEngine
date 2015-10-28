@@ -10,7 +10,7 @@
 
         void StartRound(StartRoundContext context);
 
-        PlayerTurn GetTurn(GetTurnContext context);
+        PlayerAction GetTurn(GetTurnContext context);
 
         void EndRound();
 

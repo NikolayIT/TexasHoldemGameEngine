@@ -6,10 +6,10 @@
     {
         public override string Name => "Dummy player";
 
-        public override PlayerTurn GetTurn(GetTurnContext context)
+        public override PlayerAction GetTurn(GetTurnContext context)
         {
             // TODO: Raise/Call(Check)/Fold on random
-            return PlayerTurn.Fold();
+            return PlayerAction.Fold();
         }
     }
 }

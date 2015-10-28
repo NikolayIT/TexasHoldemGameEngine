@@ -65,17 +65,9 @@
                 player.StartRound(new StartRoundContext(GameRoundType.PreFlop));
             }
 
-            // Small blind
-            // TODO: What if small blind is bigger than player's money?
-            var smallBlindPlayer = this.allPlayers[0];
-            smallBlindPlayer.Bet(this.smallBlind);
-            this.pot += this.smallBlind;
-
-            // Big blind
-            // TODO: What if small blind is bigger than player's money?
-            var bigBlindPlayer = this.allPlayers[1];
-            bigBlindPlayer.Bet(this.smallBlind * 2);
-            this.pot += this.smallBlind * 2;
+            // Blinds
+            this.Bet(this.allPlayers[0], this.smallBlind);
+            this.Bet(this.allPlayers[1], this.smallBlind * 2);
 
             // Place pre-flop bets
             this.Betting();
@@ -84,6 +76,13 @@
             {
                 player.EndRound();
             }
+        }
+
+        private void Bet(InternalPlayer player, int amount)
+        {
+            // TODO: What if small blind is bigger than player's money?
+            player.Bet(amount);
+            this.pot += amount;
         }
 
         private void PlayRound(GameRoundType gameRoundType, int communityCardsCount)
@@ -106,9 +105,9 @@
             }
         }
 
+        // TODO: Implement
         private void Betting()
         {
-            // TODO: Implement
             var playerIndex = 0;
             while (true)
             {
@@ -117,6 +116,23 @@
                 var getTurnContext = new GetTurnContext(this.communityCards);
 
                 var turn = player.GetTurn(getTurnContext);
+                if (turn.Type == PlayerActionType.Raise)
+                {
+                    this.Bet(player, turn.Money);
+                }
+                else if (turn.Type == PlayerActionType.Call)
+                {
+                    this.Bet(player, turn.Money);
+                }
+                else if (turn.Type == PlayerActionType.Check)
+                {
+                    // TODO: Is OK to check?
+                }
+                else
+                {
+                    // Fold
+                    break;
+                }
 
                 playerIndex++;
             }

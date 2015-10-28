@@ -107,6 +107,20 @@
                                 new Card(CardSuit.Spade, CardType.Ace),
                                 new Card(CardSuit.Spade, CardType.King),
                                 new Card(CardSuit.Spade, CardType.Queen),
+                                new Card(CardSuit.Heart, CardType.Jack),
+                                new Card(CardSuit.Spade, CardType.Ten),
+                                new Card(CardSuit.Club, CardType.Seven),
+                                new Card(CardSuit.Spade, CardType.Three)
+                            }
+                    },
+                new object[]
+                    {
+                        HandRankType.Flush,
+                        new List<Card>
+                            {
+                                new Card(CardSuit.Spade, CardType.Ace),
+                                new Card(CardSuit.Spade, CardType.King),
+                                new Card(CardSuit.Spade, CardType.Queen),
                                 new Card(CardSuit.Heart, CardType.Ten),
                                 new Card(CardSuit.Spade, CardType.Nine),
                                 new Card(CardSuit.Club, CardType.Seven),

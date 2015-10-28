@@ -1,24 +1,24 @@
 ﻿namespace TexasHoldem.Logic.Helpers
 {
+    using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     using TexasHoldem.Logic.Cards;
 
     // TODO: Return more information (e.g. high card, which pairs the user has, what is the highest card in the straight, etc.)
+    // TODO: Consider replacing LINQ with something more efficient
     // For performance considerations this class is not implemented using Chain of Responsibility
     public class HandEvaluator
     {
         public HandRankType GetRankType(ICollection<Card> cards)
         {
-            var hasStraight = this.HasStraight(cards);
-            var hasFlush = this.HasFlush(cards);
-            if (hasStraight && hasFlush)
+            if (this.HasStraightFlush(cards))
             {
                 return HandRankType.StraightFlush;
             }
 
-            var hasFourOfAKind = this.HasFourOfAKind(cards);
-            if (hasFourOfAKind)
+            if (this.HasFourOfAKind(cards))
             {
                 return HandRankType.FourOfAKind;
             }
@@ -30,12 +30,12 @@
                 return HandRankType.FullHouse;
             }
 
-            if (hasFlush)
+            if (this.HasFlush(cards))
             {
                 return HandRankType.Flush;
             }
 
-            if (hasStraight)
+            if (this.HasStraight(cards))
             {
                 return HandRankType.Straight;
             }
@@ -60,32 +60,59 @@
 
         private int PairsCount(ICollection<Card> cards)
         {
-            // TODO: Implement
-            return 0;
+            return cards.GroupBy(x => x.Type).Count(x => x.Count() == 2);
         }
 
         private bool HasFourOfAKind(ICollection<Card> cards)
         {
-            // TODO: Implement
-            return false;
+            return cards.GroupBy(x => x.Type).Any(x => x.Count() == 4);
         }
 
         private bool HasThreeOfAKind(ICollection<Card> cards)
         {
-            // TODO: Implement
-            return false;
+            return cards.GroupBy(x => x.Type).Any(x => x.Count() == 3);
+        }
+
+        private bool HasStraightFlush(ICollection<Card> cards)
+        {
+            var flushes = cards.GroupBy(x => x.Suit).Where(x => x.Count() == 5).Select(x => x.ToList());
+            return flushes.Any(this.HasStraight);
         }
 
         private bool HasStraight(ICollection<Card> cards)
         {
-            // TODO: Implement
-            return false;
+            var types = cards.GroupBy(x => x.Type).Select(x => (int)x.Key).ToList();
+            if (cards.Any(x => x.Type == CardType.Ace))
+            {
+                types.Add((int)CardType.Two - 1);
+            }
+
+            types.Sort();
+
+            var longestSequence = 0;
+            var currentSequence = 0;
+            var lastType = int.MaxValue;
+            foreach (var type in types)
+            {
+                if (type - 1 == lastType)
+                {
+                    currentSequence++;
+                }
+                else
+                {
+                    currentSequence = 1;
+                }
+
+                lastType = type;
+                longestSequence = Math.Max(longestSequence, currentSequence);
+            }
+
+            return longestSequence >= 5;
         }
 
         private bool HasFlush(ICollection<Card> cards)
         {
-            // TODO: Implement
-            return false;
+            return cards.GroupBy(x => x.Suit).Any(x => x.Count() == 5);
         }
     }
 }

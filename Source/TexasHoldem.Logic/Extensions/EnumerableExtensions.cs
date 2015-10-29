@@ -3,6 +3,9 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text;
+
+    using TexasHoldem.Logic.Cards;
 
     public static class EnumerableExtensions
     {
@@ -31,6 +34,22 @@
             }
 
             return array;
+        }
+
+        public static string CardsToString(this IEnumerable<Card> cards)
+        {
+            if (cards == null)
+            {
+                return string.Empty;
+            }
+
+            var stringBuilder = new StringBuilder();
+            foreach (var card in cards)
+            {
+                stringBuilder.Append(card).Append(" ");
+            }
+
+            return stringBuilder.ToString().Trim();
         }
     }
 }

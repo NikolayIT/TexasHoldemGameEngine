@@ -3,8 +3,7 @@
     public enum PlayerActionType
     {
         Fold = 0,
-        Check = 1,
-        Call = 2,
-        Raise = 3,
+        CheckCall = 1,
+        Raise = 2,
     }
 }

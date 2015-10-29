@@ -9,34 +9,33 @@
 
     internal class BettingLogic
     {
-        private static IActionValidator actionValidator = new ActionValidator();
-
         private readonly IList<InternalPlayer> allPlayers;
 
         private readonly int smallBlind;
-
-        private int pot;
 
         public BettingLogic(IList<InternalPlayer> players, int smallBlind)
         {
             this.allPlayers = players;
             this.smallBlind = smallBlind;
-            this.pot = 0;
+            this.Pot = 0;
         }
 
-        public void Start(GameRoundType gameRoundType, ICollection<Card> communityCards)
+        public int Pot { get; private set; }
+
+        public void Bet(GameRoundType gameRoundType)
         {
             var bets = new List<PlayerActionAndName>();
             if (gameRoundType == GameRoundType.PreFlop)
             {
+                // TODO: What if small blind is bigger than player's money?
                 this.Bet(this.allPlayers[0], this.smallBlind);
                 bets.Add(new PlayerActionAndName(this.allPlayers[0].Name, PlayerAction.Raise(this.smallBlind)));
 
+                // TODO: What if big blind is bigger than player's money?
                 this.Bet(this.allPlayers[1], this.smallBlind * 2);
                 bets.Add(new PlayerActionAndName(this.allPlayers[1].Name, PlayerAction.Raise(this.smallBlind * 2)));
             }
 
-            var potBeforeRound = this.pot;
             var playerIndex = 1;
             while (this.allPlayers.Count(x => x.InHand) >= 2 && this.allPlayers.Any(x => x.ShouldPlayInRound))
             {
@@ -47,9 +46,15 @@
                     continue;
                 }
 
+                var maxMoneyPerPlayer = this.allPlayers.Max(x => x.CurrentlyInPot);
                 var action =
                     player.GetTurn(
-                        new GetTurnContext(communityCards, gameRoundType, potBeforeRound, bets.AsReadOnly(), this.pot));
+                        new GetTurnContext(
+                            gameRoundType,
+                            bets.AsReadOnly(),
+                            this.smallBlind,
+                            this.Pot,
+                            maxMoneyPerPlayer));
 
                 bets.Add(new PlayerActionAndName(player.Name, action));
 
@@ -62,15 +67,11 @@
 
                     this.Bet(player, action.Money);
                 }
-                else if (action.Type == PlayerActionType.Call)
+                else if (action.Type == PlayerActionType.CheckCall)
                 {
                     player.ShouldPlayInRound = true;
-                    this.Bet(player, action.Money);
-                }
-                else if (action.Type == PlayerActionType.Check)
-                {
-                    // TODO: Is OK to check?
-                    player.ShouldPlayInRound = true;
+                    var amountToCall = this.allPlayers.Max(x => x.CurrentlyInPot) - player.CurrentlyInPot;
+                    this.Bet(player, amountToCall);
                 }
                 else //// PlayerActionType.Fold
                 {
@@ -83,9 +84,8 @@
 
         private void Bet(InternalPlayer player, int amount)
         {
-            // TODO: What if small blind is bigger than player's money?
             player.Bet(amount);
-            this.pot += amount;
+            this.Pot += amount;
         }
     }
 }

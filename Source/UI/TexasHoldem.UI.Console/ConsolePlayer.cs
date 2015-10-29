@@ -2,6 +2,7 @@
 {
     using System;
 
+    using TexasHoldem.Logic.Extensions;
     using TexasHoldem.Logic.Players;
 
     public class ConsolePlayer : BasePlayer
@@ -12,13 +13,16 @@
 
         private readonly int width;
 
+        private readonly int commonRow;
+
         public ConsolePlayer(int row, int width, int commonRow)
         {
             this.row = row;
             this.width = width;
+            this.commonRow = commonRow;
+
             this.Name = "ConsolePlayerLine" + row;
 
-            ConsoleHelper.WriteOnConsole(commonRow, 0, "Common roooowwww!");
             this.DrawGameBox();
         }
 
@@ -26,6 +30,7 @@
 
         public override void StartHand(StartHandContext context)
         {
+            this.UpdateCommonRow(0);
             ConsoleHelper.WriteOnConsole(this.row + 1, 2, this.MoneyLeft + "       ");
             ConsoleHelper.WriteOnConsole(this.row + 1, 10, context.FirstCard + "  ");
             ConsoleHelper.WriteOnConsole(this.row + 1, 15, context.SecondCard + "  ");
@@ -33,12 +38,16 @@
 
         public override void StartRound(StartRoundContext context)
         {
+            this.UpdateCommonRow(context.CurrentPot);
+
             ConsoleHelper.WriteOnConsole(this.row + 1, this.width - 11, context.RoundType + "   ");
             base.StartRound(context);
         }
 
         public override PlayerAction GetTurn(GetTurnContext context)
         {
+            this.UpdateCommonRow(context.CurrentPot);
+
             ConsoleHelper.WriteOnConsole(this.row + 2, 2, "Select action [C]heck/[C]all, [R]aise, [F]old, [A]ll-in");
             while (true)
             {
@@ -47,11 +56,10 @@
                 switch (key.Key)
                 {
                     case ConsoleKey.C:
-                        // TODO: Check or Call?
-                        action = PlayerAction.Check();
+                        action = PlayerAction.CheckOrCall();
                         break;
                     case ConsoleKey.R:
-                        // TODO: Ask the raise amount!
+                        // TODO: Ask for the raise amount!
                         action = PlayerAction.Raise(10);
                         break;
                     case ConsoleKey.F:
@@ -70,6 +78,18 @@
                     return action;
                 }
             }
+        }
+
+        private void UpdateCommonRow(int pot)
+        {
+            // Clear the common row
+            ConsoleHelper.WriteOnConsole(this.commonRow, 0, new string(' ', this.width - 1));
+
+            var cardsAsString = this.CommunityCards.CardsToString();
+            ConsoleHelper.WriteOnConsole(this.commonRow, (this.width / 2) - (cardsAsString.Length / 2), cardsAsString);
+
+            var potAsString = pot.ToString();
+            ConsoleHelper.WriteOnConsole(this.commonRow, this.width - potAsString.Length - 2, potAsString);
         }
 
         private void DrawGameBox()

@@ -1,6 +1,7 @@
 ﻿namespace TexasHoldem.Logic.GameMechanics
 {
     using System.Collections.Generic;
+    using System.Linq;
 
     using TexasHoldem.Logic.Cards;
     using TexasHoldem.Logic.Players;
@@ -15,7 +16,7 @@
 
         private readonly Deck deck;
 
-        private readonly ICollection<Card> communityCards;
+        private readonly List<Card> communityCards;
 
         private readonly BettingLogic bettingLogic;
 
@@ -65,17 +66,17 @@
 
         private void PlayRound(GameRoundType gameRoundType, int communityCardsCount)
         {
-            foreach (var player in this.players)
-            {
-                player.StartRound(new StartRoundContext(gameRoundType));
-            }
-
             for (var i = 0; i < communityCardsCount; i++)
             {
                 this.communityCards.Add(this.deck.GetNextCard());
             }
 
-            this.bettingLogic.Start(gameRoundType, this.communityCards);
+            foreach (var player in this.players)
+            {
+                player.StartRound(new StartRoundContext(gameRoundType, this.communityCards.AsReadOnly(), this.bettingLogic.Pot));
+            }
+
+            this.bettingLogic.Bet(gameRoundType);
 
             foreach (var player in this.players)
             {

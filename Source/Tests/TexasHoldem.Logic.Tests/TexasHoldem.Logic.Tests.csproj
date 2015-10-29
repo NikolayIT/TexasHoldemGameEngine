@@ -58,7 +58,6 @@
     <Compile Include="Cards\DeckTests.cs" />
     <Compile Include="Extensions\EnumerableExtensionsTests.cs" />
     <Compile Include="Extensions\RandomProviderTests.cs" />
-    <Compile Include="Helpers\ActionValidatorTests.cs" />
     <Compile Include="Helpers\HandEvaluatorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

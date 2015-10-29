@@ -2,18 +2,19 @@
 {
     using System.Collections.Generic;
 
+    using TexasHoldem.Logic.Cards;
+
     public abstract class BasePlayer : IPlayer
     {
         public abstract string Name { get; }
 
-        protected int MoneyLeft { get; set; }
+        protected int MoneyLeft { get; private set; }
 
-        protected IReadOnlyCollection<string> PlayerNames { get; set; }
+        protected IReadOnlyCollection<Card> CommunityCards { get; private set; }
 
         public virtual void StartGame(StartGameContext context)
         {
             this.MoneyLeft = context.StartMoney;
-            this.PlayerNames = context.OtherPlayerNames;
         }
 
         public virtual void StartHand(StartHandContext context)
@@ -22,6 +23,7 @@
 
         public virtual void StartRound(StartRoundContext context)
         {
+            this.CommunityCards = context.CommunityCards;
         }
 
         public abstract PlayerAction GetTurn(GetTurnContext context);

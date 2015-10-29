@@ -3,8 +3,7 @@
     public class PlayerAction
     {
         private static readonly PlayerAction FoldObject = new PlayerAction(PlayerActionType.Fold);
-        private static readonly PlayerAction CheckObject = new PlayerAction(PlayerActionType.Check);
-        private static readonly PlayerAction CallObject = new PlayerAction(PlayerActionType.Call);
+        private static readonly PlayerAction CheckCallObject = new PlayerAction(PlayerActionType.CheckCall);
 
         private PlayerAction(PlayerActionType type)
         {
@@ -26,14 +25,9 @@
             return FoldObject;
         }
 
-        public static PlayerAction Check()
+        public static PlayerAction CheckOrCall()
         {
-            return CheckObject;
-        }
-
-        public static PlayerAction Call()
-        {
-            return CallObject;
+            return CheckCallObject;
         }
 
         public static PlayerAction Raise(int toAmount)

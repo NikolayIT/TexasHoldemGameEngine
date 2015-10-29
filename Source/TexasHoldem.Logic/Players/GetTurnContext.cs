@@ -2,32 +2,30 @@
 {
     using System.Collections.Generic;
 
-    using TexasHoldem.Logic.Cards;
-
     public class GetTurnContext
     {
         public GetTurnContext(
-            ICollection<Card> communityCards,
             GameRoundType roundType,
-            int potBeforeTheRound,
-            ICollection<PlayerActionAndName> bets,
-            int currentPot)
+            IReadOnlyCollection<PlayerActionAndName> previousActions,
+            int smallBlind,
+            int currentPot,
+            int maxMoneyPerPlayer)
         {
-            this.CommunityCards = communityCards;
             this.RoundType = roundType;
-            this.PotBeforeTheRound = potBeforeTheRound;
-            this.Bets = bets;
+            this.PreviousActions = previousActions;
+            this.SmallBlind = smallBlind;
             this.CurrentPot = currentPot;
+            this.MaxMoneyPerPlayer = maxMoneyPerPlayer;
         }
-
-        public ICollection<Card> CommunityCards { get; }
 
         public GameRoundType RoundType { get; }
 
-        public int PotBeforeTheRound { get; }
+        public IReadOnlyCollection<PlayerActionAndName> PreviousActions { get; }
 
-        public ICollection<PlayerActionAndName> Bets { get; }
+        public int SmallBlind { get; }
 
         public int CurrentPot { get; }
+
+        public int MaxMoneyPerPlayer { get; }
     }
 }

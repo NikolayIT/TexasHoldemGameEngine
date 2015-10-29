@@ -72,7 +72,7 @@
                     // TODO: Is OK to check?
                     player.ShouldPlayInRound = true;
                 }
-                else
+                else //// PlayerActionType.Fold
                 {
                     player.InHand = false;
                 }

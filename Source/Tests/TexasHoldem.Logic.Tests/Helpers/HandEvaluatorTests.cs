@@ -129,6 +129,20 @@
                     },
                 new object[]
                     {
+                        HandRankType.Flush,
+                        new List<Card>
+                            {
+                                new Card(CardSuit.Spade, CardType.Ace),
+                                new Card(CardSuit.Spade, CardType.King),
+                                new Card(CardSuit.Spade, CardType.Queen),
+                                new Card(CardSuit.Spade, CardType.Ten),
+                                new Card(CardSuit.Spade, CardType.Nine),
+                                new Card(CardSuit.Spade, CardType.Seven),
+                                new Card(CardSuit.Spade, CardType.Three)
+                            }
+                    },
+                new object[]
+                    {
                         HandRankType.FullHouse,
                         new List<Card>
                             {
@@ -168,6 +182,21 @@
                                 new Card(CardSuit.Diamond, CardType.Eight),
                                 new Card(CardSuit.Heart, CardType.Jack),
                                 new Card(CardSuit.Club, CardType.Queen)
+                            }
+                    },
+                new object[]
+                    {
+                        HandRankType.StraightFlush,
+                        new List<Card>
+                            {
+                                new Card(CardSuit.Spade, CardType.Ace),
+                                new Card(CardSuit.Spade, CardType.Two),
+                                new Card(CardSuit.Spade, CardType.Three),
+                                new Card(CardSuit.Spade, CardType.Four),
+                                new Card(CardSuit.Spade, CardType.Five),
+                                new Card(CardSuit.Spade, CardType.Eight),
+                                new Card(CardSuit.Spade, CardType.Jack),
+                                new Card(CardSuit.Spade, CardType.Queen)
                             }
                     },
             };

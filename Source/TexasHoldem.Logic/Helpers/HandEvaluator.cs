@@ -75,7 +75,7 @@
 
         private bool HasStraightFlush(ICollection<Card> cards)
         {
-            var flushes = cards.GroupBy(x => x.Suit).Where(x => x.Count() == 5).Select(x => x.ToList());
+            var flushes = cards.GroupBy(x => x.Suit).Where(x => x.Count() >= 5).Select(x => x.ToList());
             return flushes.Any(this.HasStraight);
         }
 
@@ -112,7 +112,7 @@
 
         private bool HasFlush(ICollection<Card> cards)
         {
-            return cards.GroupBy(x => x.Suit).Any(x => x.Count() == 5);
+            return cards.GroupBy(x => x.Suit).Any(x => x.Count() >= 5);
         }
     }
 }

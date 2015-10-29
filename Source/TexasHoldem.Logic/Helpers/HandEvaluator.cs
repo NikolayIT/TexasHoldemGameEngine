@@ -6,8 +6,7 @@
 
     using TexasHoldem.Logic.Cards;
 
-    // TODO: Return more information (e.g. high card, which pairs the user has, what is the highest card in the straight, etc.)
-    // TODO: Consider replacing LINQ with something more efficient
+    // TODO: Consider replacing LINQ with something more efficient (profile the code)
     // For performance considerations this class is not implemented using Chain of Responsibility
     public class HandEvaluator
     {
@@ -15,53 +14,62 @@
         {
             if (this.HasStraightFlush(cards))
             {
-                return new BestHand(HandRankType.StraightFlush);
+                return new BestHand(HandRankType.StraightFlush, new List<CardType>());
             }
 
             if (this.HasFourOfAKind(cards))
             {
-                return new BestHand(HandRankType.FourOfAKind);
+                return new BestHand(HandRankType.FourOfAKind, new List<CardType>());
             }
 
-            var pairsCount = this.PairsCount(cards);
+            var pairTypes = this.GetPairTypes(cards);
             var hasThreeOfAKind = this.HasThreeOfAKind(cards);
-            if (pairsCount > 0 && hasThreeOfAKind)
+            if (pairTypes.Any() && hasThreeOfAKind)
             {
-                return new BestHand(HandRankType.FullHouse);
+                return new BestHand(HandRankType.FullHouse, new List<CardType>());
             }
 
             if (this.HasFlush(cards))
             {
-                return new BestHand(HandRankType.Flush);
+                return new BestHand(HandRankType.Flush, new List<CardType>());
             }
 
             if (this.HasStraight(cards))
             {
-                return new BestHand(HandRankType.Straight);
+                return new BestHand(HandRankType.Straight, new List<CardType>());
             }
 
             if (hasThreeOfAKind)
             {
-                return new BestHand(HandRankType.ThreeOfAKind);
+                return new BestHand(HandRankType.ThreeOfAKind, new List<CardType>());
             }
 
-            if (pairsCount >= 2)
+            if (pairTypes.Count >= 2)
             {
-                return new BestHand(HandRankType.TwoPairs);
+                return new BestHand(HandRankType.TwoPairs, new List<CardType>());
             }
 
-            if (pairsCount > 0)
+            if (pairTypes.Count == 1)
             {
-                return new BestHand(HandRankType.Pair);
+                var bestCards =
+                    cards.Where(x => x.Type != pairTypes[0])
+                        .OrderByDescending(x => x.Type)
+                        .Select(x => x.Type)
+                        .Take(3).ToList();
+                bestCards.Add(pairTypes[0]);
+                bestCards.Add(pairTypes[0]);
+                return new BestHand(HandRankType.Pair, bestCards);
             }
-
-            var bestCards = cards.OrderByDescending(x => x.Type).Select(x => x.Type).Take(5);
-            return new BestHand(HandRankType.HighCard, bestCards);
+            else
+            {
+                var bestCards = cards.OrderByDescending(x => x.Type).Select(x => x.Type).Take(5);
+                return new BestHand(HandRankType.HighCard, bestCards);
+            }
         }
 
-        private int PairsCount(ICollection<Card> cards)
+        private IList<CardType> GetPairTypes(IEnumerable<Card> cards)
         {
-            return cards.GroupBy(x => x.Type).Count(x => x.Count() == 2);
+            return cards.GroupBy(x => x.Type).Where(x => x.Count() == 2).Select(x => x.Key).OrderByDescending(x => x).ToList();
         }
 
         private bool HasFourOfAKind(ICollection<Card> cards)

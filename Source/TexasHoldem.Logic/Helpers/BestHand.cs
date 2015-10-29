@@ -2,19 +2,12 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
 
     using TexasHoldem.Logic.Cards;
 
     public class BestHand : IComparable<BestHand>
     {
-        public BestHand(HandRankType rankType)
-            : this(rankType, new List<CardType>())
-        {
-            this.RankType = rankType;
-        }
-
-        public BestHand(HandRankType rankType, IEnumerable<CardType> cards)
+        internal BestHand(HandRankType rankType, IEnumerable<CardType> cards)
         {
             this.Cards = cards;
             this.RankType = rankType;

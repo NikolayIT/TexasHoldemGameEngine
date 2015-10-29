@@ -12,8 +12,7 @@
 
     public class HandEvaluatorTests
     {
-        // TODO: Add more tests for GetRankType()
-        private static readonly object[] GetRankTypeCases =
+        private static readonly object[] HighCardCases =
             {
                 new object[]
                     {
@@ -28,8 +27,16 @@
                                 new Card(CardSuit.Diamond, CardType.Two)
                             },
                         HandRankType.HighCard,
-                        new[] { CardType.Ace, CardType.King, CardType.Seven, CardType.Six, CardType.Five }
-                    },
+                        new[]
+                            {
+                                CardType.Ace, CardType.King, CardType.Seven,
+                                CardType.Six, CardType.Five
+                            }
+                    }
+            };
+
+        private static readonly object[] PairCases =
+            {
                 new object[]
                     {
                         new[]
@@ -38,12 +45,59 @@
                                 new Card(CardSuit.Spade, CardType.King),
                                 new Card(CardSuit.Spade, CardType.Seven),
                                 new Card(CardSuit.Heart, CardType.Six),
-                                new Card(CardSuit.Spade, CardType.Six),
+                                new Card(CardSuit.Spade, CardType.Five),
+                                new Card(CardSuit.Club, CardType.Two),
+                                new Card(CardSuit.Diamond, CardType.Two)
+                            },
+                        HandRankType.Pair,
+                        new[]
+                            {
+                                CardType.Two, CardType.Two, CardType.Ace,
+                                CardType.King, CardType.Seven
+                            }
+                    },
+                new object[]
+                    {
+                        new[]
+                            {
+                                new Card(CardSuit.Spade, CardType.Ace),
+                                new Card(CardSuit.Diamond, CardType.Ace),
+                                new Card(CardSuit.Spade, CardType.King),
+                                new Card(CardSuit.Heart, CardType.Six),
+                                new Card(CardSuit.Spade, CardType.Four),
                                 new Card(CardSuit.Club, CardType.Three),
                                 new Card(CardSuit.Diamond, CardType.Two)
                             },
-                        HandRankType.Pair, new List<CardType> { }
+                        HandRankType.Pair,
+                        new[]
+                            {
+                                CardType.Ace, CardType.Ace, CardType.King,
+                                CardType.Six, CardType.Four
+                            }
                     },
+                new object[]
+                    {
+                        new[]
+                            {
+                                new Card(CardSuit.Spade, CardType.Ace),
+                                new Card(CardSuit.Heart, CardType.Seven),
+                                new Card(CardSuit.Diamond, CardType.Seven),
+                                new Card(CardSuit.Spade, CardType.Six),
+                                new Card(CardSuit.Spade, CardType.Four),
+                                new Card(CardSuit.Club, CardType.Three),
+                                new Card(CardSuit.Diamond, CardType.Two)
+                            },
+                        HandRankType.Pair,
+                        new[]
+                            {
+                                CardType.Ace, CardType.Seven, CardType.Seven,
+                                CardType.Six, CardType.Four
+                            }
+                    },
+            };
+
+        private static readonly object[] OtherCases =
+            {
                 new object[]
                     {
                         new[]
@@ -203,7 +257,9 @@
             };
 
         [Test]
-        [TestCaseSource(nameof(GetRankTypeCases))]
+        [TestCaseSource(nameof(HighCardCases))]
+        [TestCaseSource(nameof(PairCases))]
+        [TestCaseSource(nameof(OtherCases))]
         public void GetRankTypeShouldWorkCorrectly(ICollection<Card> playerCards, HandRankType expectedHandRankType, ICollection<CardType> expectedBestHandCards)
         {
             var handEvaluator = new HandEvaluator();

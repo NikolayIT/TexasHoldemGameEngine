@@ -27,7 +27,8 @@
                                 new Card(CardSuit.Club, CardType.Three),
                                 new Card(CardSuit.Diamond, CardType.Two)
                             },
-                        HandRankType.HighCard, new List<Card> { }
+                        HandRankType.HighCard,
+                        new[] { CardType.Ace, CardType.King, CardType.Seven, CardType.Six, CardType.Five }
                     },
                 new object[]
                     {
@@ -41,7 +42,7 @@
                                 new Card(CardSuit.Club, CardType.Three),
                                 new Card(CardSuit.Diamond, CardType.Two)
                             },
-                        HandRankType.Pair, new List<Card> { }
+                        HandRankType.Pair, new List<CardType> { }
                     },
                 new object[]
                     {
@@ -55,7 +56,7 @@
                                 new Card(CardSuit.Club, CardType.Three),
                                 new Card(CardSuit.Diamond, CardType.Two)
                             },
-                        HandRankType.TwoPairs, new List<Card> { }
+                        HandRankType.TwoPairs, new List<CardType> { }
                     },
                 new object[]
                     {
@@ -69,7 +70,7 @@
                                 new Card(CardSuit.Club, CardType.Three),
                                 new Card(CardSuit.Diamond, CardType.Two)
                             },
-                        HandRankType.ThreeOfAKind, new List<Card> { }
+                        HandRankType.ThreeOfAKind, new List<CardType> { }
                     },
                 new object[]
                     {
@@ -83,7 +84,7 @@
                                 new Card(CardSuit.Club, CardType.Jack),
                                 new Card(CardSuit.Diamond, CardType.Queen)
                             },
-                        HandRankType.Straight, new List<Card> { }
+                        HandRankType.Straight, new List<CardType> { }
                     },
                 new object[]
                     {
@@ -97,7 +98,7 @@
                                 new Card(CardSuit.Club, CardType.Seven),
                                 new Card(CardSuit.Diamond, CardType.Three)
                             },
-                        HandRankType.Straight, new List<Card> { }
+                        HandRankType.Straight, new List<CardType> { }
                     },
                 new object[]
                     {
@@ -111,7 +112,7 @@
                                 new Card(CardSuit.Club, CardType.Seven),
                                 new Card(CardSuit.Spade, CardType.Three)
                             },
-                        HandRankType.Flush, new List<Card> { }
+                        HandRankType.Flush, new List<CardType> { }
                     },
                 new object[]
                     {
@@ -125,7 +126,7 @@
                                 new Card(CardSuit.Club, CardType.Seven),
                                 new Card(CardSuit.Spade, CardType.Three)
                             },
-                        HandRankType.Flush, new List<Card> { }
+                        HandRankType.Flush, new List<CardType> { }
                     },
                 new object[]
                     {
@@ -139,7 +140,7 @@
                                 new Card(CardSuit.Spade, CardType.Seven),
                                 new Card(CardSuit.Spade, CardType.Three)
                             },
-                        HandRankType.Flush, new List<Card> { }
+                        HandRankType.Flush, new List<CardType> { }
                     },
                 new object[]
                     {
@@ -153,7 +154,7 @@
                                 new Card(CardSuit.Club, CardType.Seven),
                                 new Card(CardSuit.Spade, CardType.Three)
                             },
-                        HandRankType.FullHouse, new List<Card> { }
+                        HandRankType.FullHouse, new List<CardType> { }
                     },
                 new object[]
                     {
@@ -167,7 +168,7 @@
                                 new Card(CardSuit.Club, CardType.Seven),
                                 new Card(CardSuit.Spade, CardType.Three)
                             },
-                        HandRankType.FourOfAKind, new List<Card> { }
+                        HandRankType.FourOfAKind, new List<CardType> { }
                     },
                 new object[]
                     {
@@ -182,7 +183,7 @@
                                 new Card(CardSuit.Heart, CardType.Jack),
                                 new Card(CardSuit.Club, CardType.Queen)
                             },
-                        HandRankType.StraightFlush, new List<Card> { }
+                        HandRankType.StraightFlush, new List<CardType> { }
                     },
                 new object[]
                     {
@@ -197,13 +198,13 @@
                                 new Card(CardSuit.Spade, CardType.Jack),
                                 new Card(CardSuit.Spade, CardType.Queen)
                             },
-                        HandRankType.StraightFlush, new List<Card> { }
+                        HandRankType.StraightFlush, new List<CardType> { }
                     },
             };
 
         [Test]
         [TestCaseSource(nameof(GetRankTypeCases))]
-        public void GetRankTypeShouldWorkCorrectly(ICollection<Card> playerCards, HandRankType expectedHandRankType, ICollection<Card> expectedBestHandCards)
+        public void GetRankTypeShouldWorkCorrectly(ICollection<Card> playerCards, HandRankType expectedHandRankType, ICollection<CardType> expectedBestHandCards)
         {
             var handEvaluator = new HandEvaluator();
             var bestHand = handEvaluator.GetBestHand(playerCards.Shuffle().ToList());

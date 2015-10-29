@@ -55,7 +55,8 @@
                 return new BestHand(HandRankType.Pair);
             }
 
-            return new BestHand(HandRankType.HighCard);
+            var bestCards = cards.OrderByDescending(x => x.Type).Select(x => x.Type).Take(5);
+            return new BestHand(HandRankType.HighCard, bestCards);
         }
 
         private int PairsCount(ICollection<Card> cards)

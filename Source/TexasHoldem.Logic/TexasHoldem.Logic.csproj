@@ -54,6 +54,7 @@
     <Compile Include="GameMechanics\ITexasHoldemGame.cs" />
     <Compile Include="GameMechanics\TwoPlayersTexasHoldemGame.cs" />
     <Compile Include="GameRoundType.cs" />
+    <Compile Include="Helpers\BestHand.cs" />
     <Compile Include="Helpers\HandEvaluator.cs" />
     <Compile Include="HandRankType.cs" />
     <Compile Include="IDeepCloneable{T}.cs" />

@@ -11,51 +11,51 @@
     // For performance considerations this class is not implemented using Chain of Responsibility
     public class HandEvaluator
     {
-        public HandRankType GetRankType(ICollection<Card> cards)
+        public BestHand GetBestHand(ICollection<Card> cards)
         {
             if (this.HasStraightFlush(cards))
             {
-                return HandRankType.StraightFlush;
+                return new BestHand(HandRankType.StraightFlush);
             }
 
             if (this.HasFourOfAKind(cards))
             {
-                return HandRankType.FourOfAKind;
+                return new BestHand(HandRankType.FourOfAKind);
             }
 
             var pairsCount = this.PairsCount(cards);
             var hasThreeOfAKind = this.HasThreeOfAKind(cards);
             if (pairsCount > 0 && hasThreeOfAKind)
             {
-                return HandRankType.FullHouse;
+                return new BestHand(HandRankType.FullHouse);
             }
 
             if (this.HasFlush(cards))
             {
-                return HandRankType.Flush;
+                return new BestHand(HandRankType.Flush);
             }
 
             if (this.HasStraight(cards))
             {
-                return HandRankType.Straight;
+                return new BestHand(HandRankType.Straight);
             }
 
             if (hasThreeOfAKind)
             {
-                return HandRankType.ThreeOfAKind;
+                return new BestHand(HandRankType.ThreeOfAKind);
             }
 
             if (pairsCount >= 2)
             {
-                return HandRankType.TwoPairs;
+                return new BestHand(HandRankType.TwoPairs);
             }
 
             if (pairsCount > 0)
             {
-                return HandRankType.Pair;
+                return new BestHand(HandRankType.Pair);
             }
 
-            return HandRankType.HighCard;
+            return new BestHand(HandRankType.HighCard);
         }
 
         private int PairsCount(ICollection<Card> cards)

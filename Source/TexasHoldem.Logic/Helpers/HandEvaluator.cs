@@ -46,7 +46,16 @@
 
             if (pairTypes.Count >= 2)
             {
-                return new BestHand(HandRankType.TwoPairs, new List<CardType>());
+                var bestCards =
+                    cards.Where(x => x.Type != pairTypes[0] && x.Type != pairTypes[1])
+                        .OrderByDescending(x => x.Type)
+                        .Select(x => x.Type)
+                        .Take(1).ToList();
+                bestCards.Add(pairTypes[0]);
+                bestCards.Add(pairTypes[0]);
+                bestCards.Add(pairTypes[1]);
+                bestCards.Add(pairTypes[1]);
+                return new BestHand(HandRankType.TwoPairs, bestCards);
             }
 
             if (pairTypes.Count == 1)

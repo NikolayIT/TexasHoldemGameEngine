@@ -96,7 +96,7 @@
                     },
             };
 
-        private static readonly object[] OtherCases =
+        private static readonly object[] TwoPairsCases =
             {
                 new object[]
                     {
@@ -110,8 +110,55 @@
                                 new Card(CardSuit.Club, CardType.Three),
                                 new Card(CardSuit.Diamond, CardType.Two)
                             },
-                        HandRankType.TwoPairs, new List<CardType> { }
+                        HandRankType.TwoPairs,
+                        new[]
+                            {
+                                CardType.Seven, CardType.Seven, CardType.Six,
+                                CardType.Six, CardType.Ace
+                            }
                     },
+                new object[]
+                    {
+                        new[]
+                            {
+                                new Card(CardSuit.Spade, CardType.Ace),
+                                new Card(CardSuit.Spade, CardType.Ace),
+                                new Card(CardSuit.Heart, CardType.Seven),
+                                new Card(CardSuit.Heart, CardType.Six),
+                                new Card(CardSuit.Spade, CardType.Six),
+                                new Card(CardSuit.Club, CardType.Three),
+                                new Card(CardSuit.Diamond, CardType.Three)
+                            },
+                        HandRankType.TwoPairs,
+                        new[]
+                            {
+                                CardType.Ace, CardType.Ace, CardType.Seven,
+                                CardType.Six, CardType.Six
+                            }
+                    },
+                new object[]
+                    {
+                        new[]
+                            {
+                                new Card(CardSuit.Spade, CardType.Ace),
+                                new Card(CardSuit.Spade, CardType.Ace),
+                                new Card(CardSuit.Heart, CardType.Six),
+                                new Card(CardSuit.Spade, CardType.Six),
+                                new Card(CardSuit.Heart, CardType.Four),
+                                new Card(CardSuit.Club, CardType.Four),
+                                new Card(CardSuit.Diamond, CardType.Two)
+                            },
+                        HandRankType.TwoPairs,
+                        new[]
+                            {
+                                CardType.Ace, CardType.Ace, CardType.Six,
+                                CardType.Six, CardType.Four
+                            }
+                    },
+            };
+
+        private static readonly object[] OtherCases =
+            {
                 new object[]
                     {
                         new[]
@@ -259,6 +306,7 @@
         [Test]
         [TestCaseSource(nameof(HighCardCases))]
         [TestCaseSource(nameof(PairCases))]
+        [TestCaseSource(nameof(TwoPairsCases))]
         [TestCaseSource(nameof(OtherCases))]
         public void GetRankTypeShouldWorkCorrectly(ICollection<Card> playerCards, HandRankType expectedHandRankType, ICollection<CardType> expectedBestHandCards)
         {

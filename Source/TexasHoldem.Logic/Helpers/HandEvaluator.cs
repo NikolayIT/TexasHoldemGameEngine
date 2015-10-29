@@ -1,6 +1,5 @@
 ﻿namespace TexasHoldem.Logic.Helpers
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -10,6 +9,8 @@
     // For performance considerations this class is not implemented using Chain of Responsibility
     public class HandEvaluator
     {
+        private const int ComparableCards = 5;
+
         public BestHand GetBestHand(ICollection<Card> cards)
         {
             if (this.HasStraightFlush(cards))
@@ -71,7 +72,7 @@
             }
             else
             {
-                var bestCards = cards.OrderByDescending(x => x.Type).Select(x => x.Type).Take(5);
+                var bestCards = cards.OrderByDescending(x => x.Type).Select(x => x.Type).Take(ComparableCards);
                 return new BestHand(HandRankType.HighCard, bestCards);
             }
         }
@@ -93,7 +94,7 @@
 
         private bool HasStraightFlush(ICollection<Card> cards)
         {
-            var flushes = cards.GroupBy(x => x.Suit).Where(x => x.Count() >= 5).Select(x => x.ToList());
+            var flushes = cards.GroupBy(x => x.Suit).Where(x => x.Count() >= ComparableCards).Select(x => x.ToList());
             return flushes.Any(this.HasStraight);
         }
 
@@ -107,30 +108,38 @@
 
             types.Sort();
 
-            var longestSequence = 0;
-            var currentSequence = 0;
-            var lastType = int.MaxValue;
-            foreach (var type in types)
+            var cardsCount = types.Count;
+            var currentSequence = 1;
+            var lastType = types[0];
+            for (var i = 1; i < cardsCount; i++)
             {
-                if (type - 1 == lastType)
+                if (types[i] - 1 == lastType)
                 {
                     currentSequence++;
+                    if (currentSequence >= ComparableCards)
+                    {
+                        return true;
+                    }
                 }
                 else
                 {
+                    if (i > cardsCount - ComparableCards)
+                    {
+                        return false;
+                    }
+
                     currentSequence = 1;
                 }
 
-                lastType = type;
-                longestSequence = Math.Max(longestSequence, currentSequence);
+                lastType = types[i];
             }
 
-            return longestSequence >= 5;
+            return false;
         }
 
         private bool HasFlush(ICollection<Card> cards)
         {
-            return cards.GroupBy(x => x.Suit).Any(x => x.Count() >= 5);
+            return cards.GroupBy(x => x.Suit).Any(x => x.Count() >= ComparableCards);
         }
     }
 }

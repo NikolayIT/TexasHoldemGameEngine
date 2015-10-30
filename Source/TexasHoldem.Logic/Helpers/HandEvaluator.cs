@@ -7,7 +7,7 @@
 
     // TODO: Consider replacing LINQ with something more efficient (profile the code)
     // For performance considerations this class is not implemented using Chain of Responsibility
-    public class HandEvaluator
+    public class HandEvaluator : IHandEvaluator
     {
         private const int ComparableCards = 5;
 

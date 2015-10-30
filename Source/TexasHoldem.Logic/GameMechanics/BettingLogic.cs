@@ -78,6 +78,7 @@
                     player.InHand = false;
                 }
 
+                // TODO: Pot is splitted evenly - if %2 == 1 - first awarded takes 1 chip extra - (e.g. SB)
                 player.ShouldPlayInRound = false;
             }
         }

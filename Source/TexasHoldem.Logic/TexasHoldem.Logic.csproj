@@ -57,6 +57,7 @@
     <Compile Include="Helpers\BestHand.cs" />
     <Compile Include="Helpers\HandEvaluator.cs" />
     <Compile Include="HandRankType.cs" />
+    <Compile Include="Helpers\IHandEvaluator.cs" />
     <Compile Include="IDeepCloneable{T}.cs" />
     <Compile Include="InternalGameException.cs" />
     <Compile Include="Players\BasePlayer.cs" />

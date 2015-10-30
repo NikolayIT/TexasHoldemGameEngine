@@ -358,7 +358,7 @@
         [TestCaseSource(nameof(OtherCases))]
         public void GetRankTypeShouldWorkCorrectly(ICollection<Card> playerCards, HandRankType expectedHandRankType, ICollection<CardType> expectedBestHandCards)
         {
-            var handEvaluator = new HandEvaluator();
+            IHandEvaluator handEvaluator = new HandEvaluator();
             var bestHand = handEvaluator.GetBestHand(playerCards.Shuffle().ToList());
             Assert.AreEqual(expectedHandRankType, bestHand.RankType);
             CollectionAssert.AreEquivalent(expectedBestHandCards, bestHand.Cards);

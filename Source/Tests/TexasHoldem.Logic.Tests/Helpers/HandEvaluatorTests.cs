@@ -157,7 +157,7 @@
                     },
             };
 
-        private static readonly object[] OtherCases =
+        private static readonly object[] ThreeOfAKindCases =
             {
                 new object[]
                     {
@@ -171,8 +171,55 @@
                                 new Card(CardSuit.Club, CardType.Three),
                                 new Card(CardSuit.Diamond, CardType.Two)
                             },
-                        HandRankType.ThreeOfAKind, new List<CardType> { }
+                        HandRankType.ThreeOfAKind,
+                        new[]
+                            {
+                                CardType.Six, CardType.Six, CardType.Six,
+                                CardType.Ace, CardType.King
+                            }
                     },
+                new object[]
+                    {
+                        new[]
+                            {
+                                new Card(CardSuit.Spade, CardType.Ace),
+                                new Card(CardSuit.Heart, CardType.Ace),
+                                new Card(CardSuit.Diamond, CardType.Ace),
+                                new Card(CardSuit.Heart, CardType.King),
+                                new Card(CardSuit.Club, CardType.Four),
+                                new Card(CardSuit.Club, CardType.Three),
+                                new Card(CardSuit.Diamond, CardType.Two)
+                            },
+                        HandRankType.ThreeOfAKind,
+                        new[]
+                            {
+                                CardType.Ace, CardType.Ace, CardType.Ace,
+                                CardType.King, CardType.Four
+                            }
+                    },
+                new object[]
+                    {
+                        new[]
+                            {
+                                new Card(CardSuit.Spade, CardType.Jack),
+                                new Card(CardSuit.Heart, CardType.Ten),
+                                new Card(CardSuit.Diamond, CardType.Ten),
+                                new Card(CardSuit.Heart, CardType.Ten),
+                                new Card(CardSuit.Club, CardType.Nine),
+                                new Card(CardSuit.Club, CardType.Eight),
+                                new Card(CardSuit.Diamond, CardType.Two)
+                            },
+                        HandRankType.ThreeOfAKind,
+                        new[]
+                            {
+                                CardType.Ten, CardType.Ten, CardType.Ten,
+                                CardType.Jack, CardType.Nine
+                            }
+                    },
+            };
+
+        private static readonly object[] OtherCases =
+            {
                 new object[]
                     {
                         new[]
@@ -307,6 +354,7 @@
         [TestCaseSource(nameof(HighCardCases))]
         [TestCaseSource(nameof(PairCases))]
         [TestCaseSource(nameof(TwoPairsCases))]
+        [TestCaseSource(nameof(ThreeOfAKindCases))]
         [TestCaseSource(nameof(OtherCases))]
         public void GetRankTypeShouldWorkCorrectly(ICollection<Card> playerCards, HandRankType expectedHandRankType, ICollection<CardType> expectedBestHandCards)
         {

@@ -32,8 +32,6 @@
 
             // TODO: What if same rank type?
             // Pot is splitted evenly - if %2 == 1 - first awarded takes 1 chip extra - (e.g. SB)
-            throw new NotImplementedException();
-
             return 0;
         }
     }

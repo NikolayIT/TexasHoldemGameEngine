@@ -24,8 +24,8 @@
             }
 
             var pairTypes = this.GetPairTypes(cards);
-            var hasThreeOfAKind = this.HasThreeOfAKind(cards);
-            if (pairTypes.Any() && hasThreeOfAKind)
+            var threeOfAKindTypes = this.GetThreeOfAKinds(cards);
+            if (pairTypes.Count > 0 && threeOfAKindTypes.Count > 0)
             {
                 return new BestHand(HandRankType.FullHouse, new List<CardType>());
             }
@@ -40,9 +40,20 @@
                 return new BestHand(HandRankType.Straight, new List<CardType>());
             }
 
-            if (hasThreeOfAKind)
+            if (threeOfAKindTypes.Count > 0)
             {
-                return new BestHand(HandRankType.ThreeOfAKind, new List<CardType>());
+                var bestThreeOfAKindType = threeOfAKindTypes[0];
+                var bestCards =
+                    cards.Where(x => x.Type != bestThreeOfAKindType)
+                        .OrderByDescending(x => x.Type)
+                        .Select(x => x.Type)
+                        .Take(ComparableCards - 3).ToList();
+                for (var i = 0; i < 3; i++)
+                {
+                    bestCards.Add(bestThreeOfAKindType);
+                }
+
+                return new BestHand(HandRankType.ThreeOfAKind, bestCards);
             }
 
             if (pairTypes.Count >= 2)
@@ -87,9 +98,9 @@
             return cards.GroupBy(x => x.Type).Any(x => x.Count() == 4);
         }
 
-        private bool HasThreeOfAKind(ICollection<Card> cards)
+        private IList<CardType> GetThreeOfAKinds(ICollection<Card> cards)
         {
-            return cards.GroupBy(x => x.Type).Any(x => x.Count() == 3);
+            return cards.GroupBy(x => x.Type).Where(x => x.Count() == 3).Select(x => x.Key).OrderByDescending(x => x).ToList();
         }
 
         private bool HasStraightFlush(ICollection<Card> cards)

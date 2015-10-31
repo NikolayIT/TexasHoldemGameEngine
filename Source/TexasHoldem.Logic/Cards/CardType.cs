@@ -15,5 +15,6 @@
         Queen = 12,
         King = 13,
         Ace = 14,
+        LowAce = 1
     }
 }

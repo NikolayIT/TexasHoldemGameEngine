@@ -235,8 +235,8 @@
                         HandRankType.Straight,
                         new[]
                         {
-                            CardType.Ace, CardType.Two, CardType.Three,
-                            CardType.Four, CardType.Five
+                            CardType.Five, CardType.Four, CardType.Three,
+                            CardType.Two, CardType.LowAce
                         }
                     },
                 new object[]
@@ -423,8 +423,8 @@
                         HandRankType.StraightFlush,
                         new[]
                             {
-                                CardType.Ace, CardType.Two, CardType.Three,
-                                CardType.Four, CardType.Five
+                                CardType.Five, CardType.Four, CardType.Three,
+                                CardType.Two, CardType.LowAce
                             }
                     },
                 new object[]
@@ -443,8 +443,8 @@
                         HandRankType.StraightFlush,
                         new[]
                             {
-                                CardType.Ace, CardType.Two, CardType.Three,
-                                CardType.Four, CardType.Five
+                                CardType.Five, CardType.Four, CardType.Three,
+                                CardType.Two, CardType.LowAce
                             }
                     },
             };

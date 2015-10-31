@@ -70,8 +70,8 @@
                     cards.Where(x => x.Type != bestThreeOfAKindType)
                         .OrderBy(x => x.Type)
                         .Select(x => x.Type)
-                        .Skip(cards.Count - 2)
-                        .Take(ComparableCards - 3).ToList();
+                        .Skip(cards.Count - ComparableCards)
+                        .ToList();
                 bestCards.AddRange(Enumerable.Repeat(bestThreeOfAKindType, 3));
                 bestCards.Reverse();
 
@@ -99,9 +99,9 @@
                 var bestCards =
                     cards.Where(x => x.Type != pairTypes[0])
                         .OrderBy(x => x.Type)
+                        .Skip(cards.Count - ComparableCards)
                         .Select(x => x.Type)
-                        .Skip(cards.Count - 3)
-                        .Take(ComparableCards - 2).ToList();
+                        .ToList();
                 bestCards.Add(pairTypes[0]);
                 bestCards.Add(pairTypes[0]);
                 bestCards.Reverse();
@@ -132,9 +132,17 @@
 
         private IList<CardType> GetStraightFlushCards(ICollection<Card> cards)
         {
-            var flush = cards.GroupBy(x => x.Suit).First(x => x.Count() >= ComparableCards).ToList();
+            var flushes = cards.GroupBy(x => x.Suit).Where(x => x.Count() >= ComparableCards).Select(x => x.ToList());
+            foreach (var group in flushes)
+            {
+                var straightCards = this.GetStraightCards(group);
+                if (straightCards != null)
+                {
+                    return straightCards;
+                }
+            }
 
-            return flush == null ? null : this.GetStraightCards(flush);
+            return null;
         }
 
         private IList<CardType> GetStraightCards(ICollection<Card> cards)
@@ -142,7 +150,7 @@
             var types = cards.GroupBy(x => x.Type).Select(x => (int)x.Key).OrderByDescending(x => x).ToList();
             if (types[0] == (int)CardType.Ace)
             {
-                types.Add((int)CardType.Two - 1);
+                types.Add((int)CardType.LowAce);
             }
 
             var cardsCount = types.Count;
@@ -152,7 +160,7 @@
             straightCards.Add((CardType)lastType);
             for (var i = 1; i < cardsCount; i++)
             {
-                if (types[i] - 1 == lastType)
+                if (types[i] + 1 == lastType)
                 {
                     currentSequence++;
                     straightCards.Add((CardType)types[i]);

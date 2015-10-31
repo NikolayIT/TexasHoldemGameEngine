@@ -13,9 +13,10 @@
 
         public BestHand GetBestHand(ICollection<Card> cards)
         {
-            if (this.HasStraightFlush(cards))
+            var straigtFlushCards = this.GetStraightFlushCards(cards);
+            if (straigtFlushCards != null)
             {
-                return new BestHand(HandRankType.StraightFlush, new List<CardType>());
+                return new BestHand(HandRankType.StraightFlush, straigtFlushCards);
             }
 
             if (this.HasFourOfAKind(cards))
@@ -50,58 +51,15 @@
                 return new BestHand(HandRankType.FullHouse, bestCards);
             }
 
-
-            if (this.HasFlush(cards))
+            var flushCards = this.GetFlushCards(cards);
+            if (flushCards != null)
             {
-                var flushCards = cards
-                    .GroupBy(x => x.Suit)
-                    .FirstOrDefault(x => x.Count() >= ComparableCards)
-                    .Select(x => x.Type)
-                    .OrderByDescending(x => x)
-                    .Take(ComparableCards)
-                    .ToList();
-
                 return new BestHand(HandRankType.Flush, flushCards);
             }
 
-            if (this.HasStraight(cards))
+            var straightCards = this.GetStraightCards(cards);
+            if (straightCards != null)
             {
-                var straightCards = new List<CardType>();
-
-                var types = cards.GroupBy(x => x.Type).Select(x => (int)x.Key).ToList();
-                if (cards.Any(x => x.Type == CardType.Ace))
-                {
-                    types.Add((int)CardType.Two - 1);
-                    straightCards.Add(CardType.Ace);
-                }
-
-                types.Sort();
-
-                var cardsCount = types.Count;
-                var currentSequence = 1;
-                var lastType = types[0];
-
-                for (var i = 1; i < cardsCount; i++)
-                {
-                    if (types[i] - 1 == lastType)
-                    {
-                        straightCards.Add((CardType)types[i]);
-                        currentSequence++;
-                        if (currentSequence >= ComparableCards)
-                        {
-                            break;
-                        }
-                    }
-                    else
-                    {
-                        straightCards = new List<CardType>();
-                        straightCards.Add((CardType)types[i]);
-                        currentSequence = 1;
-                    }
-
-                    lastType = types[i];
-                }
-
                 return new BestHand(HandRankType.Straight, straightCards);
             }
 
@@ -165,18 +123,29 @@
             return cards.GroupBy(x => x.Type).Where(x => x.Count() == 3).Select(x => x.Key).OrderByDescending(x => x).ToList();
         }
 
-        private bool HasStraightFlush(ICollection<Card> cards)
+        private ICollection<CardType> GetStraightFlushCards(ICollection<Card> cards)
         {
             var flushes = cards.GroupBy(x => x.Suit).Where(x => x.Count() >= ComparableCards).Select(x => x.ToList());
-            return flushes.Any(this.HasStraight);
+            foreach (var group in flushes)
+            {
+                var straightCards = this.GetStraightCards(group);
+                if (straightCards != null)
+                {
+                    return straightCards;
+                }
+            }
+
+            return null;
         }
 
-        private bool HasStraight(ICollection<Card> cards)
+        private ICollection<CardType> GetStraightCards(ICollection<Card> cards)
         {
+            var straightCards = new List<CardType>();
             var types = cards.GroupBy(x => x.Type).Select(x => (int)x.Key).ToList();
             if (cards.Any(x => x.Type == CardType.Ace))
             {
                 types.Add((int)CardType.Two - 1);
+                straightCards.Add(CardType.Ace);
             }
 
             types.Sort();
@@ -189,30 +158,41 @@
                 if (types[i] - 1 == lastType)
                 {
                     currentSequence++;
+                    straightCards.Add((CardType)types[i]);
                     if (currentSequence >= ComparableCards)
                     {
-                        return true;
+                        return straightCards;
                     }
                 }
                 else
                 {
                     if (i > cardsCount - ComparableCards)
                     {
-                        return false;
+                        return null;
                     }
 
+                    straightCards.Clear();
+                    straightCards.Add((CardType)types[i]);
                     currentSequence = 1;
                 }
 
                 lastType = types[i];
             }
 
-            return false;
+            return null;
         }
 
-        private bool HasFlush(ICollection<Card> cards)
+        private ICollection<CardType> GetFlushCards(ICollection<Card> cards)
         {
-            return cards.GroupBy(x => x.Suit).Any(x => x.Count() >= ComparableCards);
+            var flushCardTypes = cards
+                .GroupBy(x => x.Suit)
+                .FirstOrDefault(x => x.Count() >= ComparableCards)
+                ?.Select(x => x.Type)
+                .OrderByDescending(x => x)
+                .Take(ComparableCards)
+                .ToList();
+
+            return flushCardTypes;
         }
     }
 }

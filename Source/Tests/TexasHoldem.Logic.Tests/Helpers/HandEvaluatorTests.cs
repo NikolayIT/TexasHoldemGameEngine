@@ -420,7 +420,12 @@
                                 new Card(CardSuit.Heart, CardType.Jack),
                                 new Card(CardSuit.Club, CardType.Queen)
                             },
-                        HandRankType.StraightFlush, new List<CardType> { }
+                        HandRankType.StraightFlush,
+                        new[]
+                            {
+                                CardType.Ace, CardType.Two, CardType.Three,
+                                CardType.Four, CardType.Five
+                            }
                     },
                 new object[]
                     {
@@ -435,7 +440,12 @@
                                 new Card(CardSuit.Spade, CardType.Jack),
                                 new Card(CardSuit.Spade, CardType.Queen)
                             },
-                        HandRankType.StraightFlush, new List<CardType> { }
+                        HandRankType.StraightFlush,
+                        new[]
+                            {
+                                CardType.Ace, CardType.Two, CardType.Three,
+                                CardType.Four, CardType.Five
+                            }
                     },
             };
 

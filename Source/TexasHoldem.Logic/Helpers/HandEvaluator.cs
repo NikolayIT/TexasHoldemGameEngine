@@ -145,7 +145,7 @@
             }
             else
             {
-                var bestCards = cards.OrderByDescending(x => x.Type).Select(x => x.Type).Take(ComparableCards);
+                var bestCards = cards.OrderByDescending(x => x.Type).Select(x => x.Type).Take(ComparableCards).ToList();
                 return new BestHand(HandRankType.HighCard, bestCards);
             }
         }

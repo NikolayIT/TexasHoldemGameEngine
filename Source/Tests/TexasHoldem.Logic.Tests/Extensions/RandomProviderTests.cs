@@ -1,4 +1,4 @@
-﻿namespace TexasHoldem.Tests.Extensions
+﻿namespace TexasHoldem.Logic.Tests.Extensions
 {
     using System.Collections.Generic;
     using System.Linq;

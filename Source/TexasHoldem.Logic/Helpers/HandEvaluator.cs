@@ -26,7 +26,6 @@
                     .Select(x => x.Type)
                     .Take(ComparableCards - 4)
                     .ToList();
-
                 bestCards.AddRange(Enumerable.Repeat(fourOfAKindType, 4));
 
                 return new BestHand(HandRankType.FourOfAKind, bestCards);
@@ -34,14 +33,35 @@
 
             var pairTypes = this.GetPairTypes(cards);
             var threeOfAKindTypes = this.GetThreeOfAKinds(cards);
-            if (pairTypes.Count > 0 && threeOfAKindTypes.Count > 0)
+            if ((pairTypes.Count > 0 && threeOfAKindTypes.Count > 0) || threeOfAKindTypes.Count == 2)
             {
-                return new BestHand(HandRankType.FullHouse, new List<CardType>());
+                var bestCards = new List<CardType>();
+                if (pairTypes.Count > 0)
+                {
+                    bestCards.AddRange(Enumerable.Repeat(threeOfAKindTypes[0], 3));
+                    bestCards.AddRange(Enumerable.Repeat(pairTypes[0], 2));
+                }
+                else if (threeOfAKindTypes.Count == 2)
+                {
+                    bestCards.AddRange(Enumerable.Repeat(threeOfAKindTypes[0], 3));
+                    bestCards.AddRange(Enumerable.Repeat(threeOfAKindTypes[1], 2));
+                }
+
+                return new BestHand(HandRankType.FullHouse, bestCards);
             }
+
 
             if (this.HasFlush(cards))
             {
-                return new BestHand(HandRankType.Flush, new List<CardType>());
+                var flushCards = cards
+                    .GroupBy(x => x.Suit)
+                    .FirstOrDefault(x => x.Count() >= ComparableCards)
+                    .Select(x => x.Type)
+                    .OrderByDescending(x => x)
+                    .Take(ComparableCards)
+                    .ToList();
+
+                return new BestHand(HandRankType.Flush, flushCards);
             }
 
             if (this.HasStraight(cards))
@@ -57,10 +77,7 @@
                         .OrderByDescending(x => x.Type)
                         .Select(x => x.Type)
                         .Take(ComparableCards - 3).ToList();
-                for (var i = 0; i < 3; i++)
-                {
-                    bestCards.Add(bestThreeOfAKindType);
-                }
+                bestCards.AddRange(Enumerable.Repeat(bestThreeOfAKindType, 3));
 
                 return new BestHand(HandRankType.ThreeOfAKind, bestCards);
             }

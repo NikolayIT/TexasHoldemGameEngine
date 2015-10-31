@@ -66,7 +66,43 @@
 
             if (this.HasStraight(cards))
             {
-                return new BestHand(HandRankType.Straight, new List<CardType>());
+                var straightCards = new List<CardType>();
+
+                var types = cards.GroupBy(x => x.Type).Select(x => (int)x.Key).ToList();
+                if (cards.Any(x => x.Type == CardType.Ace))
+                {
+                    types.Add((int)CardType.Two - 1);
+                    straightCards.Add(CardType.Ace);
+                }
+
+                types.Sort();
+
+                var cardsCount = types.Count;
+                var currentSequence = 1;
+                var lastType = types[0];
+
+                for (var i = 1; i < cardsCount; i++)
+                {
+                    if (types[i] - 1 == lastType)
+                    {
+                        straightCards.Add((CardType)types[i]);
+                        currentSequence++;
+                        if (currentSequence >= ComparableCards)
+                        {
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        straightCards = new List<CardType>();
+                        straightCards.Add((CardType)types[i]);
+                        currentSequence = 1;
+                    }
+
+                    lastType = types[i];
+                }
+
+                return new BestHand(HandRankType.Straight, straightCards);
             }
 
             if (threeOfAKindTypes.Count > 0)

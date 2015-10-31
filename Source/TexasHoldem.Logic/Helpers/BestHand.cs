@@ -84,7 +84,21 @@
             ICollection<CardType> firstHand,
             ICollection<CardType> secondHand)
         {
-            return 0;
+            var firstPairType = firstHand.GroupBy(x => x).First(x => x.Count() >= 2);
+            var secondPairType = secondHand.GroupBy(x => x).First(x => x.Count() >= 2);
+
+            if (firstPairType.Key > secondPairType.Key)
+            {
+                return 1;
+            }
+
+            if (firstPairType.Key < secondPairType.Key)
+            {
+                return -1;
+            }
+
+            // Equal pair => compare high card
+            return CompareTwoHandsWithHighCard(firstHand, secondHand);
         }
 
         private static int CompareTwoHandsWithTwoPairs(

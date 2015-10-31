@@ -1,21 +1,24 @@
 ﻿namespace TexasHoldem.Logic.Tests.Helpers
 {
     using System.Collections.Generic;
+    using System.Linq;
 
     using NUnit.Framework;
 
     using TexasHoldem.Logic;
     using TexasHoldem.Logic.Cards;
+    using TexasHoldem.Logic.Extensions;
     using TexasHoldem.Logic.Helpers;
 
     [TestFixture]
     public class BestHandTests
     {
         private static readonly object[] DifferentHandRankTypesCases =
-       {
+            {
                 new object[]
                     {
-                        ExpectedCompareResult.FirstShouldBeBetter,
+                        ExpectedCompareResult
+                            .FirstShouldBeBetter,
                         HandRankType.TwoPairs,
                         new[]
                             {
@@ -33,7 +36,8 @@
                     },
                 new object[]
                     {
-                        ExpectedCompareResult.SecondShouldBeBetter,
+                        ExpectedCompareResult
+                            .SecondShouldBeBetter,
                         HandRankType.Straight,
                         new[]
                             {
@@ -53,12 +57,6 @@
 
         private static readonly object[] BothHaveHighCardCases =
             {
-                new object[]
-                    {
-                        ExpectedCompareResult.TheyShouldBeEqual,
-                        HandRankType.HighCard, new CardType[] { },
-                        HandRankType.HighCard, new CardType[] { }
-                    },
                 new object[]
                     {
                         ExpectedCompareResult.TheyShouldBeEqual,
@@ -120,8 +118,84 @@
                 new object[]
                     {
                         ExpectedCompareResult.TheyShouldBeEqual,
-                        HandRankType.Pair, new CardType[] { },
-                        HandRankType.Pair, new CardType[] { }
+                        HandRankType.Pair,
+                        new[]
+                            {
+                                CardType.Ace, CardType.King, CardType.King,
+                                CardType.Queen, CardType.Jack
+                            },
+                        HandRankType.Pair,
+                        new[]
+                            {
+                                CardType.Ace, CardType.King, CardType.King,
+                                CardType.Queen, CardType.Jack,
+                            }
+                    },
+                new object[]
+                    {
+                        ExpectedCompareResult.FirstShouldBeBetter,
+                        HandRankType.Pair,
+                        new[]
+                            {
+                                CardType.Ace, CardType.King, CardType.King,
+                                CardType.Queen, CardType.Jack
+                            },
+                        HandRankType.Pair,
+                        new[]
+                            {
+                                CardType.Ace, CardType.King, CardType.King,
+                                CardType.Queen, CardType.Ten
+                            }
+                    },
+                new object[]
+                    {
+                        ExpectedCompareResult.SecondShouldBeBetter,
+                        HandRankType.Pair,
+                        new[]
+                            {
+                                CardType.Ace, CardType.King, CardType.King,
+                                CardType.Queen, CardType.Ten
+                            },
+                        HandRankType.Pair,
+                        new[]
+                            {
+                                CardType.Ace, CardType.King, CardType.King,
+                                CardType.Queen, CardType.Jack,
+                            }
+                    },
+                new object[]
+                    {
+                        ExpectedCompareResult.FirstShouldBeBetter,
+                        HandRankType.Pair,
+                        new[]
+                            {
+                                CardType.King, CardType.King,
+                                CardType.Queen, CardType.Jack,
+                                CardType.Three,
+                            },
+                        HandRankType.Pair,
+                        new[]
+                            {
+                                CardType.King, CardType.King,
+                                CardType.Queen, CardType.Jack, CardType.Two,
+                            }
+                    },
+                new object[]
+                    {
+                        ExpectedCompareResult.SecondShouldBeBetter,
+                        HandRankType.Pair,
+                        new[]
+                            {
+                                CardType.King, CardType.King,
+                                CardType.Queen, CardType.Jack, CardType.Two,
+                            },
+                        HandRankType.Pair,
+                        new[]
+                            {
+                                CardType.King, CardType.King,
+                                CardType.Queen, CardType.Jack,
+                                CardType.Three,
+                            }
                     }
             };
 
@@ -226,8 +300,8 @@
             HandRankType secondHandRankType,
             ICollection<CardType> secondCardTypes)
         {
-            var firstBestHand = new BestHand(firstHandRankType, firstCardTypes);
-            var secondBestHand = new BestHand(secondHandRankType, secondCardTypes);
+            var firstBestHand = new BestHand(firstHandRankType, firstCardTypes.Shuffle().ToList());
+            var secondBestHand = new BestHand(secondHandRankType, secondCardTypes.Shuffle().ToList());
             var compareToResult = firstBestHand.CompareTo(secondBestHand);
             switch (expectedCompareResult)
             {

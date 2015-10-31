@@ -31,6 +31,91 @@
             }
 
             // TODO: What if same rank type?
+            switch (this.RankType)
+            {
+                case HandRankType.HighCard:
+                    return CompareTwoHandsWithHighCard(this.Cards, other.Cards);
+                case HandRankType.Pair:
+                    return CompareTwoHandsWithPair(this.Cards, other.Cards);
+                case HandRankType.TwoPairs:
+                    return CompareTwoHandsWithTwoPairs(this.Cards, other.Cards);
+                case HandRankType.ThreeOfAKind:
+                    return CompareTwoHandsWithThreeOfAKind(this.Cards, other.Cards);
+                case HandRankType.Straight:
+                    return CompareTwoHandsWithStraight(this.Cards, other.Cards);
+                case HandRankType.Flush:
+                    return CompareTwoHandsWithFlush(this.Cards, other.Cards);
+                case HandRankType.FullHouse:
+                    return CompareTwoHandsWithFullHouse(this.Cards, other.Cards);
+                case HandRankType.FourOfAKind:
+                    return CompareTwoHandsWithFourOfAKind(this.Cards, other.Cards);
+                case HandRankType.StraightFlush:
+                    return CompareTwoHandsWithStraightFlush(this.Cards, other.Cards);
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        private static int CompareTwoHandsWithHighCard(
+            ICollection<CardType> firstHand,
+            ICollection<CardType> secondHand)
+        {
+            return 0;
+        }
+
+        private static int CompareTwoHandsWithPair(
+            ICollection<CardType> firstHand,
+            ICollection<CardType> secondHand)
+        {
+            return 0;
+        }
+
+        private static int CompareTwoHandsWithTwoPairs(
+            ICollection<CardType> firstHand,
+            ICollection<CardType> secondHand)
+        {
+            return 0;
+        }
+
+        private static int CompareTwoHandsWithThreeOfAKind(
+            ICollection<CardType> firstHand,
+            ICollection<CardType> secondHand)
+        {
+            return 0;
+        }
+
+        private static int CompareTwoHandsWithStraight(
+            ICollection<CardType> firstHand,
+            ICollection<CardType> secondHand)
+        {
+            return 0;
+        }
+
+        private static int CompareTwoHandsWithFlush(
+            ICollection<CardType> firstHand,
+            ICollection<CardType> secondHand)
+        {
+            return 0;
+        }
+
+        private static int CompareTwoHandsWithFullHouse(
+            ICollection<CardType> firstHand,
+            ICollection<CardType> secondHand)
+        {
+            return 0;
+        }
+
+        private static int CompareTwoHandsWithFourOfAKind(
+            ICollection<CardType> firstHand,
+            ICollection<CardType> secondHand)
+        {
+            return 0;
+        }
+
+        private static int CompareTwoHandsWithStraightFlush(
+            ICollection<CardType> firstHand,
+            ICollection<CardType> secondHand)
+        {
             return 0;
         }
     }

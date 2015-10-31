@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     using TexasHoldem.Logic.Cards;
 
@@ -60,6 +61,22 @@
             ICollection<CardType> firstHand,
             ICollection<CardType> secondHand)
         {
+            var firstSorted = firstHand.OrderBy(x => x).ToList();
+            var secondSorted = secondHand.OrderBy(x => x).ToList();
+            var cardsToCompare = Math.Min(firstHand.Count, secondHand.Count);
+            for (var i = 0; i < cardsToCompare; i++)
+            {
+                if (firstSorted[i] > secondSorted[i])
+                {
+                    return 1;
+                }
+
+                if (firstSorted[i] < secondSorted[i])
+                {
+                    return -1;
+                }
+            }
+
             return 0;
         }
 

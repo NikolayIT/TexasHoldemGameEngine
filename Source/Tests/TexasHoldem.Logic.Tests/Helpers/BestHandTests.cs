@@ -58,6 +58,60 @@
                         ExpectedCompareResult.TheyShouldBeEqual,
                         HandRankType.HighCard, new CardType[] { },
                         HandRankType.HighCard, new CardType[] { }
+                    },
+                new object[]
+                    {
+                        ExpectedCompareResult.TheyShouldBeEqual,
+                        HandRankType.HighCard,
+                        new[]
+                            {
+                                CardType.Ace, CardType.King,
+                                CardType.Queen, CardType.Jack,
+                                CardType.Nine
+                            },
+                        HandRankType.HighCard,
+                        new[]
+                            {
+                                CardType.Ace, CardType.King,
+                                CardType.Queen, CardType.Jack,
+                                CardType.Nine,
+                            }
+                    },
+                new object[]
+                    {
+                        ExpectedCompareResult.FirstShouldBeBetter,
+                        HandRankType.HighCard,
+                        new[]
+                            {
+                                CardType.Ace, CardType.King,
+                                CardType.Queen, CardType.Jack,
+                                CardType.Nine
+                            },
+                        HandRankType.HighCard,
+                        new[]
+                            {
+                                CardType.Ace, CardType.King,
+                                CardType.Queen, CardType.Jack,
+                                CardType.Eight,
+                            }
+                    },
+                new object[]
+                    {
+                        ExpectedCompareResult.SecondShouldBeBetter,
+                        HandRankType.HighCard,
+                        new[]
+                            {
+                                CardType.Ace, CardType.King,
+                                CardType.Queen, CardType.Jack,
+                                CardType.Eight
+                            },
+                        HandRankType.HighCard,
+                        new[]
+                            {
+                                CardType.Ace, CardType.King,
+                                CardType.Queen, CardType.Jack,
+                                CardType.Nine,
+                            }
                     }
             };
 

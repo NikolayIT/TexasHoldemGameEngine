@@ -1,4 +1,4 @@
-﻿namespace TexasHoldem.Tests.Cards
+﻿namespace TexasHoldem.Logic.Tests.Cards
 {
     using NUnit.Framework;
 

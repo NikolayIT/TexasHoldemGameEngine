@@ -7,8 +7,8 @@
     <ProjectGuid>{9FFA4BF2-F50F-43EE-8DBE-B88DED9E0E9F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TexasHoldem.Tests</RootNamespace>
-    <AssemblyName>TexasHoldem.Tests</AssemblyName>
+    <RootNamespace>TexasHoldem.Logic.Tests</RootNamespace>
+    <AssemblyName>TexasHoldem.Logic.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -58,6 +58,7 @@
     <Compile Include="Cards\DeckTests.cs" />
     <Compile Include="Extensions\EnumerableExtensionsTests.cs" />
     <Compile Include="Extensions\RandomProviderTests.cs" />
+    <Compile Include="Helpers\BestHandTests.cs" />
     <Compile Include="Helpers\HandEvaluatorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

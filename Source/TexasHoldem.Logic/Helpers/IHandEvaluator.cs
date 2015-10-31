@@ -1,4 +1,4 @@
-namespace TexasHoldem.Logic.Helpers
+﻿namespace TexasHoldem.Logic.Helpers
 {
     using System.Collections.Generic;
 

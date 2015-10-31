@@ -7,14 +7,14 @@
 
     public class BestHand : IComparable<BestHand>
     {
-        internal BestHand(HandRankType rankType, IEnumerable<CardType> cards)
+        internal BestHand(HandRankType rankType, ICollection<CardType> cards)
         {
             this.Cards = cards;
             this.RankType = rankType;
         }
 
         // When comparing or ranking cards, the suit doesn't matter
-        public IEnumerable<CardType> Cards { get; }
+        public ICollection<CardType> Cards { get; }
 
         public HandRankType RankType { get; }
 

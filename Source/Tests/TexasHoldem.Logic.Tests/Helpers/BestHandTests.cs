@@ -90,24 +90,6 @@
                                 CardType.Queen, CardType.Jack,
                                 CardType.Eight,
                             }
-                    },
-                new object[]
-                    {
-                        ExpectedCompareResult.SecondShouldBeBetter,
-                        HandRankType.HighCard,
-                        new[]
-                            {
-                                CardType.Ace, CardType.King,
-                                CardType.Queen, CardType.Jack,
-                                CardType.Eight
-                            },
-                        HandRankType.HighCard,
-                        new[]
-                            {
-                                CardType.Ace, CardType.King,
-                                CardType.Queen, CardType.Jack,
-                                CardType.Nine,
-                            }
                     }
             };
 
@@ -147,22 +129,6 @@
                     },
                 new object[]
                     {
-                        ExpectedCompareResult.SecondShouldBeBetter,
-                        HandRankType.Pair,
-                        new[]
-                            {
-                                CardType.Two, CardType.Two, CardType.Ace,
-                                CardType.King, CardType.Jack
-                            },
-                        HandRankType.Pair,
-                        new[]
-                            {
-                                CardType.Ace, CardType.Ace, CardType.Four,
-                                CardType.Three, CardType.Two
-                            }
-                    },
-                new object[]
-                    {
                         ExpectedCompareResult.FirstShouldBeBetter,
                         HandRankType.Pair,
                         new[]
@@ -179,22 +145,6 @@
                     },
                 new object[]
                     {
-                        ExpectedCompareResult.SecondShouldBeBetter,
-                        HandRankType.Pair,
-                        new[]
-                            {
-                                CardType.Ace, CardType.King, CardType.King,
-                                CardType.Queen, CardType.Ten
-                            },
-                        HandRankType.Pair,
-                        new[]
-                            {
-                                CardType.Ace, CardType.King, CardType.King,
-                                CardType.Queen, CardType.Jack,
-                            }
-                    },
-                new object[]
-                    {
                         ExpectedCompareResult.FirstShouldBeBetter,
                         HandRankType.Pair,
                         new[]
@@ -209,34 +159,75 @@
                                 CardType.King, CardType.King,
                                 CardType.Queen, CardType.Jack, CardType.Two,
                             }
-                    },
-                new object[]
-                    {
-                        ExpectedCompareResult.SecondShouldBeBetter,
-                        HandRankType.Pair,
-                        new[]
-                            {
-                                CardType.King, CardType.King,
-                                CardType.Queen, CardType.Jack, CardType.Two,
-                            },
-                        HandRankType.Pair,
-                        new[]
-                            {
-                                CardType.King, CardType.King,
-                                CardType.Queen, CardType.Jack,
-                                CardType.Three,
-                            }
                     }
             };
 
         private static readonly object[] BothHaveTwoPairsCases =
             {
-                //// new object[]
-                ////     {
-                ////         ExpectedCompareResult.TheyShouldBeEqual,
-                ////         HandRankType.TwoPairs, new CardType[] { },
-                ////         HandRankType.TwoPairs, new CardType[] { }
-                ////     }
+                new object[]
+                    {
+                        ExpectedCompareResult.TheyShouldBeEqual,
+                        HandRankType.TwoPairs,
+                        new[]
+                            {
+                                CardType.Ace, CardType.Ace,
+                                CardType.King, CardType.King, CardType.Queen,
+                            },
+                        HandRankType.TwoPairs,
+                        new[]
+                            {
+                                CardType.Ace, CardType.Ace,
+                                CardType.King, CardType.King, CardType.Queen,
+                            }
+                    },
+                new object[]
+                    {
+                        ExpectedCompareResult.TheyShouldBeEqual,
+                        HandRankType.TwoPairs,
+                        new[]
+                            {
+                                CardType.Ace, CardType.King,
+                                CardType.King, CardType.Queen, CardType.Queen,
+                            },
+                        HandRankType.TwoPairs,
+                        new[]
+                            {
+                                CardType.Ace, CardType.King,
+                                CardType.King, CardType.Queen, CardType.Queen,
+                            }
+                    },
+                new object[]
+                    {
+                        ExpectedCompareResult.TheyShouldBeEqual,
+                        HandRankType.TwoPairs,
+                        new[]
+                            {
+                                CardType.Ace, CardType.Ace,
+                                CardType.King, CardType.Queen, CardType.Queen,
+                            },
+                        HandRankType.TwoPairs,
+                        new[]
+                            {
+                                CardType.Ace, CardType.Ace,
+                                CardType.King, CardType.Queen, CardType.Queen,
+                            }
+                    },
+                //new object[]
+                //    {
+                //        ExpectedCompareResult.FirstShouldBeBetter,
+                //        HandRankType.TwoPairs,
+                //        new[]
+                //            {
+                //                CardType.Ace, CardType.Ace,
+                //                CardType.King, CardType.King, CardType.Queen,
+                //            },
+                //        HandRankType.TwoPairs,
+                //        new[]
+                //            {
+                //                CardType.Ace, CardType.Ace,
+                //                CardType.King, CardType.King, CardType.Jack,
+                //            }
+                //    }
             };
 
         private static readonly object[] BothHaveThreeOfAKindCases =
@@ -332,17 +323,21 @@
         {
             var firstBestHand = new BestHand(firstHandRankType, firstCardTypes.Shuffle().ToList());
             var secondBestHand = new BestHand(secondHandRankType, secondCardTypes.Shuffle().ToList());
-            var compareToResult = firstBestHand.CompareTo(secondBestHand);
+            var compareToResultFirstSecond = firstBestHand.CompareTo(secondBestHand);
+            var compareToResultSecondFirst = secondBestHand.CompareTo(firstBestHand);
             switch (expectedCompareResult)
             {
                 case ExpectedCompareResult.FirstShouldBeBetter:
-                    Assert.IsTrue(compareToResult > 0, "compareToResult > 0");
+                    Assert.IsTrue(compareToResultFirstSecond > 0, "compareToResultFirstSecond > 0");
+                    Assert.IsTrue(compareToResultSecondFirst < 0, "compareToResultSecondFirst < 0");
                     break;
                 case ExpectedCompareResult.SecondShouldBeBetter:
-                    Assert.IsTrue(compareToResult < 0, "compareToResult < 0");
+                    Assert.IsTrue(compareToResultFirstSecond < 0, "compareToResultFirstSecond < 0");
+                    Assert.IsTrue(compareToResultSecondFirst > 0, "compareToResultSecondFirst > 0");
                     break;
                 case ExpectedCompareResult.TheyShouldBeEqual:
-                    Assert.AreEqual(0, compareToResult);
+                    Assert.AreEqual(0, compareToResultFirstSecond);
+                    Assert.AreEqual(0, compareToResultSecondFirst);
                     break;
                 default:
                     Assert.Fail("Invalid ExpectedCompareResult value");

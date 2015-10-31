@@ -50,7 +50,7 @@
                 case HandRankType.Straight:
                     return CompareTwoHandsWithStraight(this.Cards, other.Cards);
                 case HandRankType.Flush:
-                    return CompareTwoHandsWithFlush(this.Cards, other.Cards);
+                    return CompareTwoHandsWithHighCard(this.Cards, other.Cards);
                 case HandRankType.FullHouse:
                     return CompareTwoHandsWithFullHouse(this.Cards, other.Cards);
                 case HandRankType.FourOfAKind:
@@ -110,7 +110,24 @@
             ICollection<CardType> firstHand,
             ICollection<CardType> secondHand)
         {
-            return 0;
+            var firstPairType = firstHand.GroupBy(x => x).Where(x => x.Count() == 2).OrderByDescending(x => x.Key).ToList();
+            var secondPairType = secondHand.GroupBy(x => x).Where(x => x.Count() == 2).OrderByDescending(x => x.Key).ToList();
+
+            for (int i = 0; i < firstPairType.Count; i++)
+            {
+                if (firstPairType[i].Key > secondPairType[i].Key)
+                {
+                    return 1;
+                }
+
+                if (secondPairType[i].Key > firstPairType[i].Key)
+                {
+                    return -1;
+                }
+            }
+
+            // Equal pairs => compare high card
+            return CompareTwoHandsWithHighCard(firstHand, secondHand);
         }
 
         private static int CompareTwoHandsWithThreeOfAKind(
@@ -121,13 +138,6 @@
         }
 
         private static int CompareTwoHandsWithStraight(
-            ICollection<CardType> firstHand,
-            ICollection<CardType> secondHand)
-        {
-            return 0;
-        }
-
-        private static int CompareTwoHandsWithFlush(
             ICollection<CardType> firstHand,
             ICollection<CardType> secondHand)
         {

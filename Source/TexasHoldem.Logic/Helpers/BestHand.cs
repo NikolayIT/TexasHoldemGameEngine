@@ -10,6 +10,11 @@
     {
         internal BestHand(HandRankType rankType, ICollection<CardType> cards)
         {
+            if (cards.Count != 5)
+            {
+                throw new ArgumentException("Cards collection should contains exactly 5 elements", nameof(cards));
+            }
+
             this.Cards = cards;
             this.RankType = rankType;
         }

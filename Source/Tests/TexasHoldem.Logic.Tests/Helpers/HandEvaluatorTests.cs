@@ -260,7 +260,12 @@
                                 new Card(CardSuit.Club, CardType.Seven),
                                 new Card(CardSuit.Spade, CardType.Three)
                             },
-                        HandRankType.Flush, new List<CardType> { }
+                        HandRankType.Flush, 
+                        new[]
+                        {
+                            CardType.Ace, CardType.King, CardType.Queen,
+                            CardType.Ten, CardType.Three
+                        }
                     },
                 new object[]
                     {
@@ -274,7 +279,12 @@
                                 new Card(CardSuit.Club, CardType.Seven),
                                 new Card(CardSuit.Spade, CardType.Three)
                             },
-                        HandRankType.Flush, new List<CardType> { }
+                        HandRankType.Flush,
+                        new[]
+                        {
+                            CardType.Ace, CardType.King, CardType.Queen,
+                            CardType.Nine, CardType.Three
+                        }
                     },
                 new object[]
                     {
@@ -288,7 +298,12 @@
                                 new Card(CardSuit.Spade, CardType.Seven),
                                 new Card(CardSuit.Spade, CardType.Three)
                             },
-                        HandRankType.Flush, new List<CardType> { }
+                        HandRankType.Flush,
+                        new[]
+                        {
+                            CardType.Ace, CardType.King, CardType.Queen,
+                            CardType.Ten, CardType.Nine
+                        }
                     },
                 new object[]
                     {

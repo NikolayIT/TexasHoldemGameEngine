@@ -50,9 +50,18 @@
                 return new BestHand(HandRankType.FullHouse, bestCards);
             }
 
+
             if (this.HasFlush(cards))
             {
-                return new BestHand(HandRankType.Flush, new List<CardType>());
+                var flushCards = cards
+                    .GroupBy(x => x.Suit)
+                    .FirstOrDefault(x => x.Count() >= ComparableCards)
+                    .Select(x => x.Type)
+                    .OrderByDescending(x => x)
+                    .Take(ComparableCards)
+                    .ToList();
+
+                return new BestHand(HandRankType.Flush, flushCards);
             }
 
             if (this.HasStraight(cards))

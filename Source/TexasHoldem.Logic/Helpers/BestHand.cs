@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     using TexasHoldem.Logic.Cards;
 
@@ -9,6 +10,11 @@
     {
         internal BestHand(HandRankType rankType, ICollection<CardType> cards)
         {
+            if (cards.Count != 5)
+            {
+                throw new ArgumentException("Cards collection should contains exactly 5 elements", nameof(cards));
+            }
+
             this.Cards = cards;
             this.RankType = rankType;
         }
@@ -44,7 +50,7 @@
                 case HandRankType.Straight:
                     return CompareTwoHandsWithStraight(this.Cards, other.Cards);
                 case HandRankType.Flush:
-                    return CompareTwoHandsWithFlush(this.Cards, other.Cards);
+                    return CompareTwoHandsWithHighCard(this.Cards, other.Cards);
                 case HandRankType.FullHouse:
                     return CompareTwoHandsWithFullHouse(this.Cards, other.Cards);
                 case HandRankType.FourOfAKind:
@@ -60,6 +66,22 @@
             ICollection<CardType> firstHand,
             ICollection<CardType> secondHand)
         {
+            var firstSorted = firstHand.OrderBy(x => x).ToList();
+            var secondSorted = secondHand.OrderBy(x => x).ToList();
+            var cardsToCompare = Math.Min(firstHand.Count, secondHand.Count);
+            for (var i = 0; i < cardsToCompare; i++)
+            {
+                if (firstSorted[i] > secondSorted[i])
+                {
+                    return 1;
+                }
+
+                if (firstSorted[i] < secondSorted[i])
+                {
+                    return -1;
+                }
+            }
+
             return 0;
         }
 
@@ -67,14 +89,45 @@
             ICollection<CardType> firstHand,
             ICollection<CardType> secondHand)
         {
-            return 0;
+            var firstPairType = firstHand.GroupBy(x => x).First(x => x.Count() >= 2);
+            var secondPairType = secondHand.GroupBy(x => x).First(x => x.Count() >= 2);
+
+            if (firstPairType.Key > secondPairType.Key)
+            {
+                return 1;
+            }
+
+            if (firstPairType.Key < secondPairType.Key)
+            {
+                return -1;
+            }
+
+            // Equal pair => compare high card
+            return CompareTwoHandsWithHighCard(firstHand, secondHand);
         }
 
         private static int CompareTwoHandsWithTwoPairs(
             ICollection<CardType> firstHand,
             ICollection<CardType> secondHand)
         {
-            return 0;
+            var firstPairType = firstHand.GroupBy(x => x).Where(x => x.Count() == 2).OrderByDescending(x => x.Key).ToList();
+            var secondPairType = secondHand.GroupBy(x => x).Where(x => x.Count() == 2).OrderByDescending(x => x.Key).ToList();
+
+            for (int i = 0; i < firstPairType.Count; i++)
+            {
+                if (firstPairType[i].Key > secondPairType[i].Key)
+                {
+                    return 1;
+                }
+
+                if (secondPairType[i].Key > firstPairType[i].Key)
+                {
+                    return -1;
+                }
+            }
+
+            // Equal pairs => compare high card
+            return CompareTwoHandsWithHighCard(firstHand, secondHand);
         }
 
         private static int CompareTwoHandsWithThreeOfAKind(
@@ -85,13 +138,6 @@
         }
 
         private static int CompareTwoHandsWithStraight(
-            ICollection<CardType> firstHand,
-            ICollection<CardType> secondHand)
-        {
-            return 0;
-        }
-
-        private static int CompareTwoHandsWithFlush(
             ICollection<CardType> firstHand,
             ICollection<CardType> secondHand)
         {

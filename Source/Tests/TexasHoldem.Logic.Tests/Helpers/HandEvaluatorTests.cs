@@ -302,7 +302,31 @@
                                 new Card(CardSuit.Club, CardType.Seven),
                                 new Card(CardSuit.Spade, CardType.Three)
                             },
-                        HandRankType.FullHouse, new List<CardType> { }
+                        HandRankType.FullHouse,
+                        new[]
+                        {
+                            CardType.Ace, CardType.Ace, CardType.Ace,
+                            CardType.Ten, CardType.Ten
+                        }
+                    },
+                new object[]
+                    {
+                        new[]
+                            {
+                                new Card(CardSuit.Spade, CardType.Two),
+                                new Card(CardSuit.Heart, CardType.Two),
+                                new Card(CardSuit.Club, CardType.Two),
+                                new Card(CardSuit.Diamond, CardType.Ten),
+                                new Card(CardSuit.Club, CardType.Ten),
+                                new Card(CardSuit.Club, CardType.Seven),
+                                new Card(CardSuit.Spade, CardType.Seven)
+                            },
+                        HandRankType.FullHouse, 
+                        new[]
+                        {
+                            CardType.Two, CardType.Two, CardType.Two,
+                            CardType.Ten, CardType.Ten
+                        }
                     },
                 new object[]
                     {

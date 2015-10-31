@@ -316,7 +316,12 @@
                                 new Card(CardSuit.Club, CardType.Seven),
                                 new Card(CardSuit.Spade, CardType.Three)
                             },
-                        HandRankType.FourOfAKind, new List<CardType> { }
+                        HandRankType.FourOfAKind,
+                        new[]
+                            {
+                                CardType.Ace, CardType.Ace, CardType.Ace,
+                                CardType.Ace, CardType.Ten
+                            }
                     },
                 new object[]
                     {

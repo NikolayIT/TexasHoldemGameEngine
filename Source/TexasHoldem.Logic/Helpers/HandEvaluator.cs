@@ -20,7 +20,16 @@
 
             if (this.HasFourOfAKind(cards))
             {
-                return new BestHand(HandRankType.FourOfAKind, new List<CardType>());
+                var fourOfAKindType = cards.GroupBy(x => x.Type).Where(x => x.Count() == 4).Select(x => x.Key).FirstOrDefault();
+                var bestCards = cards.Where(x => x.Type != fourOfAKindType)
+                    .OrderByDescending(x => x.Type)
+                    .Select(x => x.Type)
+                    .Take(ComparableCards - 4)
+                    .ToList();
+
+                bestCards.AddRange(Enumerable.Repeat(fourOfAKindType, 4));
+
+                return new BestHand(HandRankType.FourOfAKind, bestCards);
             }
 
             var pairTypes = this.GetPairTypes(cards);

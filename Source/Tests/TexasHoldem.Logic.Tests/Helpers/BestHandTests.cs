@@ -397,9 +397,9 @@
         public void CompareToShouldWorkCorrectly(
             ExpectedCompareResult expectedCompareResult,
             HandRankType firstHandRankType,
-            ICollection<CardType> firstCardTypes,
+            IList<CardType> firstCardTypes,
             HandRankType secondHandRankType,
-            ICollection<CardType> secondCardTypes)
+            IList<CardType> secondCardTypes)
         {
             var firstBestHand = new BestHand(firstHandRankType, firstCardTypes.Shuffle().ToList());
             var secondBestHand = new BestHand(secondHandRankType, secondCardTypes.Shuffle().ToList());

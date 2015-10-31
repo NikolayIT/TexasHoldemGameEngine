@@ -93,7 +93,7 @@
                                 CardType.Ace, CardType.Seven, CardType.Seven,
                                 CardType.Six, CardType.Four
                             }
-                    },
+                    }
             };
 
         private static readonly object[] TwoPairsCases =
@@ -154,7 +154,7 @@
                                 CardType.Ace, CardType.Ace, CardType.Six,
                                 CardType.Six, CardType.Four
                             }
-                    },
+                    }
             };
 
         private static readonly object[] ThreeOfAKindCases =
@@ -215,10 +215,10 @@
                                 CardType.Ten, CardType.Ten, CardType.Ten,
                                 CardType.Jack, CardType.Nine
                             }
-                    },
+                    }
             };
 
-        private static readonly object[] OtherCases =
+        private static readonly object[] StraightCases =
             {
                 new object[]
                     {
@@ -232,7 +232,12 @@
                                 new Card(CardSuit.Club, CardType.Jack),
                                 new Card(CardSuit.Diamond, CardType.Queen)
                             },
-                        HandRankType.Straight, new List<CardType> { }
+                        HandRankType.Straight,
+                        new[]
+                        {
+                            CardType.Ace, CardType.Two, CardType.Three,
+                            CardType.Four, CardType.Five
+                        }
                     },
                 new object[]
                     {
@@ -246,8 +251,36 @@
                                 new Card(CardSuit.Club, CardType.Seven),
                                 new Card(CardSuit.Diamond, CardType.Three)
                             },
-                        HandRankType.Straight, new List<CardType> { }
+                        HandRankType.Straight,
+                        new[]
+                        {
+                            CardType.Ace, CardType.King, CardType.Queen,
+                            CardType.Jack, CardType.Ten
+                        }
                     },
+                new object[]
+                    {
+                        new[]
+                            {
+                                new Card(CardSuit.Spade, CardType.Ace),
+                                new Card(CardSuit.Spade, CardType.Two),
+                                new Card(CardSuit.Spade, CardType.Queen),
+                                new Card(CardSuit.Heart, CardType.Jack),
+                                new Card(CardSuit.Spade, CardType.Ten),
+                                new Card(CardSuit.Club, CardType.Nine),
+                                new Card(CardSuit.Diamond, CardType.Eight)
+                            },
+                        HandRankType.Straight,
+                        new[]
+                        {
+                            CardType.Queen, CardType.Jack, CardType.Ten,
+                            CardType.Nine, CardType.Eight
+                        }
+                    }
+            };
+
+        private static readonly object[] FlushCases =
+            {
                 new object[]
                     {
                         new[]
@@ -260,7 +293,7 @@
                                 new Card(CardSuit.Club, CardType.Seven),
                                 new Card(CardSuit.Spade, CardType.Three)
                             },
-                        HandRankType.Flush, 
+                        HandRankType.Flush,
                         new[]
                         {
                             CardType.Ace, CardType.King, CardType.Queen,
@@ -304,7 +337,11 @@
                             CardType.Ace, CardType.King, CardType.Queen,
                             CardType.Ten, CardType.Nine
                         }
-                    },
+                    }
+            };
+
+        private static readonly object[] FullHouseCases =
+            {
                 new object[]
                     {
                         new[]
@@ -336,13 +373,17 @@
                                 new Card(CardSuit.Club, CardType.Seven),
                                 new Card(CardSuit.Spade, CardType.Seven)
                             },
-                        HandRankType.FullHouse, 
+                        HandRankType.FullHouse,
                         new[]
                         {
                             CardType.Two, CardType.Two, CardType.Two,
                             CardType.Ten, CardType.Ten
                         }
-                    },
+                    }
+            };
+
+        private static readonly object[] FourOfAKindCases =
+            {
                 new object[]
                     {
                         new[]
@@ -362,6 +403,10 @@
                                 CardType.Ace, CardType.Ten
                             }
                     },
+            };
+
+        private static readonly object[] StraightFlushCases =
+            {
                 new object[]
                     {
                         new[]
@@ -399,7 +444,11 @@
         [TestCaseSource(nameof(PairCases))]
         [TestCaseSource(nameof(TwoPairsCases))]
         [TestCaseSource(nameof(ThreeOfAKindCases))]
-        [TestCaseSource(nameof(OtherCases))]
+        [TestCaseSource(nameof(StraightCases))]
+        [TestCaseSource(nameof(FlushCases))]
+        [TestCaseSource(nameof(FullHouseCases))]
+        [TestCaseSource(nameof(FourOfAKindCases))]
+        [TestCaseSource(nameof(StraightFlushCases))]
         public void GetRankTypeShouldWorkCorrectly(ICollection<Card> playerCards, HandRankType expectedHandRankType, ICollection<CardType> expectedBestHandCards)
         {
             IHandEvaluator handEvaluator = new HandEvaluator();

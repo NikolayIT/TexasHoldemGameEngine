@@ -4,13 +4,12 @@
 
     using TexasHoldem.Logic.Players;
 
-    public class DummyPlayer : BasePlayer
+    internal class AlwaysCallDummyPlayer : BasePlayer
     {
-        public override string Name { get; } = "DummyPlayer_" + Guid.NewGuid();
+        public override string Name { get; } = "AlwaysCallDummyPlayer_" + Guid.NewGuid();
 
         public override PlayerAction GetTurn(GetTurnContext context)
         {
-            // TODO: Raise/Call(Check)/Fold on random
             return PlayerAction.CheckOrCall();
         }
     }

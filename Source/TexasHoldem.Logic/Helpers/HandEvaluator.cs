@@ -13,13 +13,19 @@
 
         public BestHand GetBestHand(ICollection<Card> cards)
         {
+            var cardTypeCounts = new int[15]; // Ace = 14
+            foreach (var card in cards)
+            {
+                cardTypeCounts[(int)card.Type]++;
+            }
+
             var straightFlushCards = this.GetStraightFlushCards(cards);
             if (straightFlushCards != null)
             {
                 return new BestHand(HandRankType.StraightFlush, straightFlushCards);
             }
 
-            if (this.HasFourOfAKind(cards))
+            if (this.HasFourOfAKind(cardTypeCounts))
             {
                 var fourOfAKindType =
                     cards.GroupBy(x => x.Type)
@@ -39,7 +45,7 @@
                 return new BestHand(HandRankType.FourOfAKind, bestCards);
             }
 
-            var pairTypes = this.GetPairTypes(cards);
+            var pairTypes = this.GetPairTypes(cardTypeCounts);
             var threeOfAKindTypes = this.GetThreeOfAKinds(cards);
             if ((pairTypes.Count > 0 && threeOfAKindTypes.Count > 0) || threeOfAKindTypes.Count == 2)
             {
@@ -115,9 +121,18 @@
             }
         }
 
-        private IList<CardType> GetPairTypes(IEnumerable<Card> cards)
+        private IList<CardType> GetPairTypes(int[] cardTypeCounts)
         {
-            return cards.GroupBy(x => x.Type).Where(x => x.Count() == 2).Select(x => x.Key).OrderByDescending(x => x).ToList();
+            var pairs = new List<CardType>();
+            for (var i = cardTypeCounts.Length - 1; i >= 0; i--)
+            {
+                if (cardTypeCounts[i] == 2)
+                {
+                    pairs.Add((CardType)i);
+                }
+            }
+
+            return pairs;
         }
 
         private IList<CardType> GetThreeOfAKinds(ICollection<Card> cards)
@@ -125,9 +140,9 @@
             return cards.GroupBy(x => x.Type).Where(x => x.Count() == 3).Select(x => x.Key).OrderByDescending(x => x).ToList();
         }
 
-        private bool HasFourOfAKind(ICollection<Card> cards)
+        private bool HasFourOfAKind(int[] cardTypeCounts)
         {
-            return cards.GroupBy(x => x.Type).Any(x => x.Count() == 4);
+            return cardTypeCounts.Any(x => x == 4);
         }
 
         private ICollection<CardType> GetStraightFlushCards(ICollection<Card> cards)

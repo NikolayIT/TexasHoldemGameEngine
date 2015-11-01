@@ -56,7 +56,7 @@
                 case HandRankType.FourOfAKind:
                     return CompareTwoHandsWithFourOfAKind(this.Cards, other.Cards);
                 case HandRankType.StraightFlush:
-                    return CompareTwoHandsWithStraightFlush(this.Cards, other.Cards);
+                    return CompareTwoHandsWithStraight(this.Cards, other.Cards);
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -177,13 +177,6 @@
         }
 
         private static int CompareTwoHandsWithFourOfAKind(
-            ICollection<CardType> firstHand,
-            ICollection<CardType> secondHand)
-        {
-            return 0;
-        }
-
-        private static int CompareTwoHandsWithStraightFlush(
             ICollection<CardType> firstHand,
             ICollection<CardType> secondHand)
         {

@@ -620,12 +620,7 @@
 
         private static readonly object[] BothHaveFlushCases =
             {
-                //// new object[]
-                ////     {
-                ////         ExpectedCompareResult.TheyShouldBeEqual,
-                ////         HandRankType.Flush, new CardType[] { },
-                ////         HandRankType.Flush, new CardType[] { }
-                ////     }
+                // Tests from BothHaveHighCardCases are sufficient
             };
 
         private static readonly object[] BothHaveFullHouseCases =
@@ -652,14 +647,7 @@
 
         private static readonly object[] BothHaveStraightFlushCases =
             {
-                //// new object[]
-                ////     {
-                ////         ExpectedCompareResult.TheyShouldBeEqual,
-                ////         HandRankType.StraightFlush,
-                ////         new CardType[] { },
-                ////         HandRankType.StraightFlush,
-                ////         new CardType[] { }
-                ////     }
+                // Tests from BothHaveStraightCases are sufficient
             };
 
         public enum ExpectedCompareResult

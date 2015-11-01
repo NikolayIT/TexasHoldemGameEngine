@@ -131,7 +131,7 @@
 
         private ICollection<CardType> GetStraightCards(ICollection<Card> cards)
         {
-            var straightCards = cards.Select(x => (int)x.Type).ToList();
+            var straightCards = cards.Select(x => (int)x.Type).Distinct().ToList();
             if (straightCards.Contains((int)CardType.Ace))
             {
                 straightCards.Add(1);

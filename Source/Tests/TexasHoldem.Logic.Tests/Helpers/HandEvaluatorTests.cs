@@ -295,6 +295,44 @@
                             CardType.Three, CardType.Four, CardType.Five,
                             CardType.Six, CardType.Seven
                         }
+                    },
+                new object[]
+                    {
+                        new[]
+                            {
+                                new Card(CardSuit.Diamond, CardType.Three),
+                                new Card(CardSuit.Heart, CardType.Four),
+                                new Card(CardSuit.Diamond, CardType.Five),
+                                new Card(CardSuit.Heart, CardType.Six),
+                                new Card(CardSuit.Heart, CardType.Six),
+                                new Card(CardSuit.Diamond, CardType.Seven),
+                                new Card(CardSuit.Diamond, CardType.Seven)
+                            },
+                        HandRankType.Straight,
+                        new[]
+                        {
+                            CardType.Three, CardType.Four, CardType.Five,
+                            CardType.Six, CardType.Seven
+                        }
+                    },
+                new object[]
+                    {
+                        new[]
+                            {
+                                new Card(CardSuit.Heart, CardType.Three),
+                                new Card(CardSuit.Diamond, CardType.Three),
+                                new Card(CardSuit.Heart, CardType.Four),
+                                new Card(CardSuit.Diamond, CardType.Five),
+                                new Card(CardSuit.Heart, CardType.Six),
+                                new Card(CardSuit.Diamond, CardType.Seven),
+                                new Card(CardSuit.Heart, CardType.Seven)
+                            },
+                        HandRankType.Straight,
+                        new[]
+                        {
+                            CardType.Three, CardType.Four, CardType.Five,
+                            CardType.Six, CardType.Seven
+                        }
                     }
             };
 
@@ -550,6 +588,26 @@
                                 CardType.Ten
                             }
                     },
+                new object[]
+                    {
+                        new[]
+                            {
+                                new Card(CardSuit.Spade, CardType.Ten),
+                                new Card(CardSuit.Spade, CardType.Jack),
+                                new Card(CardSuit.Spade, CardType.Queen),
+                                new Card(CardSuit.Spade, CardType.King),
+                                new Card(CardSuit.Spade, CardType.King),
+                                new Card(CardSuit.Spade, CardType.Ace),
+                                new Card(CardSuit.Spade, CardType.Ace)
+                            },
+                        HandRankType.StraightFlush,
+                        new[]
+                            {
+                                CardType.Ace, CardType.King,
+                                CardType.Queen, CardType.Jack,
+                                CardType.Ten
+                            }
+                    }
             };
 
         [Test]

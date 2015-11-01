@@ -21,22 +21,33 @@
                 { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 } // 2
             };
 
+        private static readonly int[,] StartingHandRecommendationsUnsuited =
+            {
+                { 3, 3, 3, 3, 3, 1, 1, 1, 0, 0, 0, 0, 0 }, // A
+                { 0, 3, 3, 3, 2, 1, 0, 0, 0, 0, 0, 0, 0 }, // K
+                { 0, 0, 3, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0 }, // Q
+                { 0, 0, 0, 3, 2, 1, 1, 0, 0, 0, 0, 0, 0 }, // J
+                { 0, 0, 0, 0, 3, 1, 1, 0, 0, 0, 0, 0, 0 }, // 10
+                { 0, 0, 0, 0, 0, 3, 1, 1, 0, 0, 0, 0, 0 }, // 9
+                { 0, 0, 0, 0, 0, 0, 3, 1, 0, 0, 0, 0, 0 }, // 8
+                { 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0 }, // 7
+                { 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0 }, // 6
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0 }, // 5
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0 }, // 4
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0 }, // 3
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0 } // 2
+            };
+
         // http://www.rakebackpros.net/texas-holdem-starting-hands/
         public static CardValuationType PreFlop(Card firstCard, Card secondCard)
         {
-            var value = 0;
-            if (firstCard.Suit == secondCard.Suit)
-            {
-                // Suited cards
-                if (firstCard.Type < secondCard.Type)
-                {
-                    value = StartingHandRecommendationsSuited[(int)firstCard.Type - 2, (int)secondCard.Type - 2];
-                }
-                else
-                {
-                    value = StartingHandRecommendationsSuited[(int)secondCard.Type - 2, (int)firstCard.Type - 2];
-                }
-            }
+            var value = firstCard.Suit == secondCard.Suit
+                            ? (firstCard.Type < secondCard.Type
+                                   ? StartingHandRecommendationsSuited[(int)firstCard.Type - 2, (int)secondCard.Type - 2]
+                                   : StartingHandRecommendationsSuited[(int)secondCard.Type - 2, (int)firstCard.Type - 2])
+                            : (firstCard.Type < secondCard.Type
+                                   ? StartingHandRecommendationsUnsuited[(int)firstCard.Type - 2, (int)secondCard.Type - 2]
+                                   : StartingHandRecommendationsUnsuited[(int)secondCard.Type - 2, (int)firstCard.Type - 2]);
 
             switch (value)
             {

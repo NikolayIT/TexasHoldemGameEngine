@@ -81,6 +81,19 @@
                 // TODO: Pot is splitted evenly - if %2 == 1 - first awarded takes 1 chip extra - (e.g. SB)
                 player.ShouldPlayInRound = false;
             }
+
+            InternalPlayer winner;
+            if (this.allPlayers.Count(x => x.InHand) == 1)
+            {
+                winner = this.allPlayers.FirstOrDefault(x => x.InHand);
+            }
+            else
+            {
+                // TODO: Bigger card
+                winner = this.allPlayers[0];
+            }
+
+            winner.Money += this.Pot;
         }
 
         private void Bet(InternalPlayer player, int amount)

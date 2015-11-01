@@ -1,4 +1,5 @@
-﻿namespace TexasHoldem.AI.SmartPlayer
+﻿// http://www.rakebackpros.net/texas-holdem-starting-hands/
+namespace TexasHoldem.AI.SmartPlayer
 {
     using System;
 

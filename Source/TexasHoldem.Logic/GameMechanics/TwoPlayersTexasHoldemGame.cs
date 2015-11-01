@@ -23,8 +23,6 @@
 
         private readonly int initialMoney;
 
-        private int handNumber;
-
         public TwoPlayersTexasHoldemGame(IPlayer firstPlayer, IPlayer secondPlayer, int initialMoney = 1000)
         {
             if (firstPlayer == null)
@@ -52,10 +50,12 @@
             this.secondPlayer = new InternalPlayer(secondPlayer);
             this.allPlayers = new List<InternalPlayer> { this.firstPlayer, this.secondPlayer };
             this.initialMoney = initialMoney;
-            this.handNumber = 0;
+            this.HandsPlayed = 0;
         }
 
-        public void Start()
+        public int HandsPlayed { get; private set; }
+
+        public IPlayer Start()
         {
             var playerNames = this.allPlayers.Select(x => x.Name).ToList().AsReadOnly();
             foreach (var player in this.allPlayers)
@@ -66,24 +66,26 @@
             // While at least two players have money
             while (this.allPlayers.Count(x => x.Money > 0) > 1)
             {
-                this.handNumber++;
+                this.HandsPlayed++;
 
                 // Every 10 hands the blind increases
-                var smallBlind = SmallBlinds[(this.handNumber - 1) / 10];
+                var smallBlind = SmallBlinds[(this.HandsPlayed - 1) / 10];
 
                 // Rotate players
-                var hand = this.handNumber % 2 == 1
-                               ? new HandLogic(new[] { this.firstPlayer, this.secondPlayer }, this.handNumber, smallBlind)
-                               : new HandLogic(new[] { this.secondPlayer, this.firstPlayer }, this.handNumber, smallBlind);
+                var hand = this.HandsPlayed % 2 == 1
+                               ? new HandLogic(new[] { this.firstPlayer, this.secondPlayer }, this.HandsPlayed, smallBlind)
+                               : new HandLogic(new[] { this.secondPlayer, this.firstPlayer }, this.HandsPlayed, smallBlind);
 
                 hand.Play();
             }
 
-            var winner = this.allPlayers.FirstOrDefault(x => x.Money > 0).Name;
+            var winner = this.allPlayers.FirstOrDefault(x => x.Money > 0);
             foreach (var player in this.allPlayers)
             {
-                player.EndGame(new EndGameContext(winner));
+                player.EndGame(new EndGameContext(winner.Name));
             }
+
+            return winner;
         }
     }
 }

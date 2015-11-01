@@ -1,5 +1,8 @@
 ﻿namespace TexasHoldem.Logic.GameMechanics
 {
+    using System.Collections.Generic;
+
+    using TexasHoldem.Logic.Cards;
     using TexasHoldem.Logic.Players;
 
     internal class InternalPlayer : PlayerDecorator
@@ -7,7 +10,10 @@
         public InternalPlayer(IPlayer player)
             : base(player)
         {
+            this.Cards = new List<Card>();
         }
+
+        public List<Card> Cards { get; }
 
         public int Money { get; set; }
 
@@ -27,6 +33,10 @@
 
         public override void StartHand(StartHandContext context)
         {
+            this.Cards.Clear();
+            this.Cards.Add(context.FirstCard);
+            this.Cards.Add(context.SecondCard);
+
             this.CurrentlyInPot = 0;
             this.InHand = true;
             base.StartHand(context);

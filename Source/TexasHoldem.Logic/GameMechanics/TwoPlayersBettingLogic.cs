@@ -3,17 +3,15 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    using TexasHoldem.Logic.Cards;
-    using TexasHoldem.Logic.Helpers;
     using TexasHoldem.Logic.Players;
 
-    internal class BettingLogic
+    internal class TwoPlayersBettingLogic
     {
         private readonly IList<InternalPlayer> allPlayers;
 
         private readonly int smallBlind;
 
-        public BettingLogic(IList<InternalPlayer> players, int smallBlind)
+        public TwoPlayersBettingLogic(IList<InternalPlayer> players, int smallBlind)
         {
             this.allPlayers = players;
             this.smallBlind = smallBlind;
@@ -83,19 +81,6 @@
                 // TODO: Pot is splitted evenly - if %2 == 1 - first awarded takes 1 chip extra - (e.g. SB)
                 player.ShouldPlayInRound = false;
             }
-
-            InternalPlayer winner;
-            if (this.allPlayers.Count(x => x.InHand) == 1)
-            {
-                winner = this.allPlayers.FirstOrDefault(x => x.InHand);
-            }
-            else
-            {
-                // TODO: Bigger card
-                winner = this.allPlayers[0];
-            }
-
-            winner.Money += this.Pot;
         }
 
         private void Bet(InternalPlayer player, int amount)

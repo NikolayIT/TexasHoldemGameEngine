@@ -73,8 +73,8 @@
 
                 // Rotate players
                 var hand = this.HandsPlayed % 2 == 1
-                               ? new HandLogic(new[] { this.firstPlayer, this.secondPlayer }, this.HandsPlayed, smallBlind)
-                               : new HandLogic(new[] { this.secondPlayer, this.firstPlayer }, this.HandsPlayed, smallBlind);
+                               ? new TwoPlayersHandLogic(new[] { this.firstPlayer, this.secondPlayer }, this.HandsPlayed, smallBlind)
+                               : new TwoPlayersHandLogic(new[] { this.secondPlayer, this.firstPlayer }, this.HandsPlayed, smallBlind);
 
                 hand.Play();
             }

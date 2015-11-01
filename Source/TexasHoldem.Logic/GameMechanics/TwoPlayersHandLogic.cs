@@ -4,9 +4,10 @@
     using System.Linq;
 
     using TexasHoldem.Logic.Cards;
+    using TexasHoldem.Logic.Helpers;
     using TexasHoldem.Logic.Players;
 
-    internal class HandLogic
+    internal class TwoPlayersHandLogic
     {
         private readonly int handNumber;
 
@@ -18,16 +19,16 @@
 
         private readonly List<Card> communityCards;
 
-        private readonly BettingLogic bettingLogic;
+        private readonly TwoPlayersBettingLogic bettingLogic;
 
-        public HandLogic(IList<InternalPlayer> players, int handNumber, int smallBlind)
+        public TwoPlayersHandLogic(IList<InternalPlayer> players, int handNumber, int smallBlind)
         {
             this.handNumber = handNumber;
             this.smallBlind = smallBlind;
             this.players = players;
             this.deck = new Deck();
             this.communityCards = new List<Card>(5);
-            this.bettingLogic = new BettingLogic(this.players, smallBlind);
+            this.bettingLogic = new TwoPlayersBettingLogic(this.players, smallBlind);
         }
 
         public void Play()
@@ -66,11 +67,40 @@
                 this.PlayRound(GameRoundType.River, 1);
             }
 
-            // TODO: Determine winner and give him/them the pot
+            this.DetermineWinnerAndAddPot(this.bettingLogic.Pot);
+
             foreach (var player in this.players)
             {
-                // TODO: Showdown
+                // TODO: Showdown?
                 player.EndHand();
+            }
+        }
+
+        private void DetermineWinnerAndAddPot(int pot)
+        {
+            if (this.players.Count(x => x.InHand) == 1)
+            {
+                var winner = this.players.FirstOrDefault(x => x.InHand);
+                winner.Money += pot;
+            }
+            else
+            {
+                var betterHand = Helpers.CompareCards(
+                    this.players[0].Cards.Concat(this.communityCards).ToList(),
+                    this.players[1].Cards.Concat(this.communityCards).ToList());
+                if (betterHand > 1)
+                {
+                    this.players[0].Money += pot;
+                }
+                else if (betterHand < 1)
+                {
+                    this.players[1].Money += pot;
+                }
+                else
+                {
+                    this.players[0].Money += pot / 2;
+                    this.players[1].Money += pot / 2;
+                }
             }
         }
 

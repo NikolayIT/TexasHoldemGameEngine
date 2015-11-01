@@ -10,6 +10,7 @@
         {
             SimulateGames(new SmartVsDummyPlayerSimulator());
             SimulateGames(new SmartVsSmartPlayerSimulator());
+            SimulateGames(new AlwaysCallPlayersGameSimulation());
         }
 
         private static void SimulateGames(IGameSimulator gameSimulator)

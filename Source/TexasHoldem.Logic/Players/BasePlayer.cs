@@ -8,13 +8,10 @@
     {
         public abstract string Name { get; }
 
-        protected int MoneyLeft { get; private set; }
-
         protected IReadOnlyCollection<Card> CommunityCards { get; private set; }
 
         public virtual void StartGame(StartGameContext context)
         {
-            this.MoneyLeft = context.StartMoney;
         }
 
         public virtual void StartHand(StartHandContext context)

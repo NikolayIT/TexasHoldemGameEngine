@@ -39,6 +39,7 @@
                     this.deck.GetNextCard(),
                     this.deck.GetNextCard(),
                     this.handNumber,
+                    player.Money,
                     this.smallBlind,
                     this.players[0].Name);
                 player.StartHand(startHandContext);
@@ -82,7 +83,7 @@
 
             foreach (var player in this.players)
             {
-                player.StartRound(new StartRoundContext(gameRoundType, this.communityCards.AsReadOnly(), this.bettingLogic.Pot));
+                player.StartRound(new StartRoundContext(gameRoundType, this.communityCards.AsReadOnly(), player.Money, this.bettingLogic.Pot));
             }
 
             this.bettingLogic.Bet(gameRoundType);

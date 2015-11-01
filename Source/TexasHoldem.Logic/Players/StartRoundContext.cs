@@ -6,10 +6,11 @@
 
     public class StartRoundContext
     {
-        public StartRoundContext(GameRoundType roundType, IReadOnlyCollection<Card> communityCards, int currentPot)
+        public StartRoundContext(GameRoundType roundType, IReadOnlyCollection<Card> communityCards, int moneyLeft, int currentPot)
         {
             this.RoundType = roundType;
             this.CommunityCards = communityCards;
+            this.MoneyLeft = moneyLeft;
             this.CurrentPot = currentPot;
         }
 
@@ -17,6 +18,8 @@
 
         public IReadOnlyCollection<Card> CommunityCards { get; }
 
-        public int CurrentPot { get; set; }
+        public int MoneyLeft { get; }
+
+        public int CurrentPot { get; }
     }
 }

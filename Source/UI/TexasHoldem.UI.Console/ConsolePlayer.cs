@@ -31,7 +31,7 @@
         public override void StartHand(StartHandContext context)
         {
             this.UpdateCommonRow(0);
-            ConsoleHelper.WriteOnConsole(this.row + 1, 2, this.MoneyLeft + "       ");
+            ConsoleHelper.WriteOnConsole(this.row + 1, 2, context.MoneyLeft + "       ");
             ConsoleHelper.WriteOnConsole(this.row + 1, 10, context.FirstCard + "  ");
             ConsoleHelper.WriteOnConsole(this.row + 1, 15, context.SecondCard + "  ");
         }
@@ -66,7 +66,7 @@
                         action = PlayerAction.Fold();
                         break;
                     case ConsoleKey.A:
-                        action = PlayerAction.Raise(this.MoneyLeft);
+                        action = PlayerAction.Raise(context.MoneyLeft);
                         break;
                 }
 

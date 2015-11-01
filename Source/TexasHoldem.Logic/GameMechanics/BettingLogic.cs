@@ -53,6 +53,7 @@
                             gameRoundType,
                             bets.AsReadOnly(),
                             this.smallBlind,
+                            player.Money,
                             this.Pot,
                             maxMoneyPerPlayer));
 

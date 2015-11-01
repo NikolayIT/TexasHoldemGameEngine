@@ -49,7 +49,7 @@
                     continue;
                 }
 
-                var maxMoneyPerPlayer = this.allPlayers.Max(x => x.CurrentBet);
+                var maxMoneyPerPlayer = this.allPlayers.Max(x => x.CurrentRoundBet);
                 var action =
                     player.GetTurn(
                         new GetTurnContext(
@@ -61,38 +61,51 @@
                             player.CurrentlyInPot,
                             maxMoneyPerPlayer));
 
-                if (action.Type == PlayerActionType.Raise)
-                {
-                    // TODO: Min raise?
-                    foreach (var playerToUpdate in this.allPlayers)
-                    {
-                        playerToUpdate.ShouldPlayInRound = true;
-                    }
-
-                    player.Call(maxMoneyPerPlayer);
-                    if (player.Money > action.Money)
-                    {
-                        player.PlaceMoney(action.Money);
-                    }
-                    else
-                    {
-                        // All-in
-                        action.Money = player.Money;
-                        player.PlaceMoney(action.Money);
-                    }
-                }
-                else if (action.Type == PlayerActionType.CheckCall)
-                {
-                    player.Call(maxMoneyPerPlayer);
-                }
-                else //// PlayerActionType.Fold
-                {
-                    player.InHand = false;
-                }
+                action = this.DoPlayerAction(player, action, maxMoneyPerPlayer);
 
                 bets.Add(new PlayerActionAndName(player.Name, action));
                 player.ShouldPlayInRound = false;
             }
+        }
+
+        private PlayerAction DoPlayerAction(InternalPlayer player, PlayerAction action, int maxMoneyPerPlayer)
+        {
+            if (action.Type == PlayerActionType.Raise)
+            {
+                player.Call(maxMoneyPerPlayer);
+
+                if (player.Money <= 0)
+                {
+                    return PlayerAction.CheckOrCall();
+                }
+
+                foreach (var playerToUpdate in this.allPlayers)
+                {
+                    playerToUpdate.ShouldPlayInRound = true;
+                }
+
+                // TODO: Min raise?
+                if (player.Money > action.Money)
+                {
+                    player.PlaceMoney(action.Money);
+                }
+                else
+                {
+                    // All-in
+                    action.Money = player.Money;
+                    player.PlaceMoney(action.Money);
+                }
+            }
+            else if (action.Type == PlayerActionType.CheckCall)
+            {
+                player.Call(maxMoneyPerPlayer);
+            }
+            else //// PlayerActionType.Fold
+            {
+                player.InHand = false;
+            }
+
+            return action;
         }
     }
 }

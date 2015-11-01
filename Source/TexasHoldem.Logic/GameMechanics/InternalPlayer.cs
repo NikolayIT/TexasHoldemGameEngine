@@ -17,7 +17,7 @@
 
         public int Money { get; set; }
 
-        public int CurrentBet { get; private set; }
+        public int CurrentRoundBet { get; private set; }
 
         public int CurrentlyInPot { get; private set; }
 
@@ -38,7 +38,7 @@
             this.Cards.Add(context.SecondCard);
 
             this.CurrentlyInPot = 0;
-            this.CurrentBet = 0;
+            this.CurrentRoundBet = 0;
             this.InHand = true;
 
             base.StartHand(context);
@@ -46,7 +46,7 @@
 
         public override void StartRound(StartRoundContext context)
         {
-            this.CurrentBet = 0;
+            this.CurrentRoundBet = 0;
             if (this.InHand)
             {
                 this.ShouldPlayInRound = true;
@@ -58,13 +58,13 @@
         // TODO: Extract next methods in separate MoneyManager class for easier testing?
         public void Call(int maxMoneyPerPlayer)
         {
-            var diff = maxMoneyPerPlayer - this.CurrentBet;
+            var diff = maxMoneyPerPlayer - this.CurrentRoundBet;
             this.PlaceMoney(diff);
         }
 
         public void PlaceMoney(int money)
         {
-            this.CurrentBet += money;
+            this.CurrentRoundBet += money;
             this.CurrentlyInPot += money;
             this.Money -= money;
         }

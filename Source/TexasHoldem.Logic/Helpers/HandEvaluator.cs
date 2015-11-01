@@ -13,10 +13,10 @@
 
         public BestHand GetBestHand(ICollection<Card> cards)
         {
-            var straigtFlushCards = this.GetStraightFlushCards(cards);
-            if (straigtFlushCards != null)
+            var straightFlushCards = this.GetStraightFlushCards(cards);
+            if (straightFlushCards != null)
             {
-                return new BestHand(HandRankType.StraightFlush, straigtFlushCards);
+                return new BestHand(HandRankType.StraightFlush, straightFlushCards);
             }
 
             if (this.HasFourOfAKind(cards))
@@ -126,16 +126,7 @@
         private ICollection<CardType> GetStraightFlushCards(ICollection<Card> cards)
         {
             var flushes = cards.GroupBy(x => x.Suit).Where(x => x.Count() >= ComparableCards).Select(x => x.ToList());
-            foreach (var group in flushes)
-            {
-                var straightCards = this.GetStraightCards(group);
-                if (straightCards != null)
-                {
-                    return straightCards;
-                }
-            }
-
-            return null;
+            return flushes.Select(this.GetStraightCards).FirstOrDefault(straightCards => straightCards != null);
         }
 
         private ICollection<CardType> GetStraightCards(ICollection<Card> cards)

@@ -486,6 +486,7 @@
                                 new Card(CardSuit.Spade, CardType.Ace),
                                 new Card(CardSuit.Heart, CardType.Ace),
                                 new Card(CardSuit.Club, CardType.Ace),
+                                new Card(CardSuit.Club, CardType.Ace),
                                 new Card(CardSuit.Diamond, CardType.Two),
                                 new Card(CardSuit.Club, CardType.Two),
                                 new Card(CardSuit.Club, CardType.Two),
@@ -494,8 +495,8 @@
                         HandRankType.FourOfAKind,
                         new[]
                             {
-                                CardType.Two, CardType.Two, CardType.Two,
-                                CardType.Two, CardType.Ace
+                                CardType.Ace, CardType.Ace, CardType.Ace,
+                                CardType.Ace, CardType.Two
                             }
                     },
             };

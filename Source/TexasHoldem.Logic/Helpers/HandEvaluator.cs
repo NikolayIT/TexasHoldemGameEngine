@@ -21,13 +21,20 @@
 
             if (this.HasFourOfAKind(cards))
             {
-                var fourOfAKindType = cards.GroupBy(x => x.Type).Where(x => x.Count() == 4).Select(x => x.Key).FirstOrDefault();
-                var bestCards = cards.Where(x => x.Type != fourOfAKindType)
-                    .OrderByDescending(x => x.Type)
-                    .Select(x => x.Type)
-                    .Take(ComparableCards - 4)
-                    .ToList();
-                bestCards.AddRange(Enumerable.Repeat(fourOfAKindType, 4));
+                var fourOfAKindType =
+                    cards.GroupBy(x => x.Type)
+                        .Where(x => x.Count() == 4)
+                        .Select(x => x.Key)
+                        .OrderByDescending(x => x)
+                        .FirstOrDefault();
+                var bestCards = new List<CardType>
+                                    {
+                                        fourOfAKindType,
+                                        fourOfAKindType,
+                                        fourOfAKindType,
+                                        fourOfAKindType,
+                                        cards.Where(x => x.Type != fourOfAKindType).Max(x => x.Type)
+                                    };
 
                 return new BestHand(HandRankType.FourOfAKind, bestCards);
             }
@@ -78,15 +85,15 @@
 
             if (pairTypes.Count >= 2)
             {
-                var bestCards =
-                    cards.Where(x => x.Type != pairTypes[0] && x.Type != pairTypes[1])
-                        .OrderByDescending(x => x.Type)
-                        .Select(x => x.Type)
-                        .Take(1).ToList();
-                bestCards.Add(pairTypes[0]);
-                bestCards.Add(pairTypes[0]);
-                bestCards.Add(pairTypes[1]);
-                bestCards.Add(pairTypes[1]);
+                var bestCards = new List<CardType>
+                                    {
+                                        pairTypes[0],
+                                        pairTypes[0],
+                                        pairTypes[1],
+                                        pairTypes[1],
+                                        cards.Where(x => x.Type != pairTypes[0] && x.Type != pairTypes[1])
+                                            .Max(x => x.Type)
+                                    };
                 return new BestHand(HandRankType.TwoPairs, bestCards);
             }
 
@@ -113,14 +120,14 @@
             return cards.GroupBy(x => x.Type).Where(x => x.Count() == 2).Select(x => x.Key).OrderByDescending(x => x).ToList();
         }
 
-        private bool HasFourOfAKind(ICollection<Card> cards)
-        {
-            return cards.GroupBy(x => x.Type).Any(x => x.Count() == 4);
-        }
-
         private IList<CardType> GetThreeOfAKinds(ICollection<Card> cards)
         {
             return cards.GroupBy(x => x.Type).Where(x => x.Count() == 3).Select(x => x.Key).OrderByDescending(x => x).ToList();
+        }
+
+        private bool HasFourOfAKind(ICollection<Card> cards)
+        {
+            return cards.GroupBy(x => x.Type).Any(x => x.Count() == 4);
         }
 
         private ICollection<CardType> GetStraightFlushCards(ICollection<Card> cards)

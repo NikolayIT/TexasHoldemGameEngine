@@ -635,14 +635,114 @@
 
         private static readonly object[] BothHaveFourOfAKindCases =
             {
-                //// new object[]
-                ////     {
-                ////         ExpectedCompareResult.TheyShouldBeEqual,
-                ////         HandRankType.FourOfAKind,
-                ////         new CardType[] { },
-                ////         HandRankType.FourOfAKind,
-                ////         new CardType[] { }
-                ////     }
+                new object[]
+                    {
+                        ExpectedCompareResult.TheyShouldBeEqual,
+                        HandRankType.FourOfAKind,
+                        new[]
+                            {
+                                CardType.Ace, CardType.Ace,
+                                CardType.Ace, CardType.Ace,
+                                CardType.King
+                            },
+                        HandRankType.FourOfAKind,
+                        new[]
+                            {
+                                CardType.Ace, CardType.Ace,
+                                CardType.Ace, CardType.Ace,
+                                CardType.King
+                            }
+                    },
+                new object[]
+                    {
+                        ExpectedCompareResult.TheyShouldBeEqual,
+                        HandRankType.FourOfAKind,
+                        new[]
+                            {
+                                CardType.Three, CardType.Two,
+                                CardType.Two, CardType.Two,
+                                CardType.Two
+                            },
+                        HandRankType.FourOfAKind,
+                        new[]
+                            {
+                                CardType.Three, CardType.Two,
+                                CardType.Two, CardType.Two,
+                                CardType.Two
+                            }
+                    },
+                new object[]
+                    {
+                        ExpectedCompareResult.FirstShouldBeBetter,
+                        HandRankType.FourOfAKind,
+                        new[]
+                            {
+                                CardType.Ace, CardType.Ace,
+                                CardType.Ace, CardType.Ace,
+                                CardType.Jack
+                            },
+                        HandRankType.FourOfAKind,
+                        new[]
+                            {
+                                CardType.King, CardType.King,
+                                CardType.King, CardType.King,
+                                CardType.Queen
+                            }
+                    },
+                new object[]
+                    {
+                        ExpectedCompareResult.FirstShouldBeBetter,
+                        HandRankType.FourOfAKind,
+                        new[]
+                            {
+                                CardType.Four, CardType.Three,
+                                CardType.Three, CardType.Three,
+                                CardType.Three
+                            },
+                        HandRankType.FourOfAKind,
+                        new[]
+                            {
+                                CardType.Five, CardType.Two,
+                                CardType.Two, CardType.Two,
+                                CardType.Two
+                            }
+                    },
+                new object[]
+                    {
+                        ExpectedCompareResult.FirstShouldBeBetter,
+                        HandRankType.FourOfAKind,
+                        new[]
+                            {
+                                CardType.Ace, CardType.Ace,
+                                CardType.Ace, CardType.Ace,
+                                CardType.King
+                            },
+                        HandRankType.FourOfAKind,
+                        new[]
+                            {
+                                CardType.Ace, CardType.Ace,
+                                CardType.Ace, CardType.Ace,
+                                CardType.Queen
+                            }
+                    },
+                new object[]
+                    {
+                        ExpectedCompareResult.FirstShouldBeBetter,
+                        HandRankType.FourOfAKind,
+                        new[]
+                            {
+                                CardType.Ace, CardType.Two,
+                                CardType.Two, CardType.Two,
+                                CardType.Two
+                            },
+                        HandRankType.FourOfAKind,
+                        new[]
+                            {
+                                CardType.King, CardType.Two,
+                                CardType.Two, CardType.Two,
+                                CardType.Two
+                            }
+                    }
             };
 
         private static readonly object[] BothHaveStraightFlushCases =

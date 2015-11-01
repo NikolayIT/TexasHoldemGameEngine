@@ -180,7 +180,21 @@
             ICollection<CardType> firstHand,
             ICollection<CardType> secondHand)
         {
-            return 0;
+            var firstFourOfAKingType = firstHand.GroupBy(x => x).First(x => x.Count() == 4);
+            var secondFourOfAKindType = secondHand.GroupBy(x => x).First(x => x.Count() == 4);
+
+            if (firstFourOfAKingType.Key > secondFourOfAKindType.Key)
+            {
+                return 1;
+            }
+
+            if (firstFourOfAKingType.Key < secondFourOfAKindType.Key)
+            {
+                return -1;
+            }
+
+            // Equal pair => compare high card
+            return CompareTwoHandsWithHighCard(firstHand, secondHand);
         }
     }
 }

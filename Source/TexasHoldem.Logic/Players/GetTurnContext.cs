@@ -10,14 +10,16 @@
             int smallBlind,
             int moneyLeft,
             int currentPot,
-            int maxMoneyPerPlayer)
+            int myMoneyInThePot,
+            int maxMoneyPerPlayerInThePot)
         {
             this.RoundType = roundType;
             this.PreviousActions = previousActions;
             this.SmallBlind = smallBlind;
             this.MoneyLeft = moneyLeft;
             this.CurrentPot = currentPot;
-            this.MaxMoneyPerPlayer = maxMoneyPerPlayer;
+            this.MyMoneyInThePot = myMoneyInThePot;
+            this.MaxMoneyPerPlayerInThePot = maxMoneyPerPlayerInThePot;
         }
 
         public GameRoundType RoundType { get; }
@@ -30,6 +32,10 @@
 
         public int CurrentPot { get; }
 
-        public int MaxMoneyPerPlayer { get; }
+        public int MyMoneyInThePot { get; }
+
+        public int MaxMoneyPerPlayerInThePot { get; }
+
+        public bool CanCheck => this.MyMoneyInThePot == this.MaxMoneyPerPlayerInThePot;
     }
 }

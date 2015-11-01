@@ -55,6 +55,7 @@
                             this.smallBlind,
                             player.Money,
                             this.Pot,
+                            player.CurrentlyInPot,
                             maxMoneyPerPlayer));
 
                 bets.Add(new PlayerActionAndName(player.Name, action));

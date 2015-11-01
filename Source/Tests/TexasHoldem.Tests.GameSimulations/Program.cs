@@ -8,7 +8,7 @@
     {
         public static void Main()
         {
-            // SimulateGames(new SmartVsDummyPlayerSimulator());
+            SimulateGames(new SmartVsDummyPlayerSimulator());
             SimulateGames(new SmartVsSmartPlayerSimulator());
         }
 

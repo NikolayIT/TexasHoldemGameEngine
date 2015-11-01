@@ -11,14 +11,8 @@
     {
         private const int ComparableCards = 5;
 
-        public BestHand GetBestHand(ICollection<Card> cards)
+        public BestHand GetBestHand(IEnumerable<Card> cards)
         {
-            var cardTypeCounts = new int[15]; // Ace = 14
-            foreach (var card in cards)
-            {
-                cardTypeCounts[(int)card.Type]++;
-            }
-
             var cardSuitCounts = new int[4]; // 0, 1, 2, 3
             foreach (var card in cards)
             {
@@ -30,6 +24,12 @@
             if (straightFlushCards.Count > 0)
             {
                 return new BestHand(HandRankType.StraightFlush, straightFlushCards);
+            }
+
+            var cardTypeCounts = new int[15]; // Ace = 14
+            foreach (var card in cards)
+            {
+                cardTypeCounts[(int)card.Type]++;
             }
 
             // Four of a kind
@@ -79,10 +79,21 @@
             }
 
             // Flush
-            var flushCards = this.GetFlushCards(cards);
-            if (flushCards != null)
+            if (cardSuitCounts.Any(x => x >= ComparableCards))
             {
-                return new BestHand(HandRankType.Flush, flushCards);
+                for (var i = 0; i < cardSuitCounts.Length; i++)
+                {
+                    if (cardSuitCounts[i] >= ComparableCards)
+                    {
+                        var flushCards =
+                            cards.Where(x => x.Suit == (CardSuit)i)
+                                .Select(x => x.Type)
+                                .OrderByDescending(x => x)
+                                .Take(ComparableCards)
+                                .ToList();
+                        return new BestHand(HandRankType.Flush, flushCards);
+                    }
+                }
             }
 
             // Straight
@@ -136,7 +147,20 @@
             else
             {
                 // High card
-                var bestCards = cards.OrderByDescending(x => x.Type).Select(x => x.Type).Take(ComparableCards).ToList();
+                var bestCards = new List<CardType>();
+                for (var i = cardTypeCounts.Length - 1; i >= 0; i--)
+                {
+                    if (cardTypeCounts[i] > 0)
+                    {
+                        bestCards.Add((CardType)i);
+                    }
+
+                    if (bestCards.Count == ComparableCards)
+                    {
+                        break;
+                    }
+                }
+
                 return new BestHand(HandRankType.HighCard, bestCards);
             }
         }
@@ -155,7 +179,7 @@
             return pairs;
         }
 
-        private ICollection<CardType> GetStraightFlushCards(int[] cardSuitCounts, ICollection<Card> cards)
+        private ICollection<CardType> GetStraightFlushCards(int[] cardSuitCounts, IEnumerable<Card> cards)
         {
             var straightFlushCardTypes = new List<CardType>();
             for (var i = 0; i < cardSuitCounts.Length; i++)
@@ -194,7 +218,7 @@
                     straightLength++;
                     if (straightLength == ComparableCards)
                     {
-                        var bestStraight = new List<CardType>();
+                        var bestStraight = new List<CardType>(ComparableCards);
                         for (var j = i; j <= i + ComparableCards - 1; j++)
                         {
                             if (j == 1)
@@ -219,19 +243,6 @@
             }
 
             return null;
-        }
-
-        private ICollection<CardType> GetFlushCards(ICollection<Card> cards)
-        {
-            var flushCardTypes = cards
-                .GroupBy(x => x.Suit)
-                .FirstOrDefault(x => x.Count() >= ComparableCards)
-                ?.Select(x => x.Type)
-                .OrderByDescending(x => x)
-                .Take(ComparableCards)
-                .ToList();
-
-            return flushCardTypes;
         }
     }
 }

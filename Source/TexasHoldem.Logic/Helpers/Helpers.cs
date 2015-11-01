@@ -6,18 +6,17 @@
 
     public static class Helpers
     {
+        private static readonly IHandEvaluator HandEvaluator = new HandEvaluator();
+
         public static HandRankType GetHandRank(ICollection<Card> cards)
         {
-            // TODO: Share common object for less memory usage
-            var handEvaluator = new HandEvaluator();
-            return handEvaluator.GetBestHand(cards).RankType;
+            return HandEvaluator.GetBestHand(cards).RankType;
         }
 
-        public static int CompareCards(ICollection<Card> firstPlayerCards, ICollection<Card> secondPlayerCards)
+        public static int CompareCards(IEnumerable<Card> firstPlayerCards, IEnumerable<Card> secondPlayerCards)
         {
-            var handEvaluator = new HandEvaluator();
-            var firstPlayerBestHand = handEvaluator.GetBestHand(firstPlayerCards);
-            var secondPlayerBestHand = handEvaluator.GetBestHand(secondPlayerCards);
+            var firstPlayerBestHand = HandEvaluator.GetBestHand(firstPlayerCards);
+            var secondPlayerBestHand = HandEvaluator.GetBestHand(secondPlayerCards);
             return firstPlayerBestHand.CompareTo(secondPlayerBestHand);
         }
     }

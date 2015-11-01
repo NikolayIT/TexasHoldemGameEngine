@@ -86,8 +86,8 @@
             else
             {
                 var betterHand = Helpers.CompareCards(
-                    this.players[0].Cards.Concat(this.communityCards).ToList(),
-                    this.players[1].Cards.Concat(this.communityCards).ToList());
+                    this.players[0].Cards.Concat(this.communityCards),
+                    this.players[1].Cards.Concat(this.communityCards));
                 if (betterHand > 1)
                 {
                     this.players[0].Money += pot;

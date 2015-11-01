@@ -6,6 +6,6 @@
 
     public interface IHandEvaluator
     {
-        BestHand GetBestHand(ICollection<Card> cards);
+        BestHand GetBestHand(IEnumerable<Card> cards);
     }
 }

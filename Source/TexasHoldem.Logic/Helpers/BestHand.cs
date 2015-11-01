@@ -66,8 +66,8 @@
             ICollection<CardType> firstHand,
             ICollection<CardType> secondHand)
         {
-            var firstSorted = firstHand.OrderBy(x => x).ToList();
-            var secondSorted = secondHand.OrderBy(x => x).ToList();
+            var firstSorted = firstHand.OrderByDescending(x => x).ToList();
+            var secondSorted = secondHand.OrderByDescending(x => x).ToList();
             var cardsToCompare = Math.Min(firstHand.Count, secondHand.Count);
             for (var i = 0; i < cardsToCompare; i++)
             {

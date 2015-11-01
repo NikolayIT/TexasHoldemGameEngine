@@ -70,7 +70,7 @@
                             {
                                 CardType.Ace, CardType.King,
                                 CardType.Queen, CardType.Jack,
-                                CardType.Nine,
+                                CardType.Nine
                             }
                     },
                 new object[]
@@ -88,7 +88,25 @@
                             {
                                 CardType.Ace, CardType.King,
                                 CardType.Queen, CardType.Jack,
-                                CardType.Eight,
+                                CardType.Eight
+                            }
+                    },
+                new object[]
+                    {
+                        ExpectedCompareResult.FirstShouldBeBetter,
+                        HandRankType.HighCard,
+                        new[]
+                            {
+                                CardType.Ace, CardType.King,
+                                CardType.Queen, CardType.Jack,
+                                CardType.Two
+                            },
+                        HandRankType.HighCard,
+                        new[]
+                            {
+                                CardType.King, CardType.Queen,
+                                CardType.Jack, CardType.Ten,
+                                CardType.Three
                             }
                     }
             };

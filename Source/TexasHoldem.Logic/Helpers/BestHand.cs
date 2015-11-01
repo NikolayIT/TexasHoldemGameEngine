@@ -134,7 +134,20 @@
             ICollection<CardType> firstHand,
             ICollection<CardType> secondHand)
         {
-            return 0;
+            var firstThreeOfAKindType = firstHand.GroupBy(x => x).Where(x => x.Count() == 3).OrderByDescending(x => x.Key).FirstOrDefault();
+            var secondThreeOfAKindType = secondHand.GroupBy(x => x).Where(x => x.Count() == 3).OrderByDescending(x => x.Key).FirstOrDefault();
+            if (firstThreeOfAKindType.Key > secondThreeOfAKindType.Key)
+            {
+                return 1;
+            }
+
+            if (secondThreeOfAKindType.Key > firstThreeOfAKindType.Key)
+            {
+                return -1;
+            }
+
+            // Equal triples => compare high card
+            return CompareTwoHandsWithHighCard(firstHand, secondHand);
         }
 
         private static int CompareTwoHandsWithStraight(

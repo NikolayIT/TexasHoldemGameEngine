@@ -305,21 +305,205 @@
                         new[]
                             {
                                 CardType.Ace, CardType.Ace,
-                                CardType.Seven, CardType.Two, CardType.Two,
+                                CardType.Seven, CardType.Two, CardType.Two
                             }
                     }
             };
 
         private static readonly object[] BothHaveThreeOfAKindCases =
             {
-                //// new object[]
-                ////     {
-                ////         ExpectedCompareResult.TheyShouldBeEqual,
-                ////         HandRankType.ThreeOfAKind,
-                ////         new CardType[] { },
-                ////         HandRankType.ThreeOfAKind,
-                ////         new CardType[] { }
-                ////     }
+                new object[]
+                    {
+                        ExpectedCompareResult.TheyShouldBeEqual,
+                        HandRankType.ThreeOfAKind,
+                        new[]
+                            {
+                                CardType.Ace, CardType.Ace,
+                                CardType.Ace, CardType.Five, CardType.Two
+                            },
+                        HandRankType.ThreeOfAKind,
+                        new[]
+                            {
+                                CardType.Ace, CardType.Ace,
+                                CardType.Ace, CardType.Five, CardType.Two
+                            }
+                    },
+                new object[]
+                    {
+                        ExpectedCompareResult.TheyShouldBeEqual,
+                        HandRankType.ThreeOfAKind,
+                        new[]
+                            {
+                                CardType.Ace, CardType.King,
+                                CardType.King, CardType.King, CardType.Two
+                            },
+                        HandRankType.ThreeOfAKind,
+                        new[]
+                            {
+                                CardType.Ace, CardType.King,
+                                CardType.King, CardType.King, CardType.Two
+                            }
+                    },
+                new object[]
+                    {
+                        ExpectedCompareResult.TheyShouldBeEqual,
+                        HandRankType.ThreeOfAKind,
+                        new[]
+                            {
+                                CardType.Ace, CardType.King,
+                                CardType.Queen, CardType.Queen, CardType.Queen
+                            },
+                        HandRankType.ThreeOfAKind,
+                        new[]
+                            {
+                                CardType.Ace, CardType.King,
+                                CardType.Queen, CardType.Queen, CardType.Queen
+                            }
+                    },
+                new object[]
+                    {
+                        ExpectedCompareResult.FirstShouldBeBetter,
+                        HandRankType.ThreeOfAKind,
+                        new[]
+                            {
+                                CardType.Ace, CardType.Ace,
+                                CardType.Ace, CardType.Five, CardType.Two
+                            },
+                        HandRankType.ThreeOfAKind,
+                        new[]
+                            {
+                                CardType.King, CardType.King,
+                                CardType.King, CardType.Five, CardType.Two
+                            }
+                    },
+                new object[]
+                    {
+                        ExpectedCompareResult.FirstShouldBeBetter,
+                        HandRankType.ThreeOfAKind,
+                        new[]
+                            {
+                                CardType.Ace, CardType.King,
+                                CardType.King, CardType.King, CardType.Two
+                            },
+                        HandRankType.ThreeOfAKind,
+                        new[]
+                            {
+                                CardType.Ace, CardType.Queen,
+                                CardType.Queen, CardType.Queen, CardType.Two
+                            }
+                    },
+                new object[]
+                    {
+                        ExpectedCompareResult.FirstShouldBeBetter,
+                        HandRankType.ThreeOfAKind,
+                        new[]
+                            {
+                                CardType.Ace, CardType.King,
+                                CardType.Queen, CardType.Queen, CardType.Queen
+                            },
+                        HandRankType.ThreeOfAKind,
+                        new[]
+                            {
+                                CardType.Ace, CardType.King,
+                                CardType.Jack, CardType.Jack, CardType.Jack
+                            }
+                    },
+                new object[]
+                    {
+                        ExpectedCompareResult.FirstShouldBeBetter,
+                        HandRankType.ThreeOfAKind,
+                        new[]
+                            {
+                                CardType.Ace, CardType.Ace,
+                                CardType.Ace, CardType.Four, CardType.Three
+                            },
+                        HandRankType.ThreeOfAKind,
+                        new[]
+                            {
+                                CardType.Ace, CardType.Ace,
+                                CardType.Ace, CardType.Four, CardType.Two
+                            }
+                    },
+                new object[]
+                    {
+                        ExpectedCompareResult.FirstShouldBeBetter,
+                        HandRankType.ThreeOfAKind,
+                        new[]
+                            {
+                                CardType.Ace, CardType.Ace,
+                                CardType.Ace, CardType.Five, CardType.Two
+                            },
+                        HandRankType.ThreeOfAKind,
+                        new[]
+                            {
+                                CardType.Ace, CardType.Ace,
+                                CardType.Ace, CardType.Four, CardType.Two
+                            }
+                    },
+                new object[]
+                    {
+                        ExpectedCompareResult.FirstShouldBeBetter,
+                        HandRankType.ThreeOfAKind,
+                        new[]
+                            {
+                                CardType.Ace, CardType.Queen,
+                                CardType.Queen, CardType.Queen, CardType.Two
+                            },
+                        HandRankType.ThreeOfAKind,
+                        new[]
+                            {
+                                CardType.King, CardType.Queen,
+                                CardType.Queen, CardType.Queen, CardType.Two
+                            }
+                    },
+                new object[]
+                    {
+                        ExpectedCompareResult.FirstShouldBeBetter,
+                        HandRankType.ThreeOfAKind,
+                        new[]
+                            {
+                                CardType.Ace, CardType.Queen,
+                                CardType.Queen, CardType.Queen, CardType.Three
+                            },
+                        HandRankType.ThreeOfAKind,
+                        new[]
+                            {
+                                CardType.Ace, CardType.Queen,
+                                CardType.Queen, CardType.Queen, CardType.Two
+                            }
+                    },
+                new object[]
+                    {
+                        ExpectedCompareResult.FirstShouldBeBetter,
+                        HandRankType.ThreeOfAKind,
+                        new[]
+                            {
+                                CardType.Ace, CardType.Jack,
+                                CardType.Three, CardType.Three, CardType.Three
+                            },
+                        HandRankType.ThreeOfAKind,
+                        new[]
+                            {
+                                CardType.King, CardType.Jack,
+                                CardType.Three, CardType.Three, CardType.Three
+                            }
+                    },
+                new object[]
+                    {
+                        ExpectedCompareResult.FirstShouldBeBetter,
+                        HandRankType.ThreeOfAKind,
+                        new[]
+                            {
+                                CardType.Ace, CardType.Jack,
+                                CardType.Three, CardType.Three, CardType.Three
+                            },
+                        HandRankType.ThreeOfAKind,
+                        new[]
+                            {
+                                CardType.Ace, CardType.Ten,
+                                CardType.Three, CardType.Three, CardType.Three
+                            }
+                    }
             };
 
         private static readonly object[] BothHaveStraightCases =

@@ -154,7 +154,19 @@
             ICollection<CardType> firstHand,
             ICollection<CardType> secondHand)
         {
-            return 0;
+            var firstBiggestCardType = firstHand.Max();
+            if (firstBiggestCardType == CardType.Ace && firstHand.Contains(CardType.Five))
+            {
+                firstBiggestCardType = CardType.Five;
+            }
+
+            var secondBiggestCardType = secondHand.Max();
+            if (secondBiggestCardType == CardType.Ace && secondHand.Contains(CardType.Five))
+            {
+                secondBiggestCardType = CardType.Five;
+            }
+
+            return firstBiggestCardType.CompareTo(secondBiggestCardType);
         }
 
         private static int CompareTwoHandsWithFullHouse(

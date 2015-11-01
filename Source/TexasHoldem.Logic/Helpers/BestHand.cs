@@ -173,7 +173,22 @@
             ICollection<CardType> firstHand,
             ICollection<CardType> secondHand)
         {
-            return 0;
+            var firstThreeOfAKindType = firstHand.GroupBy(x => x).Where(x => x.Count() == 3).OrderByDescending(x => x.Key).FirstOrDefault();
+            var secondThreeOfAKindType = secondHand.GroupBy(x => x).Where(x => x.Count() == 3).OrderByDescending(x => x.Key).FirstOrDefault();
+
+            if (firstThreeOfAKindType.Key > secondThreeOfAKindType.Key)
+            {
+                return 1;
+            }
+
+            if (secondThreeOfAKindType.Key > firstThreeOfAKindType.Key)
+            {
+                return -1;
+            }
+
+            var firstPairType = firstHand.GroupBy(x => x).First(x => x.Count() == 2);
+            var secondPairType = secondHand.GroupBy(x => x).First(x => x.Count() == 2);
+            return firstPairType.Key.CompareTo(secondPairType.Key);
         }
 
         private static int CompareTwoHandsWithFourOfAKind(

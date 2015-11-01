@@ -625,12 +625,70 @@
 
         private static readonly object[] BothHaveFullHouseCases =
             {
-                //// new object[]
-                ////     {
-                ////         ExpectedCompareResult.TheyShouldBeEqual,
-                ////         HandRankType.FullHouse, new CardType[] { },
-                ////         HandRankType.FullHouse, new CardType[] { }
-                ////     }
+                new object[]
+                    {
+                        ExpectedCompareResult.TheyShouldBeEqual,
+                        HandRankType.FullHouse,
+                        new[]
+                            {
+                                CardType.Ace, CardType.Ace, CardType.Ace,
+                                CardType.King, CardType.King
+                            },
+                        HandRankType.FullHouse,
+                        new[]
+                            {
+                                CardType.Ace, CardType.Ace, CardType.Ace,
+                                CardType.King, CardType.King
+                            }
+                    },
+                new object[]
+                    {
+                        ExpectedCompareResult.TheyShouldBeEqual,
+                        HandRankType.FullHouse,
+                        new[]
+                            {
+                                CardType.Ace, CardType.Ace,
+                                CardType.King, CardType.King, CardType.King
+                            },
+                        HandRankType.FullHouse,
+                        new[]
+                            {
+                                CardType.Ace, CardType.Ace,
+                                CardType.King, CardType.King, CardType.King
+                            }
+                    },
+                new object[]
+                    {
+                        ExpectedCompareResult.FirstShouldBeBetter,
+                        HandRankType.FullHouse,
+                        new[]
+                            {
+                                CardType.Three, CardType.Three, CardType.Three,
+                                CardType.Ace, CardType.Ace
+                            },
+                        HandRankType.FullHouse,
+                        new[]
+                            {
+                                CardType.Two, CardType.Two, CardType.Two,
+                                CardType.Ace, CardType.Ace
+                            }
+                    },
+                new object[]
+                    {
+                        ExpectedCompareResult.FirstShouldBeBetter,
+                        HandRankType.FullHouse,
+                        new[]
+                            {
+                                CardType.Three, CardType.Three, CardType.Three,
+                                CardType.Four, CardType.Four
+                            },
+                        HandRankType.FullHouse,
+                        new[]
+                            {
+                                CardType.Two, CardType.Two, CardType.Two,
+                                CardType.Ace, CardType.Ace
+                            }
+                    },
             };
 
         private static readonly object[] BothHaveFourOfAKindCases =

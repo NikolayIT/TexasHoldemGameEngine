@@ -16,9 +16,9 @@
             this.Money = money;
         }
 
-        public PlayerActionType Type { get; }
+        public PlayerActionType Type { get; internal set; }
 
-        public int Money { get; }
+        public int Money { get; internal set; }
 
         public static PlayerAction Fold()
         {

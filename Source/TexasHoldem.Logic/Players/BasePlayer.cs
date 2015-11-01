@@ -10,12 +10,18 @@
 
         protected IReadOnlyCollection<Card> CommunityCards { get; private set; }
 
+        protected Card FirstCard { get; set; }
+
+        protected Card SecondCard { get; set; }
+
         public virtual void StartGame(StartGameContext context)
         {
         }
 
         public virtual void StartHand(StartHandContext context)
         {
+            this.FirstCard = context.FirstCard;
+            this.SecondCard = context.SecondCard;
         }
 
         public virtual void StartRound(StartRoundContext context)

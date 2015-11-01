@@ -15,10 +15,15 @@
         {
             this.allPlayers = players;
             this.smallBlind = smallBlind;
-            this.Pot = 0;
         }
 
-        public int Pot { get; private set; }
+        public int Pot
+        {
+            get
+            {
+                return this.allPlayers.Sum(x => x.CurrentlyInPot);
+            }
+        }
 
         public void Bet(GameRoundType gameRoundType)
         {
@@ -26,11 +31,11 @@
             if (gameRoundType == GameRoundType.PreFlop)
             {
                 // TODO: What if small blind is bigger than player's money?
-                this.Bet(this.allPlayers[0], this.smallBlind);
+                this.allPlayers[0].PlaceMoney(this.smallBlind);
                 bets.Add(new PlayerActionAndName(this.allPlayers[0].Name, PlayerAction.Raise(this.smallBlind)));
 
                 // TODO: What if big blind is bigger than player's money?
-                this.Bet(this.allPlayers[1], this.smallBlind * 2);
+                this.allPlayers[1].PlaceMoney(this.smallBlind * 2);
                 bets.Add(new PlayerActionAndName(this.allPlayers[1].Name, PlayerAction.Raise(this.smallBlind * 2)));
             }
 
@@ -44,7 +49,7 @@
                     continue;
                 }
 
-                var maxMoneyPerPlayer = this.allPlayers.Max(x => x.CurrentlyInPot);
+                var maxMoneyPerPlayer = this.allPlayers.Max(x => x.CurrentBet);
                 var action =
                     player.GetTurn(
                         new GetTurnContext(
@@ -56,37 +61,38 @@
                             player.CurrentlyInPot,
                             maxMoneyPerPlayer));
 
-                bets.Add(new PlayerActionAndName(player.Name, action));
-
                 if (action.Type == PlayerActionType.Raise)
                 {
+                    // TODO: Min raise?
                     foreach (var playerToUpdate in this.allPlayers)
                     {
                         playerToUpdate.ShouldPlayInRound = true;
                     }
 
-                    this.Bet(player, action.Money);
+                    player.Call(maxMoneyPerPlayer);
+                    if (player.Money > action.Money)
+                    {
+                        player.PlaceMoney(action.Money);
+                    }
+                    else
+                    {
+                        // All-in
+                        action.Money = player.Money;
+                        player.PlaceMoney(action.Money);
+                    }
                 }
                 else if (action.Type == PlayerActionType.CheckCall)
                 {
-                    player.ShouldPlayInRound = true;
-                    var amountToCall = this.allPlayers.Max(x => x.CurrentlyInPot) - player.CurrentlyInPot;
-                    this.Bet(player, amountToCall);
+                    player.Call(maxMoneyPerPlayer);
                 }
                 else //// PlayerActionType.Fold
                 {
                     player.InHand = false;
                 }
 
-                // TODO: Pot is splitted evenly - if %2 == 1 - first awarded takes 1 chip extra - (e.g. SB)
+                bets.Add(new PlayerActionAndName(player.Name, action));
                 player.ShouldPlayInRound = false;
             }
-        }
-
-        private void Bet(InternalPlayer player, int amount)
-        {
-            player.Bet(amount);
-            this.Pot += amount;
         }
     }
 }

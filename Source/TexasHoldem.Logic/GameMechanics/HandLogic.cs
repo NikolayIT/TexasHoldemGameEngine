@@ -48,13 +48,22 @@
             this.PlayRound(GameRoundType.PreFlop, 0);
 
             // Flop -> 3 cards -> betting
-            this.PlayRound(GameRoundType.Flop, 3);
+            if (this.players.Count(x => x.InHand) > 1)
+            {
+                this.PlayRound(GameRoundType.Flop, 3);
+            }
 
             // Turn -> 1 card -> betting
-            this.PlayRound(GameRoundType.Turn, 1);
+            if (this.players.Count(x => x.InHand) > 1)
+            {
+                this.PlayRound(GameRoundType.Turn, 1);
+            }
 
             // River -> 1 card -> betting
-            this.PlayRound(GameRoundType.River, 1);
+            if (this.players.Count(x => x.InHand) > 1)
+            {
+                this.PlayRound(GameRoundType.River, 1);
+            }
 
             // TODO: Determine winner and give him/them the pot
             foreach (var player in this.players)

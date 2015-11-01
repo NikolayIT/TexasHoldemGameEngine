@@ -276,6 +276,25 @@
                             CardType.Queen, CardType.Jack, CardType.Ten,
                             CardType.Nine, CardType.Eight
                         }
+                    },
+                new object[]
+                    {
+                        new[]
+                            {
+                                new Card(CardSuit.Diamond, CardType.Ace),
+                                new Card(CardSuit.Heart, CardType.Two),
+                                new Card(CardSuit.Diamond, CardType.Three),
+                                new Card(CardSuit.Heart, CardType.Four),
+                                new Card(CardSuit.Diamond, CardType.Five),
+                                new Card(CardSuit.Heart, CardType.Six),
+                                new Card(CardSuit.Diamond, CardType.Seven)
+                            },
+                        HandRankType.Straight,
+                        new[]
+                        {
+                            CardType.Three, CardType.Four, CardType.Five,
+                            CardType.Six, CardType.Seven
+                        }
                     }
             };
 
@@ -379,6 +398,25 @@
                             CardType.Two, CardType.Two, CardType.Two,
                             CardType.Ten, CardType.Ten
                         }
+                    },
+                new object[]
+                    {
+                        new[]
+                            {
+                                new Card(CardSuit.Spade, CardType.Ace),
+                                new Card(CardSuit.Heart, CardType.Ace),
+                                new Card(CardSuit.Club, CardType.Ace),
+                                new Card(CardSuit.Diamond, CardType.King),
+                                new Card(CardSuit.Club, CardType.King),
+                                new Card(CardSuit.Heart, CardType.King),
+                                new Card(CardSuit.Spade, CardType.Queen)
+                            },
+                        HandRankType.FullHouse,
+                        new[]
+                        {
+                            CardType.Ace, CardType.Ace, CardType.Ace,
+                            CardType.King, CardType.King
+                        }
                     }
             };
 
@@ -403,6 +441,25 @@
                                 CardType.Ace, CardType.Ten
                             }
                     },
+                new object[]
+                    {
+                        new[]
+                            {
+                                new Card(CardSuit.Spade, CardType.Ace),
+                                new Card(CardSuit.Heart, CardType.Ace),
+                                new Card(CardSuit.Club, CardType.Ace),
+                                new Card(CardSuit.Diamond, CardType.Two),
+                                new Card(CardSuit.Club, CardType.Two),
+                                new Card(CardSuit.Club, CardType.Two),
+                                new Card(CardSuit.Spade, CardType.Two)
+                            },
+                        HandRankType.FourOfAKind,
+                        new[]
+                            {
+                                CardType.Two, CardType.Two, CardType.Two,
+                                CardType.Two, CardType.Ace
+                            }
+                    },
             };
 
         private static readonly object[] StraightFlushCases =
@@ -416,15 +473,18 @@
                                 new Card(CardSuit.Spade, CardType.Three),
                                 new Card(CardSuit.Spade, CardType.Four),
                                 new Card(CardSuit.Spade, CardType.Five),
-                                new Card(CardSuit.Diamond, CardType.Eight),
+                                new Card(
+                                    CardSuit.Diamond,
+                                    CardType.Eight),
                                 new Card(CardSuit.Heart, CardType.Jack),
                                 new Card(CardSuit.Club, CardType.Queen)
                             },
                         HandRankType.StraightFlush,
                         new[]
                             {
-                                CardType.Ace, CardType.Two, CardType.Three,
-                                CardType.Four, CardType.Five
+                                CardType.Ace, CardType.Two,
+                                CardType.Three, CardType.Four,
+                                CardType.Five
                             }
                     },
                 new object[]
@@ -443,8 +503,51 @@
                         HandRankType.StraightFlush,
                         new[]
                             {
-                                CardType.Ace, CardType.Two, CardType.Three,
-                                CardType.Four, CardType.Five
+                                CardType.Ace, CardType.Two,
+                                CardType.Three, CardType.Four,
+                                CardType.Five
+                            }
+                    },
+                new object[]
+                    {
+                        new[]
+                            {
+                                new Card(CardSuit.Spade, CardType.Ace),
+                                new Card(CardSuit.Spade, CardType.Two),
+                                new Card(CardSuit.Spade, CardType.Three),
+                                new Card(CardSuit.Spade, CardType.Four),
+                                new Card(CardSuit.Spade, CardType.Five),
+                                new Card(CardSuit.Spade, CardType.Six),
+                                new Card(CardSuit.Spade, CardType.Seven)
+                            },
+                        HandRankType.StraightFlush,
+                        new[]
+                            {
+                                CardType.Three, CardType.Four,
+                                CardType.Five, CardType.Six,
+                                CardType.Seven
+                            }
+                    },
+                new object[]
+                    {
+                        new[]
+                            {
+                                new Card(CardSuit.Spade, CardType.Ace),
+                                new Card(CardSuit.Spade, CardType.Two),
+                                new Card(CardSuit.Spade, CardType.Three),
+                                new Card(CardSuit.Spade, CardType.Four),
+                                new Card(CardSuit.Spade, CardType.Five),
+                                new Card(CardSuit.Spade, CardType.Ten),
+                                new Card(CardSuit.Spade, CardType.Jack),
+                                new Card(CardSuit.Spade, CardType.Queen),
+                                new Card(CardSuit.Spade, CardType.King)
+                            },
+                        HandRankType.StraightFlush,
+                        new[]
+                            {
+                                CardType.Ace, CardType.King,
+                                CardType.Queen, CardType.Jack,
+                                CardType.Ten
                             }
                     },
             };

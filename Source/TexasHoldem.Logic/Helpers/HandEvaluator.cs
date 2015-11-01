@@ -131,43 +131,44 @@
 
         private ICollection<CardType> GetStraightCards(ICollection<Card> cards)
         {
-            var straightCards = new List<CardType>();
-            var types = cards.GroupBy(x => x.Type).Select(x => (int)x.Key).ToList();
-            if (cards.Any(x => x.Type == CardType.Ace))
+            var straightCards = cards.Select(x => (int)x.Type).ToList();
+            if (straightCards.Contains((int)CardType.Ace))
             {
-                types.Add((int)CardType.Two - 1);
-                straightCards.Add(CardType.Ace);
+                straightCards.Add(1);
             }
 
-            types.Sort();
-
-            var cardsCount = types.Count;
-            var currentSequence = 1;
-            var lastType = types[0];
-            for (var i = 1; i < cardsCount; i++)
+            straightCards.Sort();
+            var lastCard = int.MaxValue;
+            var straightLenth = 0;
+            for (var i = straightCards.Count - 1; i >= 0; i--)
             {
-                if (types[i] - 1 == lastType)
+                if (straightCards[i] == lastCard - 1)
                 {
-                    currentSequence++;
-                    straightCards.Add((CardType)types[i]);
-                    if (currentSequence >= ComparableCards)
+                    straightLenth++;
+                    if (straightLenth == ComparableCards)
                     {
-                        return straightCards;
+                        var bestStraight = new List<CardType>();
+                        for (int j = straightCards[i]; j <= straightCards[i] + ComparableCards - 1; j++)
+                        {
+                            if (j == 1)
+                            {
+                                bestStraight.Add(CardType.Ace);
+                            }
+                            else
+                            {
+                                bestStraight.Add((CardType)j);
+                            }
+                        }
+
+                        return bestStraight;
                     }
                 }
                 else
                 {
-                    if (i > cardsCount - ComparableCards)
-                    {
-                        return null;
-                    }
-
-                    straightCards.Clear();
-                    straightCards.Add((CardType)types[i]);
-                    currentSequence = 1;
+                    straightLenth = 1;
                 }
 
-                lastType = types[i];
+                lastCard = straightCards[i];
             }
 
             return null;

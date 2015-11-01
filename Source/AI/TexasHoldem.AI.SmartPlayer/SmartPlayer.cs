@@ -1,8 +1,9 @@
-﻿// http://www.rakebackpros.net/texas-holdem-starting-hands/
-namespace TexasHoldem.AI.SmartPlayer
+﻿namespace TexasHoldem.AI.SmartPlayer
 {
     using System;
 
+    using TexasHoldem.AI.SmartPlayer.Helpers;
+    using TexasHoldem.Logic;
     using TexasHoldem.Logic.Players;
 
     public class SmartPlayer : BasePlayer
@@ -11,8 +12,24 @@ namespace TexasHoldem.AI.SmartPlayer
 
         public override PlayerAction GetTurn(GetTurnContext context)
         {
-            // TODO: Implement smart logic
-            return PlayerAction.Fold();
+            if (context.RoundType == GameRoundType.PreFlop)
+            {
+                var playHand = HandStrengthValuation.PreFlop(this.FirstCard, this.SecondCard);
+                if (playHand == CardValuationType.Unplayable)
+                {
+                    return PlayerAction.Fold();
+                }
+                else if (playHand == CardValuationType.Recommended)
+                {
+                    return PlayerAction.Raise(context.SmallBlind * 2);
+                }
+                else
+                {
+                    return PlayerAction.CheckOrCall();
+                }
+            }
+
+            return PlayerAction.CheckOrCall();
         }
     }
 }

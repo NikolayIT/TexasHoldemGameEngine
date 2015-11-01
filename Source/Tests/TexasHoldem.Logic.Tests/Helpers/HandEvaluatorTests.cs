@@ -32,6 +32,26 @@
                                 CardType.Ace, CardType.King, CardType.Seven,
                                 CardType.Six, CardType.Five
                             }
+                    },
+                new object[]
+                    {
+                        new[]
+                            {
+                                new Card(CardSuit.Spade, CardType.Ace),
+                                new Card(CardSuit.Spade, CardType.King),
+                                new Card(CardSuit.Spade, CardType.Queen),
+                                new Card(CardSuit.Heart, CardType.Jack),
+                                new Card(CardSuit.Spade, CardType.Nine),
+                                new Card(CardSuit.Club, CardType.Eight),
+                                new Card(CardSuit.Diamond, CardType.Seven),
+                                new Card(CardSuit.Diamond, CardType.Six)
+                            },
+                        HandRankType.HighCard,
+                        new[]
+                            {
+                                CardType.Ace, CardType.King, CardType.Queen,
+                                CardType.Jack, CardType.Nine
+                            }
                     }
             };
 

@@ -16,7 +16,7 @@
             this.Money = money;
         }
 
-        public PlayerActionType Type { get; internal set; }
+        public PlayerActionType Type { get; }
 
         public int Money { get; internal set; }
 
@@ -46,7 +46,14 @@
 
         public override string ToString()
         {
-            return $"{this.Type}({this.Money})";
+            if (this.Type == PlayerActionType.Raise)
+            {
+                return $"{this.Type}({this.Money})";
+            }
+            else
+            {
+                return this.Type.ToString();
+            }
         }
     }
 }

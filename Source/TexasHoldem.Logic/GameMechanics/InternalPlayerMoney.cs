@@ -17,7 +17,7 @@
 
         public int CurrentRoundBet { get; private set; }
 
-        public bool InHand { get; set; }
+        public bool InHand { get; private set; }
 
         public bool ShouldPlayInRound { get; set; }
 

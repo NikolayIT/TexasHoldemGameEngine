@@ -28,23 +28,31 @@
         public void Bet(GameRoundType gameRoundType)
         {
             var bets = new List<PlayerActionAndName>();
+
+            var playerIndex = 0;
             if (gameRoundType == GameRoundType.PreFlop)
             {
                 var smallBlindAction = PlayerAction.Raise(this.smallBlind);
 
                 // Small blind
-                this.allPlayers[0].PlayerMoney.DoPlayerAction(smallBlindAction, 0);
-                bets.Add(new PlayerActionAndName(this.allPlayers[0].Name, PlayerAction.Raise(this.smallBlind)));
+                bets.Add(
+                    new PlayerActionAndName(
+                        this.allPlayers[0].Name,
+                        this.allPlayers[0].PlayerMoney.DoPlayerAction(smallBlindAction, 0)));
+                playerIndex++;
 
                 // Big blind
                 this.allPlayers[1].PlayerMoney.DoPlayerAction(smallBlindAction, this.smallBlind);
-                bets.Add(new PlayerActionAndName(this.allPlayers[1].Name, PlayerAction.Raise(this.smallBlind)));
+                bets.Add(
+                    new PlayerActionAndName(
+                        this.allPlayers[1].Name,
+                        this.allPlayers[0].PlayerMoney.DoPlayerAction(smallBlindAction, 0)));
+                playerIndex++;
             }
 
-            var playerIndex = 1;
-            while (this.allPlayers.Count(x => x.PlayerMoney.InHand) >= 2 && this.allPlayers.Any(x => x.PlayerMoney.ShouldPlayInRound))
+            while (this.allPlayers.Count(x => x.PlayerMoney.InHand) >= 2
+                   && this.allPlayers.Any(x => x.PlayerMoney.ShouldPlayInRound))
             {
-                playerIndex++;
                 var player = this.allPlayers[playerIndex % this.allPlayers.Count];
                 if (!player.PlayerMoney.InHand)
                 {
@@ -64,16 +72,19 @@
                             maxMoneyPerPlayer));
 
                 action = player.PlayerMoney.DoPlayerAction(action, maxMoneyPerPlayer);
+                bets.Add(new PlayerActionAndName(player.Name, action));
+
                 if (action.Type == PlayerActionType.Raise)
                 {
+                    // When raising, all players are required to do action
                     foreach (var playerToUpdate in this.allPlayers)
                     {
                         playerToUpdate.PlayerMoney.ShouldPlayInRound = true;
                     }
                 }
 
-                bets.Add(new PlayerActionAndName(player.Name, action));
                 player.PlayerMoney.ShouldPlayInRound = false;
+                playerIndex++;
             }
         }
     }

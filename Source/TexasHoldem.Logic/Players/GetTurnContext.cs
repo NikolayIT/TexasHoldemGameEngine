@@ -37,5 +37,7 @@
         public int MaxMoneyPerPlayerInThePot { get; }
 
         public bool CanCheck => this.MyMoneyInThePot == this.MaxMoneyPerPlayerInThePot;
+
+        public bool IsAllIn => this.MoneyLeft <= 0;
     }
 }

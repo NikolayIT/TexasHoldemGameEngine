@@ -1,5 +1,7 @@
 ﻿namespace TexasHoldem.Logic.GameMechanics
 {
+    using System;
+
     using TexasHoldem.Logic.Players;
 
     public class InternalPlayerMoney
@@ -43,19 +45,18 @@
             }
         }
 
+        // TODO: Currently there is no limit in the raise amount as long as it is positive number
         public PlayerAction DoPlayerAction(PlayerAction action, int maxMoneyPerPlayer)
         {
             if (action.Type == PlayerActionType.Raise)
             {
-                // TODO: What if maxMoneyPerPlayer is bigger than player's money?
-                this.Call(maxMoneyPerPlayer);
+                this.CallTo(maxMoneyPerPlayer);
 
                 if (this.Money <= 0)
                 {
                     return PlayerAction.CheckOrCall();
                 }
 
-                // TODO: Min raise?
                 if (this.Money > action.Money)
                 {
                     this.PlaceMoney(action.Money);
@@ -69,8 +70,7 @@
             }
             else if (action.Type == PlayerActionType.CheckCall)
             {
-                // TODO: What if maxMoneyPerPlayer is bigger than player's money?
-                this.Call(maxMoneyPerPlayer);
+                this.CallTo(maxMoneyPerPlayer);
             }
             else //// PlayerActionType.Fold
             {
@@ -88,9 +88,10 @@
             this.Money -= money;
         }
 
-        private void Call(int maxMoneyPerPlayer)
+        private void CallTo(int maxMoneyPerPlayer)
         {
-            var diff = maxMoneyPerPlayer - this.CurrentRoundBet;
+            var moneyToPay = Math.Min(this.CurrentRoundBet + this.Money, maxMoneyPerPlayer);
+            var diff = moneyToPay - this.CurrentRoundBet;
             this.PlaceMoney(diff);
         }
     }

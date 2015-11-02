@@ -111,6 +111,7 @@
             var internalPlayerMoney = new InternalPlayerMoney(1000);
 
             var action = internalPlayerMoney.DoPlayerAction(PlayerAction.Fold(), 100);
+
             Assert.AreEqual(PlayerActionType.Fold, action.Type);
 
             Assert.AreEqual(1000, internalPlayerMoney.Money);
@@ -118,6 +119,111 @@
             Assert.AreEqual(0, internalPlayerMoney.CurrentlyInPot);
         }
 
-        // TODO: Check values when not sufficient money
+        [Test]
+        public void CallWhenNoMoney()
+        {
+            var internalPlayerMoney = new InternalPlayerMoney(0);
+
+            // TODO: The other player should receive 120 back to his account
+            var action = internalPlayerMoney.DoPlayerAction(PlayerAction.CheckOrCall(), 120);
+
+            Assert.AreEqual(PlayerActionType.CheckCall, action.Type);
+
+            Assert.AreEqual(0, internalPlayerMoney.Money);
+            Assert.AreEqual(0, internalPlayerMoney.CurrentRoundBet);
+            Assert.AreEqual(0, internalPlayerMoney.CurrentlyInPot);
+        }
+
+        [Test]
+        public void CallWhenNotSufficientMoney()
+        {
+            var internalPlayerMoney = new InternalPlayerMoney(100);
+
+            internalPlayerMoney.DoPlayerAction(PlayerAction.CheckOrCall(), 80);
+            var action = internalPlayerMoney.DoPlayerAction(PlayerAction.CheckOrCall(), 120);
+
+            Assert.AreEqual(PlayerActionType.CheckCall, action.Type);
+
+            Assert.AreEqual(0, internalPlayerMoney.Money);
+            Assert.AreEqual(100, internalPlayerMoney.CurrentRoundBet);
+            Assert.AreEqual(100, internalPlayerMoney.CurrentlyInPot);
+        }
+
+        [Test]
+        public void CallWhenNotSufficientMoneyAndDiffIs0()
+        {
+            var internalPlayerMoney = new InternalPlayerMoney(100);
+
+            internalPlayerMoney.DoPlayerAction(PlayerAction.CheckOrCall(), 100);
+            var action = internalPlayerMoney.DoPlayerAction(PlayerAction.CheckOrCall(), 120);
+
+            Assert.AreEqual(PlayerActionType.CheckCall, action.Type);
+
+            Assert.AreEqual(0, internalPlayerMoney.Money);
+            Assert.AreEqual(100, internalPlayerMoney.CurrentRoundBet);
+            Assert.AreEqual(100, internalPlayerMoney.CurrentlyInPot);
+        }
+
+        [Test]
+        public void RaiseWhenNotSufficientMoney()
+        {
+            var internalPlayerMoney = new InternalPlayerMoney(10);
+
+            var action = internalPlayerMoney.DoPlayerAction(PlayerAction.Raise(20), 0);
+
+            Assert.AreEqual(PlayerActionType.Raise, action.Type);
+            Assert.AreEqual(10, action.Money);
+
+            Assert.AreEqual(0, internalPlayerMoney.Money);
+            Assert.AreEqual(10, internalPlayerMoney.CurrentRoundBet);
+            Assert.AreEqual(10, internalPlayerMoney.CurrentlyInPot);
+        }
+
+        [Test]
+        public void RaiseWhenNotSufficientMoneyAfterACall()
+        {
+            var internalPlayerMoney = new InternalPlayerMoney(10);
+
+            internalPlayerMoney.DoPlayerAction(PlayerAction.CheckOrCall(), 5);
+            var action = internalPlayerMoney.DoPlayerAction(PlayerAction.Raise(20), 5);
+
+            Assert.AreEqual(PlayerActionType.Raise, action.Type);
+            Assert.AreEqual(5, action.Money);
+
+            Assert.AreEqual(0, internalPlayerMoney.Money);
+            Assert.AreEqual(10, internalPlayerMoney.CurrentRoundBet);
+            Assert.AreEqual(10, internalPlayerMoney.CurrentlyInPot);
+        }
+
+        [Test]
+        public void RaiseWhenNoMoney()
+        {
+            var internalPlayerMoney = new InternalPlayerMoney(0);
+
+            var action = internalPlayerMoney.DoPlayerAction(PlayerAction.Raise(20), 0);
+
+            Assert.AreEqual(PlayerActionType.CheckCall, action.Type);
+
+            Assert.AreEqual(0, action.Money);
+            Assert.AreEqual(0, internalPlayerMoney.Money);
+            Assert.AreEqual(0, internalPlayerMoney.CurrentRoundBet);
+            Assert.AreEqual(0, internalPlayerMoney.CurrentlyInPot);
+        }
+
+        [Test]
+        public void RaiseWhenNoMoneyAndPreviousBet()
+        {
+            var internalPlayerMoney = new InternalPlayerMoney(0);
+
+            var action = internalPlayerMoney.DoPlayerAction(PlayerAction.Raise(20), 10);
+
+            Assert.AreEqual(PlayerActionType.CheckCall, action.Type);
+
+            Assert.AreEqual(0, internalPlayerMoney.Money);
+            Assert.AreEqual(0, internalPlayerMoney.CurrentRoundBet);
+            Assert.AreEqual(0, internalPlayerMoney.CurrentlyInPot);
+        }
+
+        // TODO: Add more tests to cover additional special cases (if any)
     }
 }

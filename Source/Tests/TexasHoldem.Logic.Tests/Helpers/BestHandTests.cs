@@ -672,7 +672,38 @@
 
         private static readonly object[] BothHaveFlushCases =
             {
-                // Tests from BothHaveHighCardCases are sufficient
+                new object[]
+                    {
+                        ExpectedCompareResult.FirstShouldBeBetter,
+                        HandRankType.Flush,
+                        new[]
+                            {
+                                CardType.Ace, CardType.King, CardType.Ten,
+                                CardType.Eight, CardType.Two
+                            },
+                        HandRankType.Flush,
+                        new[]
+                            {
+                                CardType.Ace, CardType.King, CardType.Nine,
+                                CardType.Eight, CardType.Five
+                            }
+                    },
+                new object[]
+                    {
+                        ExpectedCompareResult.TheyShouldBeEqual,
+                        HandRankType.Flush,
+                        new[]
+                            {
+                                CardType.Ace, CardType.King, CardType.Ten,
+                                CardType.Eight, CardType.Two
+                            },
+                        HandRankType.Flush,
+                        new[]
+                            {
+                                CardType.Ace, CardType.King, CardType.Ten,
+                                CardType.Eight, CardType.Two
+                            }
+                    }
             };
 
         private static readonly object[] BothHaveFullHouseCases =

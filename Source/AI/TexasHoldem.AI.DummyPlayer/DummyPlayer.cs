@@ -12,7 +12,7 @@
         public override PlayerAction GetTurn(GetTurnContext context)
         {
             var chanceForAction = RandomProvider.Next(1, 101);
-            if (chanceForAction == 1)
+            if (chanceForAction == 1 && context.MoneyLeft > 0)
             {
                 // All-in
                 return PlayerAction.Raise(context.MoneyLeft);

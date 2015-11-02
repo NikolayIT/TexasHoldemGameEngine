@@ -11,14 +11,19 @@
             this.NewRound();
         }
 
+        // Player money in the game
         public int Money { get; set; }
 
+        // The amount of money the player is currently put in the pot
         public int CurrentlyInPot { get; private set; }
 
+        // The amount of money the player is currently bet
         public int CurrentRoundBet { get; private set; }
 
+        // False when player folds
         public bool InHand { get; private set; }
 
+        // Player action is expected (some other player raised)
         public bool ShouldPlayInRound { get; set; }
 
         public void NewHand()
@@ -26,6 +31,7 @@
             this.CurrentlyInPot = 0;
             this.CurrentRoundBet = 0;
             this.InHand = true;
+            this.ShouldPlayInRound = true;
         }
 
         public void NewRound()
@@ -69,6 +75,7 @@
             else //// PlayerActionType.Fold
             {
                 this.InHand = false;
+                this.ShouldPlayInRound = false;
             }
 
             return action;

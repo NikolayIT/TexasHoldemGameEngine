@@ -1,6 +1,7 @@
 ﻿namespace TexasHoldem.Logic.GameMechanics
 {
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Linq;
 
     using TexasHoldem.Logic.Cards;
@@ -74,6 +75,8 @@
                 // TODO: Showdown?
                 player.EndHand(new EndHandContext());
             }
+
+            Debug.Assert(this.players[0].PlayerMoney.Money + this.players[1].PlayerMoney.Money == 2000);
         }
 
         private void DetermineWinnerAndAddPot(int pot)
@@ -88,11 +91,11 @@
                 var betterHand = Helpers.CompareCards(
                     this.players[0].Cards.Concat(this.communityCards),
                     this.players[1].Cards.Concat(this.communityCards));
-                if (betterHand > 1)
+                if (betterHand > 0)
                 {
                     this.players[0].PlayerMoney.Money += pot;
                 }
-                else if (betterHand < 1)
+                else if (betterHand < 0)
                 {
                     this.players[1].PlayerMoney.Money += pot;
                 }

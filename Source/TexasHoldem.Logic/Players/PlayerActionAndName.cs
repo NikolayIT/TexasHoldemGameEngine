@@ -8,8 +8,8 @@
             this.Action = action;
         }
 
-        public string PlayerName { get; set; }
+        public string PlayerName { get; }
 
-        public PlayerAction Action { get; set; }
+        public PlayerAction Action { get; }
     }
 }

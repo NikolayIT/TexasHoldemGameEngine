@@ -4,6 +4,7 @@
 
     using TexasHoldem.AI.SmartPlayer.Helpers;
     using TexasHoldem.Logic;
+    using TexasHoldem.Logic.Extensions;
     using TexasHoldem.Logic.Players;
 
     public class SmartPlayer : BasePlayer
@@ -17,12 +18,26 @@
                 var playHand = HandStrengthValuation.PreFlop(this.FirstCard, this.SecondCard);
                 if (playHand == CardValuationType.Unplayable)
                 {
-                    return PlayerAction.Fold();
+                    if (context.CanCheck)
+                    {
+                        return PlayerAction.CheckOrCall();
+                    }
+                    else
+                    {
+                        return PlayerAction.Fold();
+                    }
+                }
+
+                if (playHand == CardValuationType.Risky)
+                {
+                    var smallBlindsTimes = RandomProvider.Next(1, 8);
+                    return PlayerAction.Raise(context.SmallBlind * smallBlindsTimes);
                 }
 
                 if (playHand == CardValuationType.Recommended)
                 {
-                    return PlayerAction.Raise(context.SmallBlind * 2);
+                    var smallBlindsTimes = RandomProvider.Next(6, 14);
+                    return PlayerAction.Raise(context.SmallBlind * smallBlindsTimes);
                 }
 
                 return PlayerAction.CheckOrCall();

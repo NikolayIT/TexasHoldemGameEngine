@@ -75,8 +75,6 @@
                 // TODO: Showdown?
                 player.EndHand(new EndHandContext());
             }
-
-            Debug.Assert(this.players[0].PlayerMoney.Money + this.players[1].PlayerMoney.Money == 2000);
         }
 
         private void DetermineWinnerAndAddPot(int pot)

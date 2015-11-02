@@ -5,7 +5,6 @@
 
     using TexasHoldem.Logic.Cards;
 
-    // TODO: Consider replacing LINQ with something more efficient (profile the code)
     // For performance considerations this class is not implemented using Chain of Responsibility
     public class HandEvaluator : IHandEvaluator
     {
@@ -13,8 +12,8 @@
 
         public BestHand GetBestHand(IEnumerable<Card> cards)
         {
-            var cardSuitCounts = new int[4]; // 0, 1, 2, 3
-            var cardTypeCounts = new int[15]; // Ace = 14
+            var cardSuitCounts = new int[(int)CardSuit.Spade + 1];
+            var cardTypeCounts = new int[(int)CardType.Ace + 1];
             foreach (var card in cards)
             {
                 cardSuitCounts[(int)card.Suit]++;
@@ -181,22 +180,24 @@
             var straightFlushCardTypes = new List<CardType>();
             for (var i = 0; i < cardSuitCounts.Length; i++)
             {
-                if (cardSuitCounts[i] >= ComparableCards)
+                if (cardSuitCounts[i] < ComparableCards)
                 {
-                    var cardTypeCounts = new int[15]; // Ace = 14
-                    foreach (var card in cards)
-                    {
-                        if (card.Suit == (CardSuit)i)
-                        {
-                            cardTypeCounts[(int)card.Type]++;
-                        }
-                    }
+                    continue;
+                }
 
-                    var bestStraight = this.GetStraightCards(cardTypeCounts);
-                    if (bestStraight != null)
+                var cardTypeCounts = new int[(int)CardType.Ace + 1];
+                foreach (var card in cards)
+                {
+                    if (card.Suit == (CardSuit)i)
                     {
-                        straightFlushCardTypes.AddRange(bestStraight);
+                        cardTypeCounts[(int)card.Type]++;
                     }
+                }
+
+                var bestStraight = this.GetStraightCards(cardTypeCounts);
+                if (bestStraight != null)
+                {
+                    straightFlushCardTypes.AddRange(bestStraight);
                 }
             }
 

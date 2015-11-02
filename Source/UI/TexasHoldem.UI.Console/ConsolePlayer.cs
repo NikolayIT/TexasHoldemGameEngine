@@ -59,18 +59,19 @@
                         action = PlayerAction.CheckOrCall();
                         break;
                     case ConsoleKey.R:
-                        // TODO: Ask for the raise amount!
+                        // TODO: Ask for the raise amount
                         action = PlayerAction.Raise(10);
                         break;
                     case ConsoleKey.F:
                         action = PlayerAction.Fold();
                         break;
                     case ConsoleKey.A:
-                        action = PlayerAction.Raise(context.MoneyLeft);
+                        action = context.MoneyLeft > 0
+                                     ? PlayerAction.Raise(context.MoneyLeft)
+                                     : PlayerAction.CheckOrCall();
                         break;
                 }
 
-                // TODO: Check if the action is valid
                 if (action != null)
                 {
                     ConsoleHelper.WriteOnConsole(this.row + 2, 2, new string(' ', this.width - 3));

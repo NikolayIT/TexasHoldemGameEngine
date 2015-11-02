@@ -15,6 +15,7 @@
         {
             this.allPlayers = players;
             this.smallBlind = smallBlind;
+            this.RoundBets = new List<PlayerActionAndName>();
         }
 
         public int Pot
@@ -25,38 +26,24 @@
             }
         }
 
-        public List<PlayerActionAndName> Bets { get; private set; }
+        public List<PlayerActionAndName> RoundBets { get; }
 
         public void Bet(GameRoundType gameRoundType)
         {
-            this.Bets = new List<PlayerActionAndName>();
-
+            this.RoundBets.Clear();
             var playerIndex = 0;
+
             if (gameRoundType == GameRoundType.PreFlop)
             {
-                var smallBlindAction = PlayerAction.Raise(this.smallBlind);
-
-                // Small blind
-                this.Bets.Add(
-                    new PlayerActionAndName(
-                        this.allPlayers[0].Name,
-                        this.allPlayers[0].PlayerMoney.DoPlayerAction(smallBlindAction, 0)));
-                playerIndex++;
-
-                // Big blind
-                this.allPlayers[1].PlayerMoney.DoPlayerAction(smallBlindAction, this.smallBlind);
-                this.Bets.Add(
-                    new PlayerActionAndName(
-                        this.allPlayers[1].Name,
-                        this.allPlayers[0].PlayerMoney.DoPlayerAction(smallBlindAction, 0)));
-                playerIndex++;
+                this.PlaceBlinds();
+                playerIndex = 2;
             }
 
             while (this.allPlayers.Count(x => x.PlayerMoney.InHand) >= 2
                    && this.allPlayers.Any(x => x.PlayerMoney.ShouldPlayInRound))
             {
                 var player = this.allPlayers[playerIndex % this.allPlayers.Count];
-                if (!player.PlayerMoney.InHand)
+                if (!player.PlayerMoney.InHand || !player.PlayerMoney.ShouldPlayInRound)
                 {
                     continue;
                 }
@@ -66,7 +53,7 @@
                     player.GetTurn(
                         new GetTurnContext(
                             gameRoundType,
-                            this.Bets.AsReadOnly(),
+                            this.RoundBets.AsReadOnly(),
                             this.smallBlind,
                             player.PlayerMoney.Money,
                             this.Pot,
@@ -74,11 +61,11 @@
                             maxMoneyPerPlayer));
 
                 action = player.PlayerMoney.DoPlayerAction(action, maxMoneyPerPlayer);
-                this.Bets.Add(new PlayerActionAndName(player.Name, action));
+                this.RoundBets.Add(new PlayerActionAndName(player.Name, action));
 
                 if (action.Type == PlayerActionType.Raise)
                 {
-                    // When raising, all players are required to do action
+                    // When raising, all players are required to do action afterwards in current round
                     foreach (var playerToUpdate in this.allPlayers)
                     {
                         playerToUpdate.PlayerMoney.ShouldPlayInRound = true;
@@ -87,6 +74,35 @@
 
                 player.PlayerMoney.ShouldPlayInRound = false;
                 playerIndex++;
+            }
+
+            this.ReturnMoneyInCaseOfAllIn();
+        }
+
+        private void PlaceBlinds()
+        {
+            var smallBlindAction = PlayerAction.Raise(this.smallBlind);
+
+            // Small blind
+            this.RoundBets.Add(
+                new PlayerActionAndName(
+                    this.allPlayers[0].Name,
+                    this.allPlayers[0].PlayerMoney.DoPlayerAction(smallBlindAction, 0)));
+
+            // Big blind
+            this.allPlayers[1].PlayerMoney.DoPlayerAction(smallBlindAction, this.smallBlind);
+            this.RoundBets.Add(
+                new PlayerActionAndName(
+                    this.allPlayers[1].Name,
+                    this.allPlayers[0].PlayerMoney.DoPlayerAction(smallBlindAction, 0)));
+        }
+
+        private void ReturnMoneyInCaseOfAllIn()
+        {
+            var minMoneyPerPlayer = this.allPlayers.Min(x => x.PlayerMoney.CurrentRoundBet);
+            foreach (var player in this.allPlayers)
+            {
+                player.PlayerMoney.NormalizeBets(minMoneyPerPlayer);
             }
         }
     }

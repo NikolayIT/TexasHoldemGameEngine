@@ -36,7 +36,6 @@
                 return -1;
             }
 
-            // TODO: What if same rank type?
             switch (this.RankType)
             {
                 case HandRankType.HighCard:

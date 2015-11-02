@@ -120,7 +120,7 @@
 
             foreach (var player in this.players)
             {
-                player.EndRound(new EndRoundContext(this.bettingLogic.Bets));
+                player.EndRound(new EndRoundContext(this.bettingLogic.RoundBets));
             }
         }
     }

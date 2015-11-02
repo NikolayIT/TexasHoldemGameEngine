@@ -124,7 +124,6 @@
         {
             var internalPlayerMoney = new InternalPlayerMoney(0);
 
-            // TODO: The other player should receive 120 back to his account
             var action = internalPlayerMoney.DoPlayerAction(PlayerAction.CheckOrCall(), 120);
 
             Assert.AreEqual(PlayerActionType.CheckCall, action.Type);
@@ -224,6 +223,30 @@
             Assert.AreEqual(0, internalPlayerMoney.CurrentlyInPot);
         }
 
-        // TODO: Add more tests to cover additional special cases (if any)
+        [Test]
+        public void NormalizeBetsShouldReturnMoneyToThePlayerWhenOtherPlayersDoNotHaveSufficientFunds()
+        {
+            var internalPlayerMoney = new InternalPlayerMoney(1000);
+            internalPlayerMoney.DoPlayerAction(PlayerAction.CheckOrCall(), 200);
+
+            internalPlayerMoney.NormalizeBets(100);
+
+            Assert.AreEqual(900, internalPlayerMoney.Money);
+            Assert.AreEqual(100, internalPlayerMoney.CurrentRoundBet);
+            Assert.AreEqual(100, internalPlayerMoney.CurrentlyInPot);
+        }
+
+        [Test]
+        public void NormalizeBetsShouldNotChangeDataWhenSameValueAsCurrentRoundBet()
+        {
+            var internalPlayerMoney = new InternalPlayerMoney(1000);
+            internalPlayerMoney.DoPlayerAction(PlayerAction.CheckOrCall(), 200);
+
+            internalPlayerMoney.NormalizeBets(200);
+
+            Assert.AreEqual(800, internalPlayerMoney.Money);
+            Assert.AreEqual(200, internalPlayerMoney.CurrentRoundBet);
+            Assert.AreEqual(200, internalPlayerMoney.CurrentlyInPot);
+        }
     }
 }

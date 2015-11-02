@@ -81,6 +81,15 @@
             return action;
         }
 
+        public void NormalizeBets(int moneyPerPlayer)
+        {
+            if (moneyPerPlayer < this.CurrentRoundBet)
+            {
+                var diff = this.CurrentRoundBet - moneyPerPlayer;
+                this.PlaceMoney(-diff);
+            }
+        }
+
         private void PlaceMoney(int money)
         {
             this.CurrentRoundBet += money;

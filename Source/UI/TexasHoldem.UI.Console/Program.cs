@@ -3,7 +3,6 @@
     using System;
 
     using TexasHoldem.Logic.GameMechanics;
-    using TexasHoldem.Logic.Players;
 
     public static class Program
     {

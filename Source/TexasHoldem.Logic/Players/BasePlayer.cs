@@ -10,9 +10,9 @@
 
         protected IReadOnlyCollection<Card> CommunityCards { get; private set; }
 
-        protected Card FirstCard { get; set; }
+        protected Card FirstCard { get; private set; }
 
-        protected Card SecondCard { get; set; }
+        protected Card SecondCard { get; private set; }
 
         public virtual void StartGame(StartGameContext context)
         {

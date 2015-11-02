@@ -2,7 +2,6 @@
 {
     using System;
     using System.Diagnostics;
-    using System.Threading.Tasks;
 
     using TexasHoldem.Logic.GameMechanics;
     using TexasHoldem.Logic.Players;

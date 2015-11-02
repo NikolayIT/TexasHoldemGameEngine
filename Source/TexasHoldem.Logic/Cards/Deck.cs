@@ -7,7 +7,7 @@
 
     public class Deck : IDeck
     {
-        private static readonly IList<Card> AllCards = new List<Card>();
+        public static readonly IList<Card> AllCards = new List<Card>();
 
         private static readonly IEnumerable<CardType> AllCardTypes = new List<CardType>
                                                                          {
@@ -36,6 +36,8 @@
 
         private readonly IList<Card> listOfCards;
 
+        private int cardIndex;
+
         static Deck()
         {
             foreach (var cardSuit in AllCardSuits)
@@ -50,17 +52,18 @@
         public Deck()
         {
             this.listOfCards = AllCards.Shuffle().ToList();
+            this.cardIndex = AllCards.Count;
         }
 
         public Card GetNextCard()
         {
-            if (this.listOfCards.Count == 0)
+            if (this.cardIndex == 0)
             {
                 throw new InternalGameException("Deck is empty!");
             }
 
-            var card = this.listOfCards[this.listOfCards.Count - 1];
-            this.listOfCards.RemoveAt(this.listOfCards.Count - 1);
+            this.cardIndex--;
+            var card = this.listOfCards[this.cardIndex];
             return card;
         }
     }

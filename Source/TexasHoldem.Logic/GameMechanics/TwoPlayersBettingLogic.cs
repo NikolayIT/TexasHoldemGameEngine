@@ -21,7 +21,7 @@
         {
             get
             {
-                return this.allPlayers.Sum(x => x.CurrentlyInPot);
+                return this.allPlayers.Sum(x => x.PlayerMoney.CurrentlyInPot);
             }
         }
 
@@ -30,82 +30,51 @@
             var bets = new List<PlayerActionAndName>();
             if (gameRoundType == GameRoundType.PreFlop)
             {
-                // TODO: What if small blind is bigger than player's money?
-                this.allPlayers[0].PlaceMoney(this.smallBlind);
+                var smallBlindAction = PlayerAction.Raise(this.smallBlind);
+
+                // Small blind
+                this.allPlayers[0].PlayerMoney.DoPlayerAction(smallBlindAction, 0);
                 bets.Add(new PlayerActionAndName(this.allPlayers[0].Name, PlayerAction.Raise(this.smallBlind)));
 
-                // TODO: What if big blind is bigger than player's money?
-                this.allPlayers[1].PlaceMoney(this.smallBlind * 2);
-                bets.Add(new PlayerActionAndName(this.allPlayers[1].Name, PlayerAction.Raise(this.smallBlind * 2)));
+                // Big blind
+                this.allPlayers[1].PlayerMoney.DoPlayerAction(smallBlindAction, this.smallBlind);
+                bets.Add(new PlayerActionAndName(this.allPlayers[1].Name, PlayerAction.Raise(this.smallBlind)));
             }
 
             var playerIndex = 1;
-            while (this.allPlayers.Count(x => x.InHand) >= 2 && this.allPlayers.Any(x => x.ShouldPlayInRound))
+            while (this.allPlayers.Count(x => x.PlayerMoney.InHand) >= 2 && this.allPlayers.Any(x => x.PlayerMoney.ShouldPlayInRound))
             {
                 playerIndex++;
                 var player = this.allPlayers[playerIndex % this.allPlayers.Count];
-                if (!player.InHand)
+                if (!player.PlayerMoney.InHand)
                 {
                     continue;
                 }
 
-                var maxMoneyPerPlayer = this.allPlayers.Max(x => x.CurrentRoundBet);
+                var maxMoneyPerPlayer = this.allPlayers.Max(x => x.PlayerMoney.CurrentRoundBet);
                 var action =
                     player.GetTurn(
                         new GetTurnContext(
                             gameRoundType,
                             bets.AsReadOnly(),
                             this.smallBlind,
-                            player.Money,
+                            player.PlayerMoney.Money,
                             this.Pot,
-                            player.CurrentlyInPot,
+                            player.PlayerMoney.CurrentlyInPot,
                             maxMoneyPerPlayer));
 
-                action = this.DoPlayerAction(player, action, maxMoneyPerPlayer);
+                action = player.PlayerMoney.DoPlayerAction(action, maxMoneyPerPlayer);
+                if (action.Type == PlayerActionType.Raise)
+                {
+                    foreach (var playerToUpdate in this.allPlayers)
+                    {
+                        playerToUpdate.PlayerMoney.ShouldPlayInRound = true;
+                    }
+                }
 
                 bets.Add(new PlayerActionAndName(player.Name, action));
-                player.ShouldPlayInRound = false;
+                player.PlayerMoney.ShouldPlayInRound = false;
             }
-        }
-
-        private PlayerAction DoPlayerAction(InternalPlayer player, PlayerAction action, int maxMoneyPerPlayer)
-        {
-            if (action.Type == PlayerActionType.Raise)
-            {
-                player.Call(maxMoneyPerPlayer);
-
-                if (player.Money <= 0)
-                {
-                    return PlayerAction.CheckOrCall();
-                }
-
-                foreach (var playerToUpdate in this.allPlayers)
-                {
-                    playerToUpdate.ShouldPlayInRound = true;
-                }
-
-                // TODO: Min raise?
-                if (player.Money > action.Money)
-                {
-                    player.PlaceMoney(action.Money);
-                }
-                else
-                {
-                    // All-in
-                    action.Money = player.Money;
-                    player.PlaceMoney(action.Money);
-                }
-            }
-            else if (action.Type == PlayerActionType.CheckCall)
-            {
-                player.Call(maxMoneyPerPlayer);
-            }
-            else //// PlayerActionType.Fold
-            {
-                player.InHand = false;
-            }
-
-            return action;
         }
     }
 }

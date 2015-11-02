@@ -15,19 +15,11 @@
 
         public List<Card> Cards { get; }
 
-        public int Money { get; set; }
-
-        public int CurrentRoundBet { get; private set; }
-
-        public int CurrentlyInPot { get; private set; }
-
-        public bool InHand { get; set; }
-
-        public bool ShouldPlayInRound { get; set; }
+        public InternalPlayerMoney PlayerMoney { get; private set; }
 
         public override void StartGame(StartGameContext context)
         {
-            this.Money = context.StartMoney;
+            this.PlayerMoney = new InternalPlayerMoney(context.StartMoney);
             base.StartGame(context);
         }
 
@@ -37,36 +29,15 @@
             this.Cards.Add(context.FirstCard);
             this.Cards.Add(context.SecondCard);
 
-            this.CurrentlyInPot = 0;
-            this.CurrentRoundBet = 0;
-            this.InHand = true;
+            this.PlayerMoney.NewHand();
 
             base.StartHand(context);
         }
 
         public override void StartRound(StartRoundContext context)
         {
-            this.CurrentRoundBet = 0;
-            if (this.InHand)
-            {
-                this.ShouldPlayInRound = true;
-            }
-
+            this.PlayerMoney.NewRound();
             base.StartRound(context);
-        }
-
-        // TODO: Extract next methods in separate MoneyManager class for easier testing?
-        public void Call(int maxMoneyPerPlayer)
-        {
-            var diff = maxMoneyPerPlayer - this.CurrentRoundBet;
-            this.PlaceMoney(diff);
-        }
-
-        public void PlaceMoney(int money)
-        {
-            this.CurrentRoundBet += money;
-            this.CurrentlyInPot += money;
-            this.Money -= money;
         }
     }
 }

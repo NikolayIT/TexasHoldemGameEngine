@@ -40,7 +40,7 @@
                     this.deck.GetNextCard(),
                     this.deck.GetNextCard(),
                     this.handNumber,
-                    player.Money,
+                    player.PlayerMoney.Money,
                     this.smallBlind,
                     this.players[0].Name);
                 player.StartHand(startHandContext);
@@ -50,19 +50,19 @@
             this.PlayRound(GameRoundType.PreFlop, 0);
 
             // Flop -> 3 cards -> betting
-            if (this.players.Count(x => x.InHand) > 1)
+            if (this.players.Count(x => x.PlayerMoney.InHand) > 1)
             {
                 this.PlayRound(GameRoundType.Flop, 3);
             }
 
             // Turn -> 1 card -> betting
-            if (this.players.Count(x => x.InHand) > 1)
+            if (this.players.Count(x => x.PlayerMoney.InHand) > 1)
             {
                 this.PlayRound(GameRoundType.Turn, 1);
             }
 
             // River -> 1 card -> betting
-            if (this.players.Count(x => x.InHand) > 1)
+            if (this.players.Count(x => x.PlayerMoney.InHand) > 1)
             {
                 this.PlayRound(GameRoundType.River, 1);
             }
@@ -78,10 +78,10 @@
 
         private void DetermineWinnerAndAddPot(int pot)
         {
-            if (this.players.Count(x => x.InHand) == 1)
+            if (this.players.Count(x => x.PlayerMoney.InHand) == 1)
             {
-                var winner = this.players.FirstOrDefault(x => x.InHand);
-                winner.Money += pot;
+                var winner = this.players.FirstOrDefault(x => x.PlayerMoney.InHand);
+                winner.PlayerMoney.Money += pot;
             }
             else
             {
@@ -90,16 +90,16 @@
                     this.players[1].Cards.Concat(this.communityCards));
                 if (betterHand > 1)
                 {
-                    this.players[0].Money += pot;
+                    this.players[0].PlayerMoney.Money += pot;
                 }
                 else if (betterHand < 1)
                 {
-                    this.players[1].Money += pot;
+                    this.players[1].PlayerMoney.Money += pot;
                 }
                 else
                 {
-                    this.players[0].Money += pot / 2;
-                    this.players[1].Money += pot / 2;
+                    this.players[0].PlayerMoney.Money += pot / 2;
+                    this.players[1].PlayerMoney.Money += pot / 2;
                 }
             }
         }
@@ -113,7 +113,7 @@
 
             foreach (var player in this.players)
             {
-                player.StartRound(new StartRoundContext(gameRoundType, this.communityCards.AsReadOnly(), player.Money, this.bettingLogic.Pot));
+                player.StartRound(new StartRoundContext(gameRoundType, this.communityCards.AsReadOnly(), player.PlayerMoney.Money, this.bettingLogic.Pot));
             }
 
             this.bettingLogic.Bet(gameRoundType);

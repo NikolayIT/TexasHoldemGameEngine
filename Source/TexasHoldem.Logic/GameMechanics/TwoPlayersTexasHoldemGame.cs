@@ -64,7 +64,7 @@
             }
 
             // While at least two players have money
-            while (this.allPlayers.Count(x => x.Money > 0) > 1)
+            while (this.allPlayers.Count(x => x.PlayerMoney.Money > 0) > 1)
             {
                 this.HandsPlayed++;
 
@@ -79,7 +79,7 @@
                 hand.Play();
             }
 
-            var winner = this.allPlayers.FirstOrDefault(x => x.Money > 0);
+            var winner = this.allPlayers.FirstOrDefault(x => x.PlayerMoney.Money > 0);
             foreach (var player in this.allPlayers)
             {
                 player.EndGame(new EndGameContext(winner.Name));

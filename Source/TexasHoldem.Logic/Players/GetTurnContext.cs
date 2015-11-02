@@ -6,7 +6,7 @@
     {
         public GetTurnContext(
             GameRoundType roundType,
-            IReadOnlyCollection<PlayerActionAndName> previousActions,
+            IReadOnlyCollection<PlayerActionAndName> previousRoundActions,
             int smallBlind,
             int moneyLeft,
             int currentPot,
@@ -14,7 +14,7 @@
             int maxMoneyPerPlayerInThePot)
         {
             this.RoundType = roundType;
-            this.PreviousActions = previousActions;
+            this.PreviousRoundActions = previousRoundActions;
             this.SmallBlind = smallBlind;
             this.MoneyLeft = moneyLeft;
             this.CurrentPot = currentPot;
@@ -24,7 +24,7 @@
 
         public GameRoundType RoundType { get; }
 
-        public IReadOnlyCollection<PlayerActionAndName> PreviousActions { get; }
+        public IReadOnlyCollection<PlayerActionAndName> PreviousRoundActions { get; }
 
         public int SmallBlind { get; }
 

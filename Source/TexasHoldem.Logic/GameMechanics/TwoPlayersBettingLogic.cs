@@ -25,9 +25,11 @@
             }
         }
 
+        public List<PlayerActionAndName> Bets { get; private set; }
+
         public void Bet(GameRoundType gameRoundType)
         {
-            var bets = new List<PlayerActionAndName>();
+            this.Bets = new List<PlayerActionAndName>();
 
             var playerIndex = 0;
             if (gameRoundType == GameRoundType.PreFlop)
@@ -35,7 +37,7 @@
                 var smallBlindAction = PlayerAction.Raise(this.smallBlind);
 
                 // Small blind
-                bets.Add(
+                this.Bets.Add(
                     new PlayerActionAndName(
                         this.allPlayers[0].Name,
                         this.allPlayers[0].PlayerMoney.DoPlayerAction(smallBlindAction, 0)));
@@ -43,7 +45,7 @@
 
                 // Big blind
                 this.allPlayers[1].PlayerMoney.DoPlayerAction(smallBlindAction, this.smallBlind);
-                bets.Add(
+                this.Bets.Add(
                     new PlayerActionAndName(
                         this.allPlayers[1].Name,
                         this.allPlayers[0].PlayerMoney.DoPlayerAction(smallBlindAction, 0)));
@@ -64,7 +66,7 @@
                     player.GetTurn(
                         new GetTurnContext(
                             gameRoundType,
-                            bets.AsReadOnly(),
+                            this.Bets.AsReadOnly(),
                             this.smallBlind,
                             player.PlayerMoney.Money,
                             this.Pot,
@@ -72,7 +74,7 @@
                             maxMoneyPerPlayer));
 
                 action = player.PlayerMoney.DoPlayerAction(action, maxMoneyPerPlayer);
-                bets.Add(new PlayerActionAndName(player.Name, action));
+                this.Bets.Add(new PlayerActionAndName(player.Name, action));
 
                 if (action.Type == PlayerActionType.Raise)
                 {

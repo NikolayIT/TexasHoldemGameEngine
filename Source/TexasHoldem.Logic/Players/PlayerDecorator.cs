@@ -31,14 +31,14 @@
             return this.Player.GetTurn(context);
         }
 
-        public virtual void EndRound()
+        public virtual void EndRound(EndRoundContext context)
         {
-            this.Player.EndRound();
+            this.Player.EndRound(context);
         }
 
-        public virtual void EndHand()
+        public virtual void EndHand(EndHandContext context)
         {
-            this.Player.EndHand();
+            this.Player.EndHand(context);
         }
 
         public virtual void EndGame(EndGameContext context)

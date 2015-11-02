@@ -12,9 +12,9 @@
 
         PlayerAction GetTurn(GetTurnContext context);
 
-        void EndRound();
+        void EndRound(EndRoundContext context);
 
-        void EndHand();
+        void EndHand(EndHandContext context);
 
         void EndGame(EndGameContext context);
     }

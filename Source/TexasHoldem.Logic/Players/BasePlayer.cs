@@ -31,11 +31,11 @@
 
         public abstract PlayerAction GetTurn(GetTurnContext context);
 
-        public virtual void EndRound()
+        public virtual void EndRound(EndRoundContext context)
         {
         }
 
-        public virtual void EndHand()
+        public virtual void EndHand(EndHandContext context)
         {
         }
 

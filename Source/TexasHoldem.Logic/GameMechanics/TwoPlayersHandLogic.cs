@@ -72,7 +72,7 @@
             foreach (var player in this.players)
             {
                 // TODO: Showdown?
-                player.EndHand();
+                player.EndHand(new EndHandContext());
             }
         }
 
@@ -120,7 +120,7 @@
 
             foreach (var player in this.players)
             {
-                player.EndRound();
+                player.EndRound(new EndRoundContext(this.bettingLogic.Bets));
             }
         }
     }

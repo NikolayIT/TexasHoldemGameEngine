@@ -7,6 +7,6 @@
             this.WinnerName = winnerName;
         }
 
-        public string WinnerName { get; set; }
+        public string WinnerName { get; }
     }
 }

@@ -888,7 +888,60 @@
 
         private static readonly object[] BothHaveStraightFlushCases =
             {
-                // Tests from BothHaveStraightCases are sufficient
+                new object[]
+                    {
+                        ExpectedCompareResult.TheyShouldBeEqual,
+                        HandRankType.StraightFlush,
+                        new[]
+                            {
+                                CardType.Ace, CardType.King,
+                                CardType.Queen, CardType.Jack,
+                                CardType.Ten
+                            },
+                        HandRankType.StraightFlush,
+                        new[]
+                            {
+                                CardType.Ace, CardType.King,
+                                CardType.Queen, CardType.Jack,
+                                CardType.Ten
+                            }
+                    },
+                new object[]
+                    {
+                        ExpectedCompareResult.FirstShouldBeBetter,
+                        HandRankType.StraightFlush,
+                        new[]
+                            {
+                                CardType.Ace, CardType.King,
+                                CardType.Queen, CardType.Jack,
+                                CardType.Ten
+                            },
+                        HandRankType.StraightFlush,
+                        new[]
+                            {
+                                CardType.King, CardType.Queen,
+                                CardType.Jack, CardType.Ten,
+                                CardType.Nine
+                            }
+                    },
+                new object[]
+                    {
+                        ExpectedCompareResult.FirstShouldBeBetter,
+                        HandRankType.StraightFlush,
+                        new[]
+                            {
+                                CardType.Ace, CardType.King,
+                                CardType.Queen, CardType.Jack,
+                                CardType.Ten
+                            },
+                        HandRankType.StraightFlush,
+                        new[]
+                            {
+                                CardType.Five, CardType.Four,
+                                CardType.Three, CardType.Two,
+                                CardType.Ace
+                            }
+                    }
             };
 
         public enum ExpectedCompareResult

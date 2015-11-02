@@ -414,6 +414,25 @@
                             CardType.Ace, CardType.King, CardType.Queen,
                             CardType.Ten, CardType.Nine
                         }
+                    },
+                new object[]
+                    {
+                        new[]
+                            {
+                                new Card(CardSuit.Spade, CardType.Ace),
+                                new Card(CardSuit.Spade, CardType.King),
+                                new Card(CardSuit.Heart, CardType.Queen),
+                                new Card(CardSuit.Spade, CardType.Jack),
+                                new Card(CardSuit.Spade, CardType.Ten),
+                                new Card(CardSuit.Spade, CardType.Seven),
+                                new Card(CardSuit.Spade, CardType.Three)
+                            },
+                        HandRankType.Flush,
+                        new[]
+                        {
+                            CardType.Ace, CardType.King, CardType.Jack,
+                            CardType.Ten, CardType.Seven
+                        }
                     }
             };
 

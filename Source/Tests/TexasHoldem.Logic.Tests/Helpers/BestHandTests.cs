@@ -108,6 +108,24 @@
                                 CardType.Jack, CardType.Ten,
                                 CardType.Three
                             }
+                    },
+                new object[]
+                    {
+                        ExpectedCompareResult.SecondShouldBeBetter,
+                        HandRankType.HighCard,
+                        new[]
+                            {
+                                CardType.Ace, CardType.King,
+                                CardType.Queen, CardType.Jack,
+                                CardType.Two
+                            },
+                        HandRankType.HighCard,
+                        new[]
+                            {
+                                CardType.Ace, CardType.King,
+                                CardType.Queen, CardType.Jack,
+                                CardType.Three
+                            }
                     }
             };
 
@@ -286,6 +304,22 @@
                             {
                                 CardType.Ace, CardType.Ace,
                                 CardType.King, CardType.King, CardType.Queen
+                            },
+                        HandRankType.TwoPairs,
+                        new[]
+                            {
+                                CardType.Ace, CardType.Ace,
+                                CardType.King, CardType.King, CardType.Jack
+                            }
+                    },
+                new object[]
+                    {
+                        ExpectedCompareResult.SecondShouldBeBetter,
+                        HandRankType.TwoPairs,
+                        new[]
+                            {
+                                CardType.Ace, CardType.Ace,
+                                CardType.King, CardType.King, CardType.Nine
                             },
                         HandRankType.TwoPairs,
                         new[]

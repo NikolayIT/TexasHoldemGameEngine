@@ -19,14 +19,13 @@
                 {
                     return PlayerAction.Fold();
                 }
-                else if (playHand == CardValuationType.Recommended)
+
+                if (playHand == CardValuationType.Recommended)
                 {
                     return PlayerAction.Raise(context.SmallBlind * 2);
                 }
-                else
-                {
-                    return PlayerAction.CheckOrCall();
-                }
+
+                return PlayerAction.CheckOrCall();
             }
 
             return PlayerAction.CheckOrCall();

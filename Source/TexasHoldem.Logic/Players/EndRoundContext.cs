@@ -9,6 +9,6 @@
             this.RoundActions = roundActions;
         }
 
-        public IReadOnlyCollection<PlayerActionAndName> RoundActions { get; set; }
+        public IReadOnlyCollection<PlayerActionAndName> RoundActions { get; }
     }
 }

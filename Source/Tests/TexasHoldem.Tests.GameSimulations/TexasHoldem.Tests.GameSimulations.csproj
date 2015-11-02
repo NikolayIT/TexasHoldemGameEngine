@@ -48,6 +48,7 @@
     <Compile Include="GameSimulators\BaseGameSimulator.cs" />
     <Compile Include="GameSimulators\GameSimulationResult.cs" />
     <Compile Include="GameSimulators\IGameSimulator.cs" />
+    <Compile Include="GameSimulators\SmartVsAlwaysCallPlayerSimulation.cs" />
     <Compile Include="GameSimulators\SmartVsDummyPlayerSimulator.cs" />
     <Compile Include="GameSimulators\SmartVsSmartPlayerSimulator.cs" />
     <Compile Include="Program.cs" />

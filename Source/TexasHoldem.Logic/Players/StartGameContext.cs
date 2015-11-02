@@ -4,13 +4,13 @@
 
     public class StartGameContext
     {
-        public StartGameContext(IReadOnlyCollection<string> otherPlayerNames, int startMoney)
+        public StartGameContext(IReadOnlyCollection<string> playerNames, int startMoney)
         {
-            this.OtherPlayerNames = otherPlayerNames;
+            this.PlayerNames = playerNames;
             this.StartMoney = startMoney;
         }
 
-        public IReadOnlyCollection<string> OtherPlayerNames { get; set; }
+        public IReadOnlyCollection<string> PlayerNames { get; }
 
         public int StartMoney { get; }
     }

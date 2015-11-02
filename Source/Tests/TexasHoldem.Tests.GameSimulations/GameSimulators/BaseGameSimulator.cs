@@ -21,7 +21,7 @@
             var secondPlayerWins = 0;
             var handsPlayed = 0;
 
-            //Parallel.For(
+            //TODO: Parallel.For(
             //    1,
             //    numberOfGames + 1,
             //    i =>

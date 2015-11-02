@@ -113,14 +113,20 @@
 
             foreach (var player in this.players)
             {
-                player.StartRound(new StartRoundContext(gameRoundType, this.communityCards.AsReadOnly(), player.PlayerMoney.Money, this.bettingLogic.Pot));
+                var startRoundContext = new StartRoundContext(
+                    gameRoundType,
+                    this.communityCards.AsReadOnly(),
+                    player.PlayerMoney.Money,
+                    this.bettingLogic.Pot);
+                player.StartRound(startRoundContext);
             }
 
             this.bettingLogic.Bet(gameRoundType);
 
             foreach (var player in this.players)
             {
-                player.EndRound(new EndRoundContext(this.bettingLogic.RoundBets));
+                var endRoundContext = new EndRoundContext(this.bettingLogic.RoundBets);
+                player.EndRound(endRoundContext);
             }
         }
     }

@@ -57,7 +57,7 @@
                             this.smallBlind,
                             player.PlayerMoney.Money,
                             this.Pot,
-                            player.PlayerMoney.CurrentlyInPot,
+                            player.PlayerMoney.CurrentRoundBet,
                             maxMoneyPerPlayer));
 
                 action = player.PlayerMoney.DoPlayerAction(action, maxMoneyPerPlayer);

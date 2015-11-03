@@ -51,9 +51,7 @@
         public override PlayerAction GetTurn(GetTurnContext context)
         {
             this.UpdateCommonRow(context.CurrentPot);
-
             ConsoleHelper.WriteOnConsole(this.row + 1, 2, context.MoneyLeft + "       ");
-            ConsoleHelper.WriteOnConsole(this.row + 2, 2, "Select action [C]heck/[C]all, [R]aise, [F]old, [A]ll-in");
 
             var action = base.GetTurn(context);
 

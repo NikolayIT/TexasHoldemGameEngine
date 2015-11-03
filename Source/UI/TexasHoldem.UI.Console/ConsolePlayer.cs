@@ -6,8 +6,11 @@
 
     public class ConsolePlayer : BasePlayer
     {
-        public ConsolePlayer()
+        private readonly int row;
+
+        public ConsolePlayer(int row)
         {
+            this.row = row;
             this.Name = "ConsolePlayer";
         }
 
@@ -15,6 +18,7 @@
 
         public override PlayerAction GetTurn(GetTurnContext context)
         {
+            ConsoleHelper.WriteOnConsole(this.row + 2, 2, "Select action [C]heck/[C]all, [R]aise, [F]old, [A]ll-in");
             while (true)
             {
                 var key = Console.ReadKey(true);
@@ -25,7 +29,8 @@
                         action = PlayerAction.CheckOrCall();
                         break;
                     case ConsoleKey.R:
-                        // TODO: Ask for the raise amount
+                        // ConsoleHelper.WriteOnConsole(this.row + 2, 2, $"Raise amount [1-{context.MoneyLeft}]:                                ");
+                        // continue;
                         action = PlayerAction.Raise(10);
                         break;
                     case ConsoleKey.F:

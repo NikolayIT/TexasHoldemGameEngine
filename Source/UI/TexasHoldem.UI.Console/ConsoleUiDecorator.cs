@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace TexasHoldem.UI.Console
+﻿namespace TexasHoldem.UI.Console
 {
     using System;
     using System.Collections.Generic;
@@ -53,7 +51,7 @@ namespace TexasHoldem.UI.Console
         public override PlayerAction GetTurn(GetTurnContext context)
         {
             this.UpdateCommonRow(context.CurrentPot);
-            ConsoleHelper.WriteOnConsole(this.row + 1, 2, context.MoneyLeft.ToString());
+            ConsoleHelper.WriteOnConsole(this.row + 1, 2, context.MoneyLeft + "   ");
 
             var action = base.GetTurn(context);
 
@@ -95,7 +93,7 @@ namespace TexasHoldem.UI.Console
             {
                 var cardsAsString = this.CommunityCards.CardsToString();
                 var cardsLength = cardsAsString.Length / 2;
-                var cardsStartCol = this.width / 2 - cardsLength / 2;
+                var cardsStartCol = (this.width / 2) - (cardsLength / 2);
                 var cardIndex = 0;
                 var spacing = 0;
 
@@ -123,8 +121,8 @@ namespace TexasHoldem.UI.Console
                 case CardSuit.Club: return ConsoleColor.DarkGreen;
                 case CardSuit.Diamond: return ConsoleColor.Blue;
                 case CardSuit.Heart: return ConsoleColor.Red;
-                case CardSuit.Spade:
-                default: return ConsoleColor.Black;
+                case CardSuit.Spade: return ConsoleColor.Black;
+                default: throw new ArgumentException("card.Suit");
             }
         }
     }

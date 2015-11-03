@@ -18,7 +18,7 @@
 
         public override PlayerAction GetTurn(GetTurnContext context)
         {
-            this.DrawPlayerOptions();
+            this.DrawPlayerOptions(context.MoneyToCall);
 
             while (true)
             {
@@ -51,7 +51,7 @@
             }
         }
 
-        private void DrawPlayerOptions()
+        private void DrawPlayerOptions(int moneyToCall)
         {
             var col = 2;
             ConsoleHelper.WriteOnConsole(this.row + 2, col, "Select action: [");
@@ -62,8 +62,11 @@
             col += 7;
             ConsoleHelper.WriteOnConsole(this.row + 2, col, "C", ConsoleColor.Yellow);
             col++;
-            ConsoleHelper.WriteOnConsole(this.row + 2, col, "]all, [");
-            col += 7;
+
+            var callString = moneyToCall <= 0 ? "]all, [" : "]all(" + moneyToCall + "), [";
+
+            ConsoleHelper.WriteOnConsole(this.row + 2, col, callString);
+            col += callString.Length;
             ConsoleHelper.WriteOnConsole(this.row + 2, col, "R", ConsoleColor.Yellow);
             col++;
             ConsoleHelper.WriteOnConsole(this.row + 2, col, "]aise, [");

@@ -1,4 +1,6 @@
-﻿namespace TexasHoldem.UI.Console
+﻿using System.Linq;
+
+namespace TexasHoldem.UI.Console
 {
     using System;
     using System.Collections.Generic;
@@ -32,9 +34,9 @@
         public override void StartHand(StartHandContext context)
         {
             this.UpdateCommonRow(0);
-            ConsoleHelper.WriteOnConsole(this.row + 1, 2, context.MoneyLeft + "       ");
-            ConsoleHelper.WriteOnConsole(this.row + 1, 10, context.FirstCard + "  ");
-            ConsoleHelper.WriteOnConsole(this.row + 1, 15, context.SecondCard + "  ");
+            ConsoleHelper.WriteOnConsole(this.row + 1, 2, context.MoneyLeft.ToString());
+            this.DrawSingleCard(this.row + 1, 10, context.FirstCard);
+            this.DrawSingleCard(this.row + 1, 14, context.SecondCard);
 
             base.StartHand(context);
         }
@@ -51,7 +53,7 @@
         public override PlayerAction GetTurn(GetTurnContext context)
         {
             this.UpdateCommonRow(context.CurrentPot);
-            ConsoleHelper.WriteOnConsole(this.row + 1, 2, context.MoneyLeft + "       ");
+            ConsoleHelper.WriteOnConsole(this.row + 1, 2, context.MoneyLeft.ToString());
 
             var action = base.GetTurn(context);
 
@@ -66,8 +68,7 @@
             // Clear the common row
             ConsoleHelper.WriteOnConsole(this.commonRow, 0, new string(' ', this.width - 1));
 
-            var cardsAsString = this.CommunityCards.CardsToString();
-            ConsoleHelper.WriteOnConsole(this.commonRow, (this.width / 2) - (cardsAsString.Length / 2), cardsAsString);
+            this.DrawCommunityCards();
 
             var potAsString = pot.ToString();
             ConsoleHelper.WriteOnConsole(this.commonRow, this.width - potAsString.Length - 2, potAsString);
@@ -85,6 +86,45 @@
             {
                 ConsoleHelper.WriteOnConsole(this.row + i, 0, "║", PlayerBoxColor);
                 ConsoleHelper.WriteOnConsole(this.row + i, this.width - 1, "║", PlayerBoxColor);
+            }
+        }
+
+        private void DrawCommunityCards()
+        {
+            if (this.CommunityCards != null)
+            {
+                var cardsAsString = this.CommunityCards.CardsToString();
+                var cardsLength = cardsAsString.Length / 2;
+                var cardsStartCol = this.width / 2 - cardsLength / 2;
+                var cardIndex = 0;
+                var spacing = 0;
+
+                foreach (var communityCard in this.CommunityCards)
+                {
+                    this.DrawSingleCard(this.commonRow, cardsStartCol + (cardIndex * 4) + spacing, communityCard);
+                    cardIndex++;
+
+                    spacing += communityCard.Type == CardType.Ten ? 1 : 0;
+                }
+            }
+        }
+
+        private void DrawSingleCard(int row, int col, Card card)
+        {
+            var cardColor = this.GetCardColor(card);
+            ConsoleHelper.WriteOnConsole(row, col, " " + card + " ", cardColor, ConsoleColor.White);
+            ConsoleHelper.WriteOnConsole(row, col + 2 + card.ToString().Length, " ");
+        }
+
+        private ConsoleColor GetCardColor(Card card)
+        {
+            switch (card.Suit)
+            {
+                case CardSuit.Club: return ConsoleColor.DarkGreen;
+                case CardSuit.Diamond: return ConsoleColor.Blue;
+                case CardSuit.Heart: return ConsoleColor.Red;
+                case CardSuit.Spade:
+                default: return ConsoleColor.Black;
             }
         }
     }

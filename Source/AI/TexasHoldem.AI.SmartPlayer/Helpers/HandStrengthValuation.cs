@@ -4,6 +4,8 @@
 
     public static class HandStrengthValuation
     {
+		private const int MaxCardTypeValue = 14;
+
         private static readonly int[,] StartingHandRecommendationsSuited =
             {
                 { 3, 3, 3, 3, 3, 2, 2, 2, 2, 1, 1, 1, 1 }, // A
@@ -35,19 +37,19 @@
                 { 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0 }, // 5
                 { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0 }, // 4
                 { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0 }, // 3
-                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0 } // 2
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 } // 2
             };
 
         // http://www.rakebackpros.net/texas-holdem-starting-hands/
         public static CardValuationType PreFlop(Card firstCard, Card secondCard)
         {
             var value = firstCard.Suit == secondCard.Suit
-                            ? (firstCard.Type < secondCard.Type
-                                   ? StartingHandRecommendationsSuited[(int)firstCard.Type - 2, (int)secondCard.Type - 2]
-                                   : StartingHandRecommendationsSuited[(int)secondCard.Type - 2, (int)firstCard.Type - 2])
-                            : (firstCard.Type < secondCard.Type
-                                   ? StartingHandRecommendationsUnsuited[(int)firstCard.Type - 2, (int)secondCard.Type - 2]
-                                   : StartingHandRecommendationsUnsuited[(int)secondCard.Type - 2, (int)firstCard.Type - 2]);
+							? (firstCard.Type > secondCard.Type
+								   ? StartingHandRecommendationsSuited[MaxCardTypeValue - (int)firstCard.Type, MaxCardTypeValue - (int)secondCard.Type]
+								   : StartingHandRecommendationsSuited[MaxCardTypeValue - (int)secondCard.Type, MaxCardTypeValue - (int)firstCard.Type])
+							: (firstCard.Type > secondCard.Type
+								   ? StartingHandRecommendationsUnsuited[MaxCardTypeValue - (int)firstCard.Type, MaxCardTypeValue - (int)secondCard.Type]
+								   : StartingHandRecommendationsUnsuited[MaxCardTypeValue - (int)secondCard.Type, MaxCardTypeValue - (int)firstCard.Type]);
 
             switch (value)
             {

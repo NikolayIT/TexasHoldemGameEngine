@@ -32,6 +32,11 @@
         public override void StartHand(StartHandContext context)
         {
             this.UpdateCommonRow(0);
+            var dealerSymbol = context.FirstPlayerName == this.Player.Name ? "D" : " ";
+
+            ConsoleHelper.WriteOnConsole(this.row + 1, 1, dealerSymbol, ConsoleColor.Green);
+            ConsoleHelper.WriteOnConsole(this.row + 3, 2, "                            ");
+
             ConsoleHelper.WriteOnConsole(this.row + 1, 2, context.MoneyLeft.ToString());
             this.DrawSingleCard(this.row + 1, 10, context.FirstCard);
             this.DrawSingleCard(this.row + 1, 14, context.SecondCard);
@@ -51,12 +56,23 @@
         public override PlayerAction GetTurn(GetTurnContext context)
         {
             this.UpdateCommonRow(context.CurrentPot);
-            ConsoleHelper.WriteOnConsole(this.row + 1, 2, context.MoneyLeft.ToString());
+            ConsoleHelper.WriteOnConsole(this.row + 1, 2, context.MoneyLeft + "   ");
 
             var action = base.GetTurn(context);
 
             ConsoleHelper.WriteOnConsole(this.row + 2, 2, new string(' ', this.width - 3));
-            ConsoleHelper.WriteOnConsole(this.row + 3, 2, action + "    ");
+
+            var lastAction = action.Type + (action.Type == PlayerActionType.Fold
+                ? string.Empty
+                : "(" + (action.Money + ((context.MoneyToCall < 0) ? 0 : context.MoneyToCall) + ")"));
+
+            ConsoleHelper.WriteOnConsole(this.row + 3, 2, "Last action: " + lastAction + "            ");
+
+            var moneyAfterAction = action.Type == PlayerActionType.Fold 
+                ? context.MoneyLeft
+                : context.MoneyLeft - action.Money - context.MoneyToCall;
+
+            ConsoleHelper.WriteOnConsole(this.row + 1, 2, moneyAfterAction + "   ");
 
             return action;
         }
@@ -68,7 +84,7 @@
 
             this.DrawCommunityCards();
 
-            var potAsString = pot.ToString();
+            var potAsString = "Pot: " + pot;
             ConsoleHelper.WriteOnConsole(this.commonRow, this.width - potAsString.Length - 2, potAsString);
         }
 
@@ -121,8 +137,8 @@
                 case CardSuit.Club: return ConsoleColor.DarkGreen;
                 case CardSuit.Diamond: return ConsoleColor.Blue;
                 case CardSuit.Heart: return ConsoleColor.Red;
-                case CardSuit.Spade:
-                default: return ConsoleColor.Black;
+                case CardSuit.Spade: return ConsoleColor.Black;
+                default: throw new ArgumentException("card.Suit");
             }
         }
     }

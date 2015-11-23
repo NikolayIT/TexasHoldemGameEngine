@@ -9,7 +9,7 @@
     {
         private const string ProgramName = "TexasHoldem.UI.Console (c) 2015";
         private const int GameHeight = 12;
-        private const int GameWidth = 60;
+        private const int GameWidth = 66;
 
         public static void Main()
         {

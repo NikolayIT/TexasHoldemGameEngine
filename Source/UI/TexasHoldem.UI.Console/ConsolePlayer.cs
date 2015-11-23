@@ -18,7 +18,8 @@
 
         public override PlayerAction GetTurn(GetTurnContext context)
         {
-            ConsoleHelper.WriteOnConsole(this.row + 2, 2, "Select action [C]heck/[C]all, [R]aise, [F]old, [A]ll-in");
+            this.DrawPlayerOptions(context.MoneyToCall);
+
             while (true)
             {
                 var key = Console.ReadKey(true);
@@ -48,6 +49,35 @@
                     return action;
                 }
             }
+        }
+
+        private void DrawPlayerOptions(int moneyToCall)
+        {
+            var col = 2;
+            ConsoleHelper.WriteOnConsole(this.row + 2, col, "Select action: [");
+            col += 16;
+            ConsoleHelper.WriteOnConsole(this.row + 2, col, "C", ConsoleColor.Yellow);
+            col++;
+            ConsoleHelper.WriteOnConsole(this.row + 2, col, "]heck/[");
+            col += 7;
+            ConsoleHelper.WriteOnConsole(this.row + 2, col, "C", ConsoleColor.Yellow);
+            col++;
+
+            var callString = moneyToCall <= 0 ? "]all, [" : "]all(" + moneyToCall + "), [";
+
+            ConsoleHelper.WriteOnConsole(this.row + 2, col, callString);
+            col += callString.Length;
+            ConsoleHelper.WriteOnConsole(this.row + 2, col, "R", ConsoleColor.Yellow);
+            col++;
+            ConsoleHelper.WriteOnConsole(this.row + 2, col, "]aise, [");
+            col += 8;
+            ConsoleHelper.WriteOnConsole(this.row + 2, col, "F", ConsoleColor.Yellow);
+            col++;
+            ConsoleHelper.WriteOnConsole(this.row + 2, col, "]old, [");
+            col += 7;
+            ConsoleHelper.WriteOnConsole(this.row + 2, col, "A", ConsoleColor.Yellow);
+            col++;
+            ConsoleHelper.WriteOnConsole(this.row + 2, col, "]ll-in");
         }
     }
 }

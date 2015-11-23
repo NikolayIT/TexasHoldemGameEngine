@@ -20,38 +20,35 @@
             var secondPlayerWins = 0;
             var handsPlayed = 0;
 
-            //TODO: Parallel.For(
-            //    1,
-            //    numberOfGames + 1,
-            //    i =>
-                for (var i = 1; i < numberOfGames + 1; i++)
+            //// TODO: Parallel.For(1, numberOfGames + 1, i =>
+            for (var i = 1; i < numberOfGames + 1; i++)
+            {
+                if (i % 100 == 0)
+                {
+                    Console.Write(".");
+                }
+
+                ITexasHoldemGame game = i % 2 == 1
+                                            ? new TwoPlayersTexasHoldemGame(firstPlayer, secondPlayer)
+                                            : new TwoPlayersTexasHoldemGame(secondPlayer, firstPlayer);
+
+                var winner = game.Start();
+
+                lock (pointsLock)
+                {
+                    if (winner.Name == firstPlayer.Name)
                     {
-                        if (i % 100 == 0)
-                        {
-                            Console.Write(".");
-                        }
+                        firstPlayerWins++;
+                    }
+                    else
+                    {
+                        secondPlayerWins++;
+                    }
 
+                    handsPlayed += game.HandsPlayed;
+                }
+            }
 
-                        ITexasHoldemGame game = i % 2 == 1
-                                                    ? new TwoPlayersTexasHoldemGame(firstPlayer, secondPlayer)
-                                                    : new TwoPlayersTexasHoldemGame(secondPlayer, firstPlayer);
-
-                        var winner = game.Start();
-
-                        lock (pointsLock)
-                        {
-                            if (winner.Name == firstPlayer.Name)
-                            {
-                                firstPlayerWins++;
-                            }
-                            else
-                            {
-                                secondPlayerWins++;
-                            }
-
-                            handsPlayed += game.HandsPlayed;
-                        }
-                    }//);
             var simulationDuration = stopwatch.Elapsed;
 
             return new GameSimulationResult

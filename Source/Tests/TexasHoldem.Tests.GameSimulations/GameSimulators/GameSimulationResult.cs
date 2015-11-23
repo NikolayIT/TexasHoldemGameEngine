@@ -1,4 +1,4 @@
-namespace TexasHoldem.Tests.GameSimulations.GameSimulators
+﻿namespace TexasHoldem.Tests.GameSimulations.GameSimulators
 {
     using System;
 
@@ -9,7 +9,7 @@ namespace TexasHoldem.Tests.GameSimulations.GameSimulators
         public int SecondPlayerWins { get; set; }
 
         public int HandsPlayed { get; set; }
-        
+
         public TimeSpan SimulationDuration { get; set; }
     }
 }

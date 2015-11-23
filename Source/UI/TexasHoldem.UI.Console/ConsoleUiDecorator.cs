@@ -68,7 +68,7 @@
 
             ConsoleHelper.WriteOnConsole(this.row + 3, 2, "Last action: " + lastAction + "            ");
 
-            var moneyAfterAction = action.Type == PlayerActionType.Fold 
+            var moneyAfterAction = action.Type == PlayerActionType.Fold
                 ? context.MoneyLeft
                 : context.MoneyLeft - action.Money - context.MoneyToCall;
 

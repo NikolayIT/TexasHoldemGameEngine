@@ -21,6 +21,8 @@
 
         private readonly TwoPlayersBettingLogic bettingLogic;
 
+        private Dictionary<string, ICollection<Card>> showdownCards;
+
         public TwoPlayersHandLogic(IList<InternalPlayer> players, int handNumber, int smallBlind)
         {
             this.handNumber = handNumber;
@@ -69,10 +71,18 @@
 
             this.DetermineWinnerAndAddPot(this.bettingLogic.Pot);
 
+            // showdown
             foreach (var player in this.players)
             {
-                // TODO: Showdown?
-                player.EndHand(new EndHandContext());
+                if (player.PlayerMoney.InHand)
+                {
+                    this.showdownCards.Add(player.Name, player.Cards);
+                }
+            }
+
+            foreach (var player in this.players)
+            {
+                player.EndHand(new EndHandContext(this.showdownCards));
             }
         }
 

@@ -9,6 +9,7 @@
     public class HandEvaluator : IHandEvaluator
     {
         private const int ComparableCards = 5;
+        private bool hasFlash = false;
 
         public BestHand GetBestHand(IEnumerable<Card> cards)
         {
@@ -20,29 +21,16 @@
                 cardTypeCounts[(int)card.Type]++;
             }
 
-            // Flushes
-            if (cardSuitCounts.Any(x => x >= ComparableCards))
+            this.hasFlash = cardSuitCounts.Any(x => x >= ComparableCards);
+
+            // Straight flush
+            if (this.hasFlash)
             {
                 // Straight flush
                 var straightFlushCards = this.GetStraightFlushCards(cardSuitCounts, cards);
                 if (straightFlushCards.Count > 0)
                 {
                     return new BestHand(HandRankType.StraightFlush, straightFlushCards);
-                }
-
-                // Flush
-                for (var i = 0; i < cardSuitCounts.Length; i++)
-                {
-                    if (cardSuitCounts[i] >= ComparableCards)
-                    {
-                        var flushCards =
-                            cards.Where(x => x.Suit == (CardSuit)i)
-                                .Select(x => x.Type)
-                                .OrderByDescending(x => x)
-                                .Take(ComparableCards)
-                                .ToList();
-                        return new BestHand(HandRankType.Flush, flushCards);
-                    }
                 }
             }
 
@@ -90,6 +78,24 @@
                 }
 
                 return new BestHand(HandRankType.FullHouse, bestCards);
+            }
+
+            // Flush
+            if (this.hasFlash)
+            {
+                for (var i = 0; i < cardSuitCounts.Length; i++)
+                {
+                    if (cardSuitCounts[i] >= ComparableCards)
+                    {
+                        var flushCards =
+                            cards.Where(x => x.Suit == (CardSuit)i)
+                                .Select(x => x.Type)
+                                .OrderByDescending(x => x)
+                                .Take(ComparableCards)
+                                .ToList();
+                        return new BestHand(HandRankType.Flush, flushCards);
+                    }
+                }
             }
 
             // Straight

@@ -71,15 +71,6 @@
 
             this.DetermineWinnerAndAddPot(this.bettingLogic.Pot);
 
-            // showdown
-            foreach (var player in this.players)
-            {
-                if (player.PlayerMoney.InHand)
-                {
-                    this.showdownCards.Add(player.Name, player.Cards);
-                }
-            }
-
             foreach (var player in this.players)
             {
                 player.EndHand(new EndHandContext(this.showdownCards));
@@ -95,6 +86,15 @@
             }
             else
             {
+                // showdown
+                foreach (var player in this.players)
+                {
+                    if (player.PlayerMoney.InHand)
+                    {
+                        this.showdownCards.Add(player.Name, player.Cards);
+                    }
+                }
+
                 var betterHand = Helpers.CompareCards(
                     this.players[0].Cards.Concat(this.communityCards),
                     this.players[1].Cards.Concat(this.communityCards));

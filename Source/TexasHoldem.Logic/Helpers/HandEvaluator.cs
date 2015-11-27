@@ -30,7 +30,7 @@
                     return new BestHand(HandRankType.StraightFlush, straightFlushCards);
                 }
 
-                // Flush
+                // Flush - it is not possible to have Flush and either Four of a kind or Full house at the same time
                 for (var i = 0; i < cardSuitCounts.Length; i++)
                 {
                     if (cardSuitCounts[i] >= ComparableCards)

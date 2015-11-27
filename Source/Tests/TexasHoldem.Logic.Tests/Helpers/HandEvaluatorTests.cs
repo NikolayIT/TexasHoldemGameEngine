@@ -538,25 +538,6 @@
                                 CardType.Ace, CardType.Two
                             }
                     },
-                new object[]
-                    {
-                        new[]
-                            {
-                                new Card(CardSuit.Spade, CardType.Ace),
-                                new Card(CardSuit.Spade, CardType.Ace),
-                                new Card(CardSuit.Spade, CardType.Ace),
-                                new Card(CardSuit.Spade, CardType.Ace),
-                                new Card(CardSuit.Spade, CardType.Ten),
-                                new Card(CardSuit.Spade, CardType.Seven),
-                                new Card(CardSuit.Spade, CardType.Three)
-                            },
-                        HandRankType.FourOfAKind,
-                        new[]
-                            {
-                                CardType.Ace, CardType.Ace, CardType.Ace,
-                                CardType.Ace, CardType.Ten
-                            }
-                    },
             };
 
         private static readonly object[] StraightFlushCases =

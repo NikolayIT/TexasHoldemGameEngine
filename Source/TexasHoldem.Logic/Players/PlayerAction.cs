@@ -45,7 +45,7 @@
         {
             if (withAmount <= 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(withAmount), "Raise amount should be at least 1");
+                return CheckOrCall();
             }
 
             return new PlayerAction(withAmount);

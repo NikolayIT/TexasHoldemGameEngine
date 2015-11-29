@@ -8,10 +8,10 @@
     {
         public static void Main()
         {
-            SimulateGames(new SmartVsAlwaysCallPlayerSimulation());
+            SimulateGames(new SmartVsAlwaysCallPlayerSimulator());
             SimulateGames(new SmartVsDummyPlayerSimulator());
             SimulateGames(new SmartVsSmartPlayerSimulator());
-            SimulateGames(new AlwaysCallPlayersGameSimulation());
+            SimulateGames(new AlwaysCallPlayersGameSimulator());
         }
 
         private static void SimulateGames(IGameSimulator gameSimulator)

@@ -4,7 +4,7 @@
     using TexasHoldem.AI.SmartPlayer;
     using TexasHoldem.Logic.Players;
 
-    internal class SmartVsAlwaysCallPlayerSimulation : BaseGameSimulator
+    internal class SmartVsAlwaysCallPlayerSimulator : BaseGameSimulator
     {
         private readonly IPlayer firstPlayer = new SmartPlayer();
 

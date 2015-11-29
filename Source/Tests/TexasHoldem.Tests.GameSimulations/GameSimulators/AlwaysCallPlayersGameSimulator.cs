@@ -6,7 +6,7 @@
     /// <summary>
     /// For performance profiling
     /// </summary>
-    public class AlwaysCallPlayersGameSimulation : BaseGameSimulator
+    public class AlwaysCallPlayersGameSimulator : BaseGameSimulator
     {
         private readonly IPlayer firstPlayer = new AlwaysCallDummyPlayer();
         private readonly IPlayer secondPlayer = new AlwaysCallDummyPlayer();

@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="AlwaysCallDummyPlayer.cs" />
     <Compile Include="AlwaysFoldDummyPlayer.cs" />
+    <Compile Include="AlwaysRaiseDummyPlayer.cs" />
     <Compile Include="DummyPlayer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

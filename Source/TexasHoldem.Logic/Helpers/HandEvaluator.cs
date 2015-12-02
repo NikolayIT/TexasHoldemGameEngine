@@ -13,7 +13,7 @@
         /// <summary>
         /// Finds the best possible hand given a player's cards and all revealed comunity cards.
         /// </summary>
-        /// <param name="cards">A player's cards + all revealed comunity cards (at lesat 5 in total)</param>
+        /// <param name="cards">A player's cards + all revealed comunity cards (at least 5 in total)</param>
         /// <returns>Returns an object of type BestHand</returns>
         public BestHand GetBestHand(IEnumerable<Card> cards)
         {

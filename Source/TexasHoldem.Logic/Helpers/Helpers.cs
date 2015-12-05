@@ -11,7 +11,6 @@
     {
         private static readonly IHandEvaluator HandEvaluator = new HandEvaluator();
 
-
         /// <summary>
         /// Finds the best possible hand given a player's cards and all revealed comunity cards.
         /// </summary>

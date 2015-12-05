@@ -1,13 +1,13 @@
 ﻿namespace TexasHoldem.Logic.Players
 {
-    public class PlayerDecorator : IPlayer
+    public abstract class PlayerDecorator : IPlayer
     {
         protected PlayerDecorator(IPlayer player)
         {
             this.Player = player;
         }
 
-        public string Name => this.Player.Name;
+        public virtual string Name => this.Player.Name;
 
         protected IPlayer Player { get; }
 

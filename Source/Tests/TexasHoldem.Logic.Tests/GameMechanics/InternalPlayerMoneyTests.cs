@@ -170,7 +170,7 @@
 
             var action = internalPlayerMoney.DoPlayerAction(PlayerAction.Raise(20), 0);
 
-            Assert.AreEqual(PlayerActionType.Raise, action.Type);
+            Assert.AreEqual(PlayerActionType.AllIn, action.Type);
             Assert.AreEqual(10, action.Money);
 
             Assert.AreEqual(0, internalPlayerMoney.Money);
@@ -186,7 +186,7 @@
             internalPlayerMoney.DoPlayerAction(PlayerAction.CheckOrCall(), 5);
             var action = internalPlayerMoney.DoPlayerAction(PlayerAction.Raise(20), 5);
 
-            Assert.AreEqual(PlayerActionType.Raise, action.Type);
+            Assert.AreEqual(PlayerActionType.AllIn, action.Type);
             Assert.AreEqual(5, action.Money);
 
             Assert.AreEqual(0, internalPlayerMoney.Money);

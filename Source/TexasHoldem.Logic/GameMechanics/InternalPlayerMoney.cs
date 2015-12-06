@@ -63,10 +63,15 @@
                 }
                 else
                 {
-                    // All-in
-                    action.Money = this.Money;
-                    this.PlaceMoney(action.Money);
+                    // Temporal solution. If player tries to raise with more money than he has (all in).
+                    return this.DoPlayerAction(PlayerAction.AllIn(action.Money), maxMoneyPerPlayer);
                 }
+            }
+            else if (action.Type == PlayerActionType.AllIn)
+            {
+                // All-in - important to be accessible as information through "PreviousRoundActions".
+                action.Money = this.Money;
+                this.PlaceMoney(action.Money);
             }
             else if (action.Type == PlayerActionType.CheckCall)
             {

@@ -5,5 +5,6 @@
         Fold = 0,
         CheckCall = 1,
         Raise = 2,
+        AllIn = 3
     }
 }

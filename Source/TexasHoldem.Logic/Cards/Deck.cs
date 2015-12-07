@@ -7,7 +7,7 @@
 
     public class Deck : IDeck
     {
-        public static readonly IList<Card> AllCards = new List<Card>();
+        public static readonly IReadOnlyList<Card> AllCards;
 
         private static readonly IEnumerable<CardType> AllCardTypes = new List<CardType>
                                                                          {
@@ -40,13 +40,16 @@
 
         static Deck()
         {
+            var cards = new List<Card>();
             foreach (var cardSuit in AllCardSuits)
             {
                 foreach (var cardType in AllCardTypes)
                 {
-                    AllCards.Add(new Card(cardSuit, cardType));
+                    cards.Add(new Card(cardSuit, cardType));
                 }
             }
+
+            AllCards = cards.AsReadOnly();
         }
 
         public Deck()

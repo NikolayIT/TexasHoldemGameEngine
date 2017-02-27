@@ -12,9 +12,9 @@
             this.Type = type;
         }
 
-        private PlayerAction(int money)
+        private PlayerAction(int money, bool isAllIn = false)
         {
-            this.Type = PlayerActionType.Raise;
+            this.Type = isAllIn ? PlayerActionType.AllIn : PlayerActionType.Raise;
             this.Money = money;
         }
 
@@ -38,7 +38,6 @@
         /// <param name="withAmount">
         /// The amount to raise with.
         /// If amount is less than the minimum amount for raising then the game will take this minimum amount from the players money.
-        /// If amount is more or equal to the players money the player will be in all-in state
         /// </param>
         /// <returns>A new player action object containing information about the player action and the raise amount</returns>
         public static PlayerAction Raise(int withAmount)
@@ -49,6 +48,24 @@
             }
 
             return new PlayerAction(withAmount);
+        }
+
+        /// <summary>
+        /// Creates a new object containing information about the player action.
+        /// </summary>
+        /// <param name="moneyLeft">
+        /// The amount of money player has left to all-in with.
+        /// If amount is less than the minimum amount for raising then the game will take this minimum amount from the players money.
+        /// </param>
+        /// <returns>A new player action object containing information about the player action and the raise amount</returns>
+        public static PlayerAction AllIn(int moneyLeft)
+        {
+            if (moneyLeft <= 0)
+            {
+                return CheckOrCall();
+            }
+
+            return new PlayerAction(moneyLeft, true);
         }
 
         public override string ToString()

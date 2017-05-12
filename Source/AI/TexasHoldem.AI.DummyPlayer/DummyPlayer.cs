@@ -9,7 +9,7 @@
     {
         public override string Name { get; } = "DummyPlayer_" + Guid.NewGuid();
 
-        public override PlayerAction GetTurn(GetTurnContext context)
+        public override PlayerAction GetTurn(IGetTurnContext context)
         {
             var chanceForAction = RandomProvider.Next(1, 101);
             if (chanceForAction == 1 && context.MoneyLeft > 0)

@@ -4,7 +4,7 @@
 
     using TexasHoldem.Logic.Cards;
 
-    public class StartRoundContext
+    public class StartRoundContext : IStartRoundContext
     {
         public StartRoundContext(GameRoundType roundType, IReadOnlyCollection<Card> communityCards, int moneyLeft, int currentPot)
         {

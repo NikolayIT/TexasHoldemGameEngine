@@ -16,7 +16,7 @@
 
         public override string Name { get; }
 
-        public override PlayerAction GetTurn(GetTurnContext context)
+        public override PlayerAction GetTurn(IGetTurnContext context)
         {
             this.DrawPlayerOptions(context.MoneyToCall);
 

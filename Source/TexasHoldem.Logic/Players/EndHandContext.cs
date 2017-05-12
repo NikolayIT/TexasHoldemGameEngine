@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using TexasHoldem.Logic.Cards;
 
-    public class EndHandContext
+    public class EndHandContext : IEndHandContext
     {
         public EndHandContext(Dictionary<string, ICollection<Card>> showdownCards)
         {

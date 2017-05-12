@@ -4,18 +4,18 @@
     {
         string Name { get; }
 
-        void StartGame(StartGameContext context);
+        void StartGame(IStartGameContext context);
 
-        void StartHand(StartHandContext context);
+        void StartHand(IStartHandContext context);
 
-        void StartRound(StartRoundContext context);
+        void StartRound(IStartRoundContext context);
 
-        PlayerAction GetTurn(GetTurnContext context);
+        PlayerAction GetTurn(IGetTurnContext context);
 
-        void EndRound(EndRoundContext context);
+        void EndRound(IEndRoundContext context);
 
-        void EndHand(EndHandContext context);
+        void EndHand(IEndHandContext context);
 
-        void EndGame(EndGameContext context);
+        void EndGame(IEndGameContext context);
     }
 }

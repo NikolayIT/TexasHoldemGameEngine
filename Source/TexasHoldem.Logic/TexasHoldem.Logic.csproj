@@ -67,8 +67,15 @@
     <Compile Include="GameMechanics\InternalPlayer.cs" />
     <Compile Include="Players\EndHandContext.cs" />
     <Compile Include="Players\EndRoundContext.cs" />
+    <Compile Include="Players\IEndGameContext.cs" />
+    <Compile Include="Players\IEndHandContext.cs" />
+    <Compile Include="Players\IEndRoundContext.cs" />
+    <Compile Include="Players\IGetTurnContext.cs" />
     <Compile Include="Players\IPlayer.cs" />
     <Compile Include="Players\GetTurnContext.cs" />
+    <Compile Include="Players\IStartGameContext.cs" />
+    <Compile Include="Players\IStartHandContext.cs" />
+    <Compile Include="Players\IStartRoundContext.cs" />
     <Compile Include="Players\PlayerActionAndName.cs" />
     <Compile Include="Players\PlayerDecorator.cs" />
     <Compile Include="Players\PlayerAction.cs" />

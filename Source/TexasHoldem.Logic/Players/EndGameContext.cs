@@ -1,6 +1,6 @@
 ﻿namespace TexasHoldem.Logic.Players
 {
-    public class EndGameContext
+    public class EndGameContext : IEndGameContext
     {
         public EndGameContext(string winnerName)
         {

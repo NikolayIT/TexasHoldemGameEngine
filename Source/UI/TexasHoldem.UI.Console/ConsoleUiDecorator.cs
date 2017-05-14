@@ -29,7 +29,7 @@
 
         private IReadOnlyCollection<Card> CommunityCards { get; set; }
 
-        public override void StartHand(StartHandContext context)
+        public override void StartHand(IStartHandContext context)
         {
             this.UpdateCommonRow(0);
             var dealerSymbol = context.FirstPlayerName == this.Player.Name ? "D" : " ";
@@ -44,7 +44,7 @@
             base.StartHand(context);
         }
 
-        public override void StartRound(StartRoundContext context)
+        public override void StartRound(IStartRoundContext context)
         {
             this.CommunityCards = context.CommunityCards;
             this.UpdateCommonRow(context.CurrentPot);
@@ -53,7 +53,7 @@
             base.StartRound(context);
         }
 
-        public override PlayerAction GetTurn(GetTurnContext context)
+        public override PlayerAction GetTurn(IGetTurnContext context)
         {
             this.UpdateCommonRow(context.CurrentPot);
             ConsoleHelper.WriteOnConsole(this.row + 1, 2, context.MoneyLeft + "   ");

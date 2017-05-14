@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
 
-    public class StartGameContext
+    public class StartGameContext : IStartGameContext
     {
         public StartGameContext(IReadOnlyCollection<string> playerNames, int startMoney)
         {

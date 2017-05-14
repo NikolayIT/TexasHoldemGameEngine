@@ -2,7 +2,7 @@
 {
     using TexasHoldem.Logic.Cards;
 
-    public class StartHandContext
+    public class StartHandContext : IStartHandContext
     {
         public StartHandContext(Card firstCard, Card secondCard, int handNumber, int moneyLeft, int smallBlind, string firstPlayerName)
         {

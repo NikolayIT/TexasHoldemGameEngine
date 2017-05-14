@@ -12,7 +12,7 @@
     {
         public override string Name { get; } = "SmartPlayer_" + Guid.NewGuid();
 
-        public override PlayerAction GetTurn(GetTurnContext context)
+        public override PlayerAction GetTurn(IGetTurnContext context)
         {
             if (context.RoundType == GameRoundType.PreFlop)
             {

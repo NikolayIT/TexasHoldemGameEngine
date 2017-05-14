@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
 
-    public class EndRoundContext
+    public class EndRoundContext : IEndRoundContext
     {
         public EndRoundContext(IReadOnlyCollection<PlayerActionAndName> roundActions)
         {

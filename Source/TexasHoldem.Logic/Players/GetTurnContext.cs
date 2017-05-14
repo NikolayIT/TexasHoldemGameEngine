@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
 
-    public class GetTurnContext
+    public class GetTurnContext : IGetTurnContext
     {
         public GetTurnContext(
             GameRoundType roundType,

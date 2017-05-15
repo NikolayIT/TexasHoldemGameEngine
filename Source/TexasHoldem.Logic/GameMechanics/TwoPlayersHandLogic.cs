@@ -7,7 +7,7 @@
     using TexasHoldem.Logic.Helpers;
     using TexasHoldem.Logic.Players;
 
-    internal class TwoPlayersHandLogic
+    internal class TwoPlayersHandLogic : IHandLogic
     {
         private readonly int handNumber;
 

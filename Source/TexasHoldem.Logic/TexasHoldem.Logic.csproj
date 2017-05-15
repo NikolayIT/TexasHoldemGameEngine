@@ -49,6 +49,7 @@
     <Compile Include="Cards\IDeck.cs" />
     <Compile Include="Extensions\EnumerableExtensions.cs" />
     <Compile Include="Extensions\RandomProvider.cs" />
+    <Compile Include="GameMechanics\IHandLogic.cs" />
     <Compile Include="GameMechanics\InternalPlayerMoney.cs" />
     <Compile Include="GameMechanics\TwoPlayersBettingLogic.cs" />
     <Compile Include="GameMechanics\TwoPlayersHandLogic.cs" />

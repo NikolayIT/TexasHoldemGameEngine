@@ -17,7 +17,7 @@
 
         private readonly ICollection<IInternalPlayer> allPlayers;
 
-        private Dictionary<string, int> initialMoney;
+        private int initialMoney;
 
         public BaseTexasHoldemGame(ICollection<IPlayer> allPlayers, int initialMoney = 1000)
         {
@@ -37,13 +37,12 @@
             }
 
             this.allPlayers = new List<IInternalPlayer>(allPlayers.Count);
-            this.initialMoney = new Dictionary<string, int>(allPlayers.Count);
             foreach (var item in allPlayers)
             {
                 this.allPlayers.Add(new InternalPlayer(item));
-                this.initialMoney.Add(item.Name, initialMoney);
             }
 
+            this.initialMoney = initialMoney;
             this.HandsPlayed = 0;
         }
 
@@ -59,28 +58,12 @@
 
         public abstract void PlayHand();
 
-        public void EditInitialMoney(string playerName, int amount)
-        {
-            try
-            {
-                this.initialMoney[playerName] = amount;
-            }
-            catch (ArgumentNullException)
-            {
-                throw new ArgumentNullException(nameof(playerName));
-            }
-            catch (KeyNotFoundException)
-            {
-                throw new KeyNotFoundException("No player name found");
-            }
-        }
-
         public IPlayer Start()
         {
             var playerNames = this.allPlayers.Select(x => x.Name).ToList().AsReadOnly();
             foreach (var player in this.allPlayers)
             {
-                player.StartGame(new StartGameContext(playerNames, this.initialMoney[player.Name]));
+                player.StartGame(new StartGameContext(playerNames, this.initialMoney));
             }
 
             this.PlayHand();

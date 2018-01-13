@@ -10,6 +10,8 @@
 
         void StartRound(IStartRoundContext context);
 
+        PlayerAction ToPostBlind(int stackSize, int blindSize, int currentPot);
+
         PlayerAction GetTurn(IGetTurnContext context);
 
         void EndRound(IEndRoundContext context);

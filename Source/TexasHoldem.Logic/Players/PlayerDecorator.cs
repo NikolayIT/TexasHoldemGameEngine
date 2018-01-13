@@ -26,6 +26,11 @@
             this.Player.StartRound(context);
         }
 
+        public virtual PlayerAction ToPostBlind(int stackSize, int blindSize, int currentPot)
+        {
+            return this.Player.ToPostBlind(stackSize, blindSize, currentPot);
+        }
+
         public virtual PlayerAction GetTurn(IGetTurnContext context)
         {
             return this.Player.GetTurn(context);

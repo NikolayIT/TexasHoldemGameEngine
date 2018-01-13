@@ -9,6 +9,11 @@
     {
         public override string Name { get; } = "DummyPlayer_" + Guid.NewGuid();
 
+        public override PlayerAction ToPostBlind(int stackSize, int blindSize, int currentPot)
+        {
+            throw new NotImplementedException();
+        }
+
         public override PlayerAction GetTurn(IGetTurnContext context)
         {
             var chanceForAction = RandomProvider.Next(1, 101);

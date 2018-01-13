@@ -29,25 +29,22 @@
 
         public override void PlayHand()
         {
-            var allPlayers = this.AllPlayers;
+            var shifted = this.AllPlayers.ToList();
 
             // While at least two players have money
-            while (allPlayers.Count(x => x.PlayerMoney.Money > 0) > 1)
+            while (this.AllPlayers.Count(x => x.PlayerMoney.Money > 0) > 1)
             {
                 this.HandsPlayed++;
 
                 // Cash game with unchanged size of the blinds
                 var smallBlind = SmallBlinds[0];
 
-                // Players are sorted in order of priority to make a move
-                var sorted = allPlayers.Select((s, i) => new KeyValuePair<IInternalPlayer, int>(s, i))
-                    .OrderBy(k => (k.Value + this.HandsPlayed) % allPlayers.Count())
-                    .Where(p => p.Key.PlayerMoney.Money > 0)
-                    .Select(s => s.Key)
-                    .ToList();
+                // Players are shifted in order of priority to make a move
+                shifted.Add(shifted.First());
+                shifted.RemoveAt(0);
 
                 // Rotate players
-                IHandLogic hand = new MultiplePlayersHandLogic(sorted, this.HandsPlayed, smallBlind);
+                IHandLogic hand = new MultiplePlayersHandLogic(shifted, this.HandsPlayed, smallBlind);
 
                 hand.Play();
             }

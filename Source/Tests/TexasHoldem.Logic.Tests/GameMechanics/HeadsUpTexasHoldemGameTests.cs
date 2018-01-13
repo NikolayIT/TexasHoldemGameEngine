@@ -8,7 +8,7 @@
     using TexasHoldem.Logic.Players;
 
     [TestFixture]
-    public class TwoPlayersTexasHoldemGameTests
+    public class HeadsUpTexasHoldemGameTests
     {
         [Test]
         public void ConstructorShouldThrowArgumentNullExceptionWhenIncorrectFirstPlayer()

@@ -46,7 +46,7 @@
 
         public abstract void Bet(GameRoundType gameRoundType);
 
-        protected void PlaceBlinds()
+        protected virtual void PlaceBlinds()
         {
             var smallBlindAction = PlayerAction.Raise(this.smallBlind);
 

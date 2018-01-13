@@ -78,5 +78,22 @@
 
             this.ReturnMoneyInCaseOfAllIn();
         }
+
+        protected override void PlaceBlinds()
+        {
+            // Small blind
+            this.RoundBets.Add(
+                new PlayerActionAndName(
+                    this.AllPlayers[1].Name,
+                    this.AllPlayers[1].PlayerMoney.DoPlayerAction(
+                        this.AllPlayers[1].ToPostBlind(this.AllPlayers[1].PlayerMoney.Money, 1, 0), 0)));
+
+            // Big blind
+            this.RoundBets.Add(
+                new PlayerActionAndName(
+                    this.AllPlayers[2].Name,
+                    this.AllPlayers[2].PlayerMoney.DoPlayerAction(
+                        this.AllPlayers[2].ToPostBlind(this.AllPlayers[2].PlayerMoney.Money, 2, 1), 0)));
+        }
     }
 }

@@ -29,6 +29,8 @@
             this.CommunityCards = context.CommunityCards;
         }
 
+        public abstract PlayerAction ToPostBlind(int stackSize, int blindSize, int currentPot);
+
         public abstract PlayerAction GetTurn(IGetTurnContext context);
 
         public virtual void EndRound(IEndRoundContext context)

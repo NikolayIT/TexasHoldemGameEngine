@@ -16,6 +16,11 @@
 
         public override string Name { get; }
 
+        public override PlayerAction ToPostBlind(int stackSize, int blindSize, int currentPot)
+        {
+            return stackSize >= blindSize ? PlayerAction.Raise(blindSize) : PlayerAction.Raise(stackSize);
+        }
+
         public override PlayerAction GetTurn(IGetTurnContext context)
         {
             this.DrawPlayerOptions(context.MoneyToCall);

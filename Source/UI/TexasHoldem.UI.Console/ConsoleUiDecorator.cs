@@ -53,6 +53,23 @@
             base.StartRound(context);
         }
 
+        public override PlayerAction ToPostBlind(int stackSize, int blindSize, int currentPot)
+        {
+            this.UpdateCommonRow(currentPot);
+            ConsoleHelper.WriteOnConsole(this.row + 1, 2, stackSize + "   ");
+
+            var action = base.ToPostBlind(stackSize, blindSize, currentPot);
+
+            ConsoleHelper.WriteOnConsole(this.row + 2, 2, new string(' ', this.width - 3));
+            ConsoleHelper.WriteOnConsole(this.row + 3, 2, "Last action: posting a blind" + "(" + action.Money + ")");
+
+            var moneyAfterAction = stackSize - action.Money;
+
+            ConsoleHelper.WriteOnConsole(this.row + 1, 2, moneyAfterAction + "   ");
+
+            return action;
+        }
+
         public override PlayerAction GetTurn(IGetTurnContext context)
         {
             this.UpdateCommonRow(context.CurrentPot);

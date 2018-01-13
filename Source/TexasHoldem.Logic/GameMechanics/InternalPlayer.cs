@@ -5,7 +5,7 @@
     using TexasHoldem.Logic.Cards;
     using TexasHoldem.Logic.Players;
 
-    internal class InternalPlayer : PlayerDecorator
+    internal class InternalPlayer : PlayerDecorator, IInternalPlayer
     {
         public InternalPlayer(IPlayer player)
             : base(player)

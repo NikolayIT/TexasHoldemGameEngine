@@ -7,32 +7,48 @@
     using TexasHoldem.Logic.Helpers;
     using TexasHoldem.Logic.Players;
 
-    internal class TwoPlayersHandLogic : IHandLogic
+    internal abstract class BaseHandLogic : IHandLogic
     {
         private readonly int handNumber;
 
         private readonly int smallBlind;
 
-        private readonly IList<InternalPlayer> players;
+        private readonly IList<IInternalPlayer> players;
 
         private readonly Deck deck;
 
         private readonly List<Card> communityCards;
 
-        private readonly TwoPlayersBettingLogic bettingLogic;
+        private readonly BaseBettingLogic bettingLogic;
 
-        private Dictionary<string, ICollection<Card>> showdownCards;
-
-        public TwoPlayersHandLogic(IList<InternalPlayer> players, int handNumber, int smallBlind)
+        public BaseHandLogic(IList<IInternalPlayer> players, int handNumber, int smallBlind, BaseBettingLogic bettingLogic)
         {
             this.handNumber = handNumber;
             this.smallBlind = smallBlind;
             this.players = players;
             this.deck = new Deck();
             this.communityCards = new List<Card>(5);
-            this.bettingLogic = new TwoPlayersBettingLogic(this.players, smallBlind);
-            this.showdownCards = new Dictionary<string, ICollection<Card>>();
-    }
+            this.bettingLogic = bettingLogic;
+            this.ShowdownCards = new Dictionary<string, ICollection<Card>>();
+        }
+
+        protected IReadOnlyList<IInternalPlayer> Players
+        {
+            get
+            {
+                return this.players.ToList();
+            }
+        }
+
+        protected IReadOnlyList<Card> CommunityCards
+        {
+            get
+            {
+                return this.communityCards.ToList();
+            }
+        }
+
+        protected Dictionary<string, ICollection<Card>> ShowdownCards { get; set; }
 
         public void Play()
         {
@@ -74,46 +90,11 @@
 
             foreach (var player in this.players)
             {
-                player.EndHand(new EndHandContext(this.showdownCards));
+                player.EndHand(new EndHandContext(this.ShowdownCards));
             }
         }
 
-        private void DetermineWinnerAndAddPot(int pot)
-        {
-            if (this.players.Count(x => x.PlayerMoney.InHand) == 1)
-            {
-                var winner = this.players.FirstOrDefault(x => x.PlayerMoney.InHand);
-                winner.PlayerMoney.Money += pot;
-            }
-            else
-            {
-                // showdown
-                foreach (var player in this.players)
-                {
-                    if (player.PlayerMoney.InHand)
-                    {
-                        this.showdownCards.Add(player.Name, player.Cards);
-                    }
-                }
-
-                var betterHand = Helpers.CompareCards(
-                    this.players[0].Cards.Concat(this.communityCards),
-                    this.players[1].Cards.Concat(this.communityCards));
-                if (betterHand > 0)
-                {
-                    this.players[0].PlayerMoney.Money += pot;
-                }
-                else if (betterHand < 0)
-                {
-                    this.players[1].PlayerMoney.Money += pot;
-                }
-                else
-                {
-                    this.players[0].PlayerMoney.Money += pot / 2;
-                    this.players[1].PlayerMoney.Money += pot / 2;
-                }
-            }
-        }
+        protected abstract void DetermineWinnerAndAddPot(int pot);
 
         private void PlayRound(GameRoundType gameRoundType, int communityCardsCount)
         {

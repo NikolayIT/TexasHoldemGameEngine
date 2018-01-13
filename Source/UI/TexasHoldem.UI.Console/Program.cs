@@ -7,23 +7,47 @@
 
     public static class Program
     {
-        private const string ProgramName = "TexasHoldem.UI.Console (c) 2015";
-        private const int GameHeight = 12;
-        private const int GameWidth = 66;
+        private const string ProgramName = "TexasHoldem.UI.Console (c) 2015-2018";
 
         public static void Main()
         {
+            // HeadsUp(12, 66);
+            MultiplePlayers(36, 72);
+        }
+
+        private static void HeadsUp(int gameHeight, int gameWidth)
+        {
+            Stand(gameHeight, gameWidth);
+
+            var consolePlayer1 = new ConsoleUiDecorator(new ConsolePlayer(0), 0, gameWidth, 5);
+            var consolePlayer2 = new ConsoleUiDecorator(new SmartPlayer(), 6, gameWidth, 5);
+            ITexasHoldemGame game = new HeadsUpTexasHoldemGame(consolePlayer1, consolePlayer2);
+            game.Start();
+        }
+
+        private static void MultiplePlayers(int gameHeight, int gameWidth)
+        {
+            Stand(gameHeight, gameWidth);
+
+            var consolePlayer1 = new ConsoleUiDecorator(new ConsolePlayer(0, "ConsolePlayer_1"), 0, gameWidth, 5);
+            var consolePlayer2 = new ConsoleUiDecorator(new ConsolePlayer(6, "ConsolePlayer_2"), 6, gameWidth, 5);
+            var consolePlayer3 = new ConsoleUiDecorator(new ConsolePlayer(12, "ConsolePlayer_3"), 12, gameWidth, 5);
+            var consolePlayer4 = new ConsoleUiDecorator(new ConsolePlayer(18, "ConsolePlayer_4"), 18, gameWidth, 5);
+            var consolePlayer5 = new ConsoleUiDecorator(new ConsolePlayer(24, "ConsolePlayer_5"), 24, gameWidth, 5);
+            var consolePlayer6 = new ConsoleUiDecorator(new ConsolePlayer(30, "ConsolePlayer_6"), 30, gameWidth, 5);
+            ITexasHoldemGame game = new MultiplePlayersTexasHoldemGame(
+                new[] { consolePlayer1, consolePlayer2, consolePlayer3, consolePlayer4, consolePlayer5, consolePlayer6, });
+            game.Start();
+        }
+
+        private static void Stand(int gameHeight, int gameWidth)
+        {
             Console.BackgroundColor = ConsoleColor.Black;
             Console.ForegroundColor = ConsoleColor.Gray;
-            Console.BufferHeight = Console.WindowHeight = GameHeight;
-            Console.BufferWidth = Console.WindowWidth = GameWidth;
+            Console.BufferHeight = Console.WindowHeight = gameHeight;
+            Console.BufferWidth = Console.WindowWidth = gameWidth;
 
-            ConsoleHelper.WriteOnConsole(GameHeight - 1, GameWidth - ProgramName.Length - 1, ProgramName, ConsoleColor.Green);
-
-            var consolePlayer1 = new ConsoleUiDecorator(new ConsolePlayer(0), 0, GameWidth, 5);
-            var consolePlayer2 = new ConsoleUiDecorator(new SmartPlayer(), 6, GameWidth, 5);
-            ITexasHoldemGame game = new TwoPlayersTexasHoldemGame(consolePlayer1, consolePlayer2);
-            game.Start();
+            ConsoleHelper.WriteOnConsole(gameHeight - 1, gameWidth - ProgramName.Length - 1, ProgramName, ConsoleColor.Green);
         }
     }
 }

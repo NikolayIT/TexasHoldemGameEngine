@@ -8,10 +8,10 @@
     {
         private readonly int row;
 
-        public ConsolePlayer(int row)
+        public ConsolePlayer(int row, string playerName = "ConsolePlayer")
         {
             this.row = row;
-            this.Name = "ConsolePlayer";
+            this.Name = playerName;
         }
 
         public override string Name { get; }

@@ -17,7 +17,7 @@
             Mock<IPlayer> mockedSecondPlayer = new Mock<IPlayer>();
             var initialMoney = 1000;
             Assert.Throws<ArgumentNullException>(
-                () => { var twoPlayersGame = new TwoPlayersTexasHoldemGame(firstPlayer, mockedSecondPlayer.Object, initialMoney); });
+                () => { var twoPlayersGame = new HeadsUpTexasHoldemGame(firstPlayer, mockedSecondPlayer.Object, initialMoney); });
         }
 
         [Test]
@@ -27,7 +27,7 @@
             Mock<IPlayer> mockedFirstPlayer = new Mock<IPlayer>();
             var initialMoney = 1000;
             Assert.Throws<ArgumentNullException>(
-                () => { var twoPlayersGame = new TwoPlayersTexasHoldemGame(mockedFirstPlayer.Object, secondPlayer, initialMoney); });
+                () => { var twoPlayersGame = new HeadsUpTexasHoldemGame(mockedFirstPlayer.Object, secondPlayer, initialMoney); });
         }
 
         [Test]
@@ -37,7 +37,7 @@
             Mock<IPlayer> mockedFirstPlayer = new Mock<IPlayer>();
             var initialMoney = -100;
             Assert.Throws<ArgumentOutOfRangeException>(
-                () => { var twoPlayersGame = new TwoPlayersTexasHoldemGame(mockedFirstPlayer.Object, mockedSecondPlayer.Object, initialMoney); });
+                () => { var twoPlayersGame = new HeadsUpTexasHoldemGame(mockedFirstPlayer.Object, mockedSecondPlayer.Object, initialMoney); });
         }
 
         [Test]
@@ -47,7 +47,7 @@
             Mock<IPlayer> mockedFirstPlayer = new Mock<IPlayer>();
             var initialMoney = 200001;
             Assert.Throws<ArgumentOutOfRangeException>(
-                () => { var twoPlayersGame = new TwoPlayersTexasHoldemGame(mockedFirstPlayer.Object, mockedSecondPlayer.Object, initialMoney); });
+                () => { var twoPlayersGame = new HeadsUpTexasHoldemGame(mockedFirstPlayer.Object, mockedSecondPlayer.Object, initialMoney); });
         }
 
         [Test]
@@ -57,7 +57,7 @@
             Mock<IPlayer> mockedFirstPlayer = new Mock<IPlayer>();
             var initialMoney = 0;
             Assert.Throws<ArgumentOutOfRangeException>(
-                () => { var twoPlayersGame = new TwoPlayersTexasHoldemGame(mockedFirstPlayer.Object, mockedSecondPlayer.Object, initialMoney); });
+                () => { var twoPlayersGame = new HeadsUpTexasHoldemGame(mockedFirstPlayer.Object, mockedSecondPlayer.Object, initialMoney); });
         }
 
         [Test]
@@ -69,7 +69,7 @@
             mockedFirstPlayer.SetupGet(x => x.Name).Returns("Player");
             var initialMoney = 1000;
             Assert.Throws<ArgumentException>(
-                () => { var twoPlayersGame = new TwoPlayersTexasHoldemGame(mockedFirstPlayer.Object, mockedSecondPlayer.Object, initialMoney); });
+                () => { var twoPlayersGame = new HeadsUpTexasHoldemGame(mockedFirstPlayer.Object, mockedSecondPlayer.Object, initialMoney); });
         }
     }
 }

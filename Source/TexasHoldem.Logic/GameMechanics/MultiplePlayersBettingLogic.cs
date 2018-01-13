@@ -15,15 +15,13 @@
         public override void Bet(GameRoundType gameRoundType)
         {
             this.RoundBets.Clear();
-            var playerIndex = 0;
+            var playerIndex = 1;
 
             if (gameRoundType == GameRoundType.PreFlop)
             {
                 this.PlaceBlinds();
                 playerIndex = 3;
             }
-
-            int maxMoneyPerPlayer = 0;
 
             while (this.AllPlayers.Count(x => x.PlayerMoney.InHand) >= 2
                    && this.AllPlayers.Any(x => x.PlayerMoney.ShouldPlayInRound))
@@ -33,22 +31,13 @@
                 {
                     if (player.PlayerMoney.InHand == player.PlayerMoney.ShouldPlayInRound)
                     {
-                        player.GetTurn(
-                        new GetTurnContext(
-                            gameRoundType,
-                            this.RoundBets.AsReadOnly(),
-                            this.SmallBlind,
-                            player.PlayerMoney.Money,
-                            this.Pot,
-                            player.PlayerMoney.CurrentRoundBet,
-                            maxMoneyPerPlayer));
                         playerIndex++;
                     }
 
                     continue;
                 }
 
-                maxMoneyPerPlayer = this.AllPlayers.Max(x => x.PlayerMoney.CurrentRoundBet);
+                var maxMoneyPerPlayer = this.AllPlayers.Max(x => x.PlayerMoney.CurrentRoundBet);
                 var action =
                     player.GetTurn(
                         new GetTurnContext(

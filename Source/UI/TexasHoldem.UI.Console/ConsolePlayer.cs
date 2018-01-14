@@ -35,9 +35,7 @@
                         action = PlayerAction.CheckOrCall();
                         break;
                     case ConsoleKey.R:
-                        // ConsoleHelper.WriteOnConsole(this.row + 2, 2, $"Raise amount [1-{context.MoneyLeft}]:                                ");
-                        // continue;
-                        action = PlayerAction.Raise(10);
+                        action = PlayerAction.Raise(this.RaiseAmount(context.MoneyLeft));
                         break;
                     case ConsoleKey.F:
                         action = PlayerAction.Fold();
@@ -54,6 +52,24 @@
                     return action;
                 }
             }
+        }
+
+        private int RaiseAmount(int moneyLeft)
+        {
+            var perfix = $"Raise amount [1-{moneyLeft}]:";
+
+            do
+            {
+                ConsoleHelper.WriteOnConsole(this.row + 2, 2, new string(' ', Console.WindowWidth - 3));
+                ConsoleHelper.WriteOnConsole(this.row + 2, 2, perfix);
+                var text = ConsoleHelper.UserInput(this.row + 2, perfix.Length + 3);
+                int result;
+                if (int.TryParse(text, out result))
+                {
+                    return result;
+                }
+            }
+            while (true);
         }
 
         private void DrawPlayerOptions(int moneyToCall)

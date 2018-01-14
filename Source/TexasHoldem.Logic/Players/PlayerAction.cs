@@ -12,9 +12,9 @@
             this.Type = type;
         }
 
-        private PlayerAction(int money)
+        private PlayerAction(int money, PlayerActionType type = PlayerActionType.Raise)
         {
-            this.Type = PlayerActionType.Raise;
+            this.Type = type;
             this.Money = money;
         }
 
@@ -51,9 +51,14 @@
             return new PlayerAction(withAmount);
         }
 
+        public static PlayerAction Post(int blind)
+        {
+            return new PlayerAction(blind, PlayerActionType.Post);
+        }
+
         public override string ToString()
         {
-            if (this.Type == PlayerActionType.Raise)
+            if (this.Type == PlayerActionType.Raise || this.Type == PlayerActionType.Post)
             {
                 return $"{this.Type}({this.Money})";
             }

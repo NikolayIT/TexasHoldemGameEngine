@@ -81,6 +81,7 @@
     <Compile Include="Players\IGetTurnContext.cs" />
     <Compile Include="Players\IPlayer.cs" />
     <Compile Include="Players\GetTurnContext.cs" />
+    <Compile Include="Players\IPostingBlindContext.cs" />
     <Compile Include="Players\IStartGameContext.cs" />
     <Compile Include="Players\IStartHandContext.cs" />
     <Compile Include="Players\IStartRoundContext.cs" />
@@ -88,6 +89,7 @@
     <Compile Include="Players\PlayerDecorator.cs" />
     <Compile Include="Players\PlayerAction.cs" />
     <Compile Include="Players\PlayerActionType.cs" />
+    <Compile Include="Players\PostingBlindContext.cs" />
     <Compile Include="Players\StartGameContext.cs" />
     <Compile Include="Players\StartHandContext.cs" />
     <Compile Include="Players\StartRoundContext.cs" />

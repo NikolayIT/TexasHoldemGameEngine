@@ -58,17 +58,17 @@
             base.StartRound(context);
         }
 
-        public override PlayerAction ToPostBlind(int stackSize, int blindSize, int currentPot)
+        public override PlayerAction PostingBlind(IPostingBlindContext context)
         {
-            this.UpdateCommonRow(currentPot);
-            ConsoleHelper.WriteOnConsole(this.row + 1, 2, stackSize + "   ");
+            this.UpdateCommonRow(context.CurrentPot);
+            ConsoleHelper.WriteOnConsole(this.row + 1, 2, context.CurrentStackSize + "   ");
 
-            var action = base.ToPostBlind(stackSize, blindSize, currentPot);
+            var action = base.PostingBlind(context);
 
             ConsoleHelper.WriteOnConsole(this.row + 2, 2, new string(' ', this.width - 3));
-            ConsoleHelper.WriteOnConsole(this.row + 3, 2, "Last action: Posting a blind" + "(" + action.Money + ")");
+            ConsoleHelper.WriteOnConsole(this.row + 3, 2, "Last action: " + action.Type + "(" + action.Money + ")");
 
-            var moneyAfterAction = stackSize - action.Money;
+            var moneyAfterAction = context.CurrentStackSize;
 
             ConsoleHelper.WriteOnConsole(this.row + 1, 2, moneyAfterAction + "   ");
 
@@ -82,7 +82,7 @@
 
             var action = base.GetTurn(context);
 
-            if (action == PlayerAction.Fold())
+            if (action.Type == PlayerActionType.Fold)
             {
                 this.Eliminate(context.MoneyLeft);
                 return action;

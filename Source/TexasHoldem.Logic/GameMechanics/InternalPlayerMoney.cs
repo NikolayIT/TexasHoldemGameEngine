@@ -48,7 +48,18 @@
         // TODO: Currently there is no limit in the raise amount as long as it is positive number
         public PlayerAction DoPlayerAction(PlayerAction action, int maxMoneyPerPlayer)
         {
-            if (action.Type == PlayerActionType.Raise)
+            if (action.Type == PlayerActionType.Post)
+            {
+                if (this.Money >= action.Money)
+                {
+                    this.PlaceMoney(action.Money);
+                }
+                else
+                {
+                    this.PlaceMoney(this.Money);
+                }
+            }
+            else if (action.Type == PlayerActionType.Raise)
             {
                 this.CallTo(maxMoneyPerPlayer);
 

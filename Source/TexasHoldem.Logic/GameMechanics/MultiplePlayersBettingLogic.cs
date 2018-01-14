@@ -74,15 +74,21 @@
             this.RoundBets.Add(
                 new PlayerActionAndName(
                     this.AllPlayers[1].Name,
-                    this.AllPlayers[1].PlayerMoney.DoPlayerAction(
-                        this.AllPlayers[1].ToPostBlind(this.AllPlayers[1].PlayerMoney.Money, 1, 0), 0)));
+                    this.AllPlayers[1].PostingBlind(
+                        new PostingBlindContext(
+                            this.AllPlayers[1].PlayerMoney.DoPlayerAction(PlayerAction.Post(this.SmallBlind), 0),
+                            0,
+                            this.AllPlayers[1].PlayerMoney.Money))));
 
             // Big blind
             this.RoundBets.Add(
                 new PlayerActionAndName(
                     this.AllPlayers[2].Name,
-                    this.AllPlayers[2].PlayerMoney.DoPlayerAction(
-                        this.AllPlayers[2].ToPostBlind(this.AllPlayers[2].PlayerMoney.Money, 2, 1), 0)));
+                    this.AllPlayers[2].PostingBlind(
+                        new PostingBlindContext(
+                            this.AllPlayers[2].PlayerMoney.DoPlayerAction(PlayerAction.Post(2 * this.SmallBlind), 0),
+                            this.Pot,
+                            this.AllPlayers[2].PlayerMoney.Money))));
         }
     }
 }

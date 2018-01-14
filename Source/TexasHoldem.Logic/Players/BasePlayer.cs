@@ -29,7 +29,7 @@
             this.CommunityCards = context.CommunityCards;
         }
 
-        public abstract PlayerAction ToPostBlind(int stackSize, int blindSize, int currentPot);
+        public abstract PlayerAction PostingBlind(IPostingBlindContext context);
 
         public abstract PlayerAction GetTurn(IGetTurnContext context);
 

@@ -10,7 +10,7 @@
 
         void StartRound(IStartRoundContext context);
 
-        PlayerAction ToPostBlind(int stackSize, int blindSize, int currentPot);
+        PlayerAction PostingBlind(IPostingBlindContext context);
 
         PlayerAction GetTurn(IGetTurnContext context);
 

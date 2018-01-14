@@ -12,7 +12,7 @@
     {
         public override string Name { get; } = "SmartPlayer_" + Guid.NewGuid();
 
-        public override PlayerAction ToPostBlind(int stackSize, int blindSize, int currentPot)
+        public override PlayerAction PostingBlind(IPostingBlindContext context)
         {
             throw new NotImplementedException();
         }

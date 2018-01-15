@@ -47,7 +47,8 @@
                             continue;
                         }
 
-                        action = PlayerAction.Raise(this.RaiseAmount(context.MoneyLeft, context.MinRaise));
+                        action = PlayerAction.Raise(
+                            this.RaiseAmount(context.MoneyLeft, context.MinRaise) - context.MoneyToCall);
                         break;
                     case ConsoleKey.F:
                         action = PlayerAction.Fold();
@@ -59,7 +60,7 @@
                         }
 
                         action = context.MoneyLeft > 0
-                                     ? PlayerAction.Raise(context.MoneyLeft)
+                                     ? PlayerAction.Raise(context.MoneyLeft - context.MoneyToCall)
                                      : PlayerAction.CheckOrCall();
                         break;
                 }
@@ -73,6 +74,12 @@
 
         private int RaiseAmount(int moneyLeft, int minRaise)
         {
+            if (minRaise >= moneyLeft)
+            {
+                // Instant All-In
+                return moneyLeft;
+            }
+
             var perfix = $"Raise amount [{minRaise}-{moneyLeft}]:";
 
             do
@@ -83,6 +90,16 @@
                 int result;
                 if (int.TryParse(text, out result))
                 {
+                    if (result < minRaise)
+                    {
+                        return minRaise;
+                    }
+                    else if (result > moneyLeft)
+                    {
+                        // Raise All-in
+                        return moneyLeft;
+                    }
+
                     return result;
                 }
             }

@@ -23,7 +23,14 @@
 
         public override PlayerAction GetTurn(IGetTurnContext context)
         {
-            this.DrawPlayerOptions(context.MoneyToCall);
+            if (context.MinRaise == -1)
+            {
+                this.DrawRestrictedPlayerOptions(context.MoneyToCall);
+            }
+            else
+            {
+                this.DrawPlayerOptions(context.MoneyToCall);
+            }
 
             while (true)
             {
@@ -35,12 +42,22 @@
                         action = PlayerAction.CheckOrCall();
                         break;
                     case ConsoleKey.R:
-                        action = PlayerAction.Raise(this.RaiseAmount(context.MoneyLeft));
+                        if (context.MinRaise == -1)
+                        {
+                            continue;
+                        }
+
+                        action = PlayerAction.Raise(this.RaiseAmount(context.MoneyLeft, context.MinRaise));
                         break;
                     case ConsoleKey.F:
                         action = PlayerAction.Fold();
                         break;
                     case ConsoleKey.A:
+                        if (context.MinRaise == -1)
+                        {
+                            continue;
+                        }
+
                         action = context.MoneyLeft > 0
                                      ? PlayerAction.Raise(context.MoneyLeft)
                                      : PlayerAction.CheckOrCall();
@@ -54,9 +71,9 @@
             }
         }
 
-        private int RaiseAmount(int moneyLeft)
+        private int RaiseAmount(int moneyLeft, int minRaise)
         {
-            var perfix = $"Raise amount [1-{moneyLeft}]:";
+            var perfix = $"Raise amount [{minRaise}-{moneyLeft}]:";
 
             do
             {
@@ -99,6 +116,23 @@
             ConsoleHelper.WriteOnConsole(this.row + 2, col, "A", ConsoleColor.Yellow);
             col++;
             ConsoleHelper.WriteOnConsole(this.row + 2, col, "]ll-in");
+        }
+
+        private void DrawRestrictedPlayerOptions(int moneyToCall)
+        {
+            var col = 2;
+            ConsoleHelper.WriteOnConsole(this.row + 2, col, "Select action: [");
+            col += 16;
+            ConsoleHelper.WriteOnConsole(this.row + 2, col, "C", ConsoleColor.Yellow);
+            col++;
+
+            var callString = moneyToCall <= 0 ? "]all, [" : "]all(" + moneyToCall + "), [";
+
+            ConsoleHelper.WriteOnConsole(this.row + 2, col, callString);
+            col += callString.Length;
+            ConsoleHelper.WriteOnConsole(this.row + 2, col, "F", ConsoleColor.Yellow);
+            col++;
+            ConsoleHelper.WriteOnConsole(this.row + 2, col, "]old");
         }
     }
 }

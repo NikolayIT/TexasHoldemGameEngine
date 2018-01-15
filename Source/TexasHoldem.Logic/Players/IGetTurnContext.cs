@@ -14,5 +14,6 @@ namespace TexasHoldem.Logic.Players
         IReadOnlyCollection<PlayerActionAndName> PreviousRoundActions { get; }
         GameRoundType RoundType { get; }
         int SmallBlind { get; }
+        int MinRaise { get; }
     }
 }

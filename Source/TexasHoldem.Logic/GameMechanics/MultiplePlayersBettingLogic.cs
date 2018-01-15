@@ -47,7 +47,8 @@
                             player.PlayerMoney.Money,
                             this.Pot,
                             player.PlayerMoney.CurrentRoundBet,
-                            maxMoneyPerPlayer));
+                            maxMoneyPerPlayer,
+                            this.MinRaise(maxMoneyPerPlayer, player.Name)));
 
                 action = player.PlayerMoney.DoPlayerAction(action, maxMoneyPerPlayer);
                 this.RoundBets.Add(new PlayerActionAndName(player.Name, action));

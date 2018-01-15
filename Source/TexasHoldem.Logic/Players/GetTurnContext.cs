@@ -11,7 +11,8 @@
             int moneyLeft,
             int currentPot,
             int myMoneyInTheRound,
-            int currentMaxBet)
+            int currentMaxBet,
+            int minRaise)
         {
             this.RoundType = roundType;
             this.PreviousRoundActions = previousRoundActions;
@@ -20,6 +21,7 @@
             this.CurrentPot = currentPot;
             this.MyMoneyInTheRound = myMoneyInTheRound;
             this.CurrentMaxBet = currentMaxBet;
+            this.MinRaise = minRaise;
         }
 
         public GameRoundType RoundType { get; }
@@ -41,5 +43,7 @@
         public int MoneyToCall => this.CurrentMaxBet - this.MyMoneyInTheRound;
 
         public bool IsAllIn => this.MoneyLeft <= 0;
+
+        public int MinRaise { get; }
     }
 }

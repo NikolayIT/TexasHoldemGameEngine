@@ -74,7 +74,7 @@
                 playerIndex++;
             }
 
-            this.ReturnMoneyInCaseOfAllIn();
+            // this.ReturnMoneyInCaseOfAllIn();
         }
 
         protected override void PlaceBlinds()

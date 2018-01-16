@@ -40,7 +40,22 @@
 
         public bool CanCheck => this.MyMoneyInTheRound == this.CurrentMaxBet;
 
-        public int MoneyToCall => this.CurrentMaxBet - this.MyMoneyInTheRound;
+        public int MoneyToCall
+        {
+            get
+            {
+                var temp = this.CurrentMaxBet - this.MyMoneyInTheRound;
+                if (temp >= this.MoneyLeft)
+                {
+                    // The player does not have enough money to make a full call
+                    return this.MoneyLeft;
+                }
+                else
+                {
+                    return temp;
+                }
+            }
+        }
 
         public bool IsAllIn => this.MoneyLeft <= 0;
 

@@ -32,7 +32,14 @@
             }
             else
             {
-                this.DrawPlayerOptions(context.MoneyToCall);
+                if (context.MoneyToCall >= context.MoneyLeft)
+                {
+                    this.DrawRestrictedPlayerOptions(context.MoneyToCall);
+                }
+                else
+                {
+                    this.DrawPlayerOptions(context.MoneyToCall);
+                }
             }
 
             while (true)
@@ -45,7 +52,7 @@
                         action = PlayerAction.CheckOrCall();
                         break;
                     case ConsoleKey.R:
-                        if (context.MinRaise == -1)
+                        if (context.MinRaise == -1 || context.MoneyToCall >= context.MoneyLeft)
                         {
                             continue;
                         }
@@ -57,7 +64,7 @@
                         action = PlayerAction.Fold();
                         break;
                     case ConsoleKey.A:
-                        if (context.MinRaise == -1)
+                        if (context.MinRaise == -1 || context.MoneyToCall >= context.MoneyLeft)
                         {
                             continue;
                         }

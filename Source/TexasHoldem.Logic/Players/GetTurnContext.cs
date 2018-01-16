@@ -60,5 +60,7 @@
         public bool IsAllIn => this.MoneyLeft <= 0;
 
         public int MinRaise { get; }
+
+        public bool IsRestrictedPlayerOptions => this.MinRaise == -1 || this.MoneyToCall >= this.MoneyLeft;
     }
 }

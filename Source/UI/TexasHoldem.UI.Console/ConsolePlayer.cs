@@ -26,20 +26,13 @@
 
         public override PlayerAction GetTurn(IGetTurnContext context)
         {
-            if (context.MinRaise == -1)
+            if (context.IsRestrictedPlayerOptions)
             {
                 this.DrawRestrictedPlayerOptions(context.MoneyToCall);
             }
             else
             {
-                if (context.MoneyToCall >= context.MoneyLeft)
-                {
-                    this.DrawRestrictedPlayerOptions(context.MoneyToCall);
-                }
-                else
-                {
-                    this.DrawPlayerOptions(context.MoneyToCall);
-                }
+                this.DrawPlayerOptions(context.MoneyToCall);
             }
 
             while (true)
@@ -52,7 +45,7 @@
                         action = PlayerAction.CheckOrCall();
                         break;
                     case ConsoleKey.R:
-                        if (context.MinRaise == -1 || context.MoneyToCall >= context.MoneyLeft)
+                        if (context.IsRestrictedPlayerOptions)
                         {
                             continue;
                         }
@@ -64,7 +57,7 @@
                         action = PlayerAction.Fold();
                         break;
                     case ConsoleKey.A:
-                        if (context.MinRaise == -1 || context.MoneyToCall >= context.MoneyLeft)
+                        if (context.IsRestrictedPlayerOptions)
                         {
                             continue;
                         }

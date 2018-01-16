@@ -15,5 +15,6 @@ namespace TexasHoldem.Logic.Players
         GameRoundType RoundType { get; }
         int SmallBlind { get; }
         int MinRaise { get; }
+        bool IsRestrictedPlayerOptions { get; }
     }
 }

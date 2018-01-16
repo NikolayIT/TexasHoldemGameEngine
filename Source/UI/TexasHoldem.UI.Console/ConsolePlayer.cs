@@ -8,13 +8,16 @@
     {
         private readonly int row;
 
-        public ConsolePlayer(int row, string playerName = "ConsolePlayer")
+        public ConsolePlayer(int row, string playerName = "ConsolePlayer", int buyIn = -1)
         {
             this.row = row;
             this.Name = playerName;
+            this.BuyIn = buyIn;
         }
 
         public override string Name { get; }
+
+        public override int BuyIn { get; }
 
         public override PlayerAction PostingBlind(IPostingBlindContext context)
         {

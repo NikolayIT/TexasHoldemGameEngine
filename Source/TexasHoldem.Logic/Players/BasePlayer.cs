@@ -8,6 +8,8 @@
     {
         public abstract string Name { get; }
 
+        public abstract int BuyIn { get; }
+
         protected IReadOnlyCollection<Card> CommunityCards { get; private set; }
 
         protected Card FirstCard { get; private set; }

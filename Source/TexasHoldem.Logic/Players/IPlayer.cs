@@ -4,6 +4,8 @@
     {
         string Name { get; }
 
+        int BuyIn { get; }
+
         void StartGame(IStartGameContext context);
 
         void StartHand(IStartHandContext context);

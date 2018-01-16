@@ -9,6 +9,8 @@
 
         public virtual string Name => this.Player.Name;
 
+        public int BuyIn => this.Player.BuyIn;
+
         protected IPlayer Player { get; }
 
         public virtual void StartGame(IStartGameContext context)

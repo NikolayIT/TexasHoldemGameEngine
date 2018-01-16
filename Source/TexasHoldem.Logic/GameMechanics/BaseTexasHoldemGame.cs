@@ -63,7 +63,7 @@
             var playerNames = this.allPlayers.Select(x => x.Name).ToList().AsReadOnly();
             foreach (var player in this.allPlayers)
             {
-                player.StartGame(new StartGameContext(playerNames, this.initialMoney));
+                player.StartGame(new StartGameContext(playerNames, player.BuyIn == -1 ? this.initialMoney : player.BuyIn));
             }
 
             this.PlayHand();

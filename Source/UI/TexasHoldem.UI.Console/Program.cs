@@ -29,12 +29,12 @@
         {
             Stand(gameHeight, gameWidth);
 
-            var consolePlayer1 = new ConsoleUiDecorator(new ConsolePlayer(0, "ConsolePlayer_1"), 0, gameWidth, 5);
+            var consolePlayer1 = new ConsoleUiDecorator(new ConsolePlayer(0, "ConsolePlayer_1", 90), 0, gameWidth, 5);
             var consolePlayer2 = new ConsoleUiDecorator(new ConsolePlayer(6, "ConsolePlayer_2"), 6, gameWidth, 5);
-            var consolePlayer3 = new ConsoleUiDecorator(new ConsolePlayer(12, "ConsolePlayer_3"), 12, gameWidth, 5);
-            var consolePlayer4 = new ConsoleUiDecorator(new ConsolePlayer(18, "ConsolePlayer_4"), 18, gameWidth, 5);
+            var consolePlayer3 = new ConsoleUiDecorator(new ConsolePlayer(12, "ConsolePlayer_3", 40), 12, gameWidth, 5);
+            var consolePlayer4 = new ConsoleUiDecorator(new ConsolePlayer(18, "ConsolePlayer_4", 30), 18, gameWidth, 5);
             var consolePlayer5 = new ConsoleUiDecorator(new ConsolePlayer(24, "ConsolePlayer_5"), 24, gameWidth, 5);
-            var consolePlayer6 = new ConsoleUiDecorator(new ConsolePlayer(30, "ConsolePlayer_6"), 30, gameWidth, 5);
+            var consolePlayer6 = new ConsoleUiDecorator(new ConsolePlayer(30, "ConsolePlayer_6", 60), 30, gameWidth, 5);
             ITexasHoldemGame game = new MultiplePlayersTexasHoldemGame(
                 new[] { consolePlayer1, consolePlayer2, consolePlayer3, consolePlayer4, consolePlayer5, consolePlayer6, });
             game.Start();

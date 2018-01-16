@@ -96,6 +96,14 @@
              * 3. SB->5$; BB->10$; UTG->raise 12$(ALL-IN); MP->MinRaise=22$ (12$ + 10$(BB is step of initial raiser))
             */
 
+            if (maxMoneyPerPlayer == 0)
+            {
+                // Start postflop. Players did not bet.
+                this.lastRoundBet = 0;
+                this.lastStepBet = 2 * this.smallBlind; // Big blind
+                this.aggressorName = string.Empty;
+            }
+
             if (this.aggressorName == currentPlayerName)
             {
                 /*

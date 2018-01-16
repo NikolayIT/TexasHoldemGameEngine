@@ -27,6 +27,14 @@
                    && this.AllPlayers.Any(x => x.PlayerMoney.ShouldPlayInRound))
             {
                 var player = this.AllPlayers[playerIndex % this.AllPlayers.Count];
+                if (player.PlayerMoney.Money <= 0)
+                {
+                    // Players who are all-in are not involved in betting round
+                    player.PlayerMoney.ShouldPlayInRound = false;
+                    playerIndex++;
+                    continue;
+                }
+
                 if (!player.PlayerMoney.InHand || !player.PlayerMoney.ShouldPlayInRound)
                 {
                     if (player.PlayerMoney.InHand == player.PlayerMoney.ShouldPlayInRound)

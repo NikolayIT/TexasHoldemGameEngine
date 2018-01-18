@@ -72,7 +72,7 @@
     <Compile Include="Extensions\EnumerableExtensionsTests.cs" />
     <Compile Include="Extensions\RandomProviderTests.cs" />
     <Compile Include="GameMechanics\InternalPlayerMoneyTests.cs" />
-    <Compile Include="GameMechanics\HeadsUpTexasHoldemGameTests.cs" />
+    <Compile Include="GameMechanics\TexasHoldemGameTests.cs" />
     <Compile Include="Helpers\BestHandTests.cs" />
     <Compile Include="Helpers\HandEvaluatorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

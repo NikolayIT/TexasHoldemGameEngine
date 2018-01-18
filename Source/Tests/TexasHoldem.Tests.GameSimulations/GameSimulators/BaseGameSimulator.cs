@@ -29,8 +29,8 @@
                 }
 
                 ITexasHoldemGame game = i % 2 == 1
-                                            ? new HeadsUpTexasHoldemGame(firstPlayer, secondPlayer)
-                                            : new HeadsUpTexasHoldemGame(secondPlayer, firstPlayer);
+                                            ? new TexasHoldemGame(firstPlayer, secondPlayer)
+                                            : new TexasHoldemGame(secondPlayer, firstPlayer);
 
                 var winner = game.Start();
 

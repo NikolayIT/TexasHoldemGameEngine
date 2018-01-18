@@ -12,7 +12,7 @@
         public static void Main()
         {
             // HeadsUp(12, 66);
-            MultiplePlayers(36, 72);
+            MultiplePlayers(36, 66);
         }
 
         private static void HeadsUp(int gameHeight, int gameWidth)
@@ -21,7 +21,7 @@
 
             var consolePlayer1 = new ConsoleUiDecorator(new ConsolePlayer(0), 0, gameWidth, 5);
             var consolePlayer2 = new ConsoleUiDecorator(new SmartPlayer(), 6, gameWidth, 5);
-            ITexasHoldemGame game = new HeadsUpTexasHoldemGame(consolePlayer1, consolePlayer2);
+            ITexasHoldemGame game = new TexasHoldemGame(consolePlayer1, consolePlayer2);
             game.Start();
         }
 
@@ -35,7 +35,7 @@
             var consolePlayer4 = new ConsoleUiDecorator(new ConsolePlayer(18, "ConsolePlayer_4", 30), 18, gameWidth, 5);
             var consolePlayer5 = new ConsoleUiDecorator(new ConsolePlayer(24, "ConsolePlayer_5"), 24, gameWidth, 5);
             var consolePlayer6 = new ConsoleUiDecorator(new ConsolePlayer(30, "ConsolePlayer_6", 60), 30, gameWidth, 5);
-            ITexasHoldemGame game = new MultiplePlayersTexasHoldemGame(
+            ITexasHoldemGame game = new TexasHoldemGame(
                 new[] { consolePlayer1, consolePlayer2, consolePlayer3, consolePlayer4, consolePlayer5, consolePlayer6, });
             game.Start();
         }

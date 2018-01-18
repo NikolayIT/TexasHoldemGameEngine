@@ -26,7 +26,7 @@
 
         public override PlayerAction GetTurn(IGetTurnContext context)
         {
-            if (context.IsRestrictedPlayerOptions)
+            if (!context.AvailablePlayerOptions.Contains(PlayerActionType.Raise))
             {
                 this.DrawRestrictedPlayerOptions(context.MoneyToCall);
             }
@@ -45,7 +45,7 @@
                         action = PlayerAction.CheckOrCall();
                         break;
                     case ConsoleKey.R:
-                        if (context.IsRestrictedPlayerOptions)
+                        if (!context.AvailablePlayerOptions.Contains(PlayerActionType.Raise))
                         {
                             continue;
                         }
@@ -57,7 +57,7 @@
                         action = PlayerAction.Fold();
                         break;
                     case ConsoleKey.A:
-                        if (context.IsRestrictedPlayerOptions)
+                        if (!context.AvailablePlayerOptions.Contains(PlayerActionType.Raise))
                         {
                             continue;
                         }

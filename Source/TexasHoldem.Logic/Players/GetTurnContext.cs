@@ -61,6 +61,24 @@
 
         public int MinRaise { get; }
 
-        public bool IsRestrictedPlayerOptions => this.MinRaise == -1 || this.MoneyToCall >= this.MoneyLeft;
+        public ICollection<PlayerActionType> AvailablePlayerOptions
+        {
+            get
+            {
+                if (this.MinRaise == -1 || this.MoneyToCall >= this.MoneyLeft)
+                {
+                    return new List<PlayerActionType> { PlayerActionType.Fold, PlayerActionType.CheckCall };
+                }
+                else
+                {
+                    return new List<PlayerActionType>
+                    {
+                        PlayerActionType.Fold,
+                        PlayerActionType.CheckCall,
+                        PlayerActionType.Raise
+                    };
+                }
+            }
+        }
     }
 }

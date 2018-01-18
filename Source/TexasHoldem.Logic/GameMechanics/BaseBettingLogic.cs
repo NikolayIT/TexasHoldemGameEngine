@@ -17,6 +17,8 @@
 
         private string aggressorName;
 
+        private List<SidePot> sidePots;
+
         public BaseBettingLogic(IList<IInternalPlayer> players, int smallBlind)
         {
             this.allPlayers = players;
@@ -26,6 +28,8 @@
             this.lastRoundBet = 2 * smallBlind; // Big blind
             this.lastStepBet = this.lastRoundBet;
             this.aggressorName = string.Empty;
+
+            this.sidePots = new List<SidePot>();
         }
 
         public int Pot
@@ -33,6 +37,14 @@
             get
             {
                 return this.allPlayers.Sum(x => x.PlayerMoney.CurrentlyInPot);
+            }
+        }
+
+        public IReadOnlyCollection<SidePot> SidePots
+        {
+            get
+            {
+                return this.sidePots.AsReadOnly();
             }
         }
 
@@ -135,6 +147,11 @@
             }
 
             return this.lastRoundBet + this.lastStepBet;
+        }
+
+        protected void CreateSidePot(SidePot sidePot)
+        {
+            this.sidePots.Add(sidePot);
         }
     }
 }

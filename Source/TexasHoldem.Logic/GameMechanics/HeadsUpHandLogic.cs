@@ -14,7 +14,7 @@
         {
         }
 
-        protected override void DetermineWinnerAndAddPot(int pot)
+        protected override void DetermineWinnerAndAddPot(int pot, IReadOnlyCollection<SidePot> sidePot)
         {
             if (this.Players.Count(x => x.PlayerMoney.InHand) == 1)
             {

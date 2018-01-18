@@ -7,9 +7,15 @@
 
     internal class MultiplePlayersBettingLogic : BaseBettingLogic
     {
+        private List<int> boundsOfSidePots;
+
+        private int lowerBound;
+
         public MultiplePlayersBettingLogic(IList<IInternalPlayer> players, int smallBlind)
             : base(players, smallBlind)
         {
+            this.boundsOfSidePots = new List<int>();
+            this.lowerBound = 0;
         }
 
         public override void Bet(GameRoundType gameRoundType)
@@ -70,10 +76,43 @@
                     }
                 }
 
+                if (player.PlayerMoney.Money <= 0)
+                {
+                    this.boundsOfSidePots.Add(player.PlayerMoney.CurrentlyInPot);
+                }
+
                 player.PlayerMoney.ShouldPlayInRound = false;
                 playerIndex++;
             }
 
+            foreach (var upperBound in this.boundsOfSidePots.Where(x => x > this.lowerBound).OrderBy(x => x))
+            {
+                var namesOfParticipants = new List<string>();
+                var amount = 0;
+                foreach (var item in this.AllPlayers)
+                {
+                    if (item.PlayerMoney.CurrentlyInPot > this.lowerBound)
+                    {
+                        // The player participates in the side pot
+                        namesOfParticipants.Add(item.Name);
+                        if (item.PlayerMoney.CurrentlyInPot >= upperBound)
+                        {
+                            amount += upperBound - this.lowerBound;
+                        }
+                        else
+                        {
+                            amount += item.PlayerMoney.CurrentlyInPot - this.lowerBound;
+                        }
+                    }
+                }
+
+                this.CreateSidePot(new SidePot(
+                    amount,
+                    namesOfParticipants));
+                this.lowerBound = upperBound;
+            }
+
+            // A method is needed that will return uncalled bet!!!
             // this.ReturnMoneyInCaseOfAllIn();
         }
 

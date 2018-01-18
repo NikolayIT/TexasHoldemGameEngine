@@ -62,6 +62,7 @@
     <Compile Include="GameMechanics\HeadsUpHandLogic.cs" />
     <Compile Include="GameMechanics\ITexasHoldemGame.cs" />
     <Compile Include="GameMechanics\HeadsUpTexasHoldemGame.cs" />
+    <Compile Include="GameMechanics\SidePot.cs" />
     <Compile Include="GameRoundType.cs" />
     <Compile Include="Helpers\BestHand.cs" />
     <Compile Include="Helpers\HandEvaluator.cs" />

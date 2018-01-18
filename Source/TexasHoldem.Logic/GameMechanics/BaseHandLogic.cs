@@ -86,7 +86,7 @@
                 this.PlayRound(GameRoundType.River, 1);
             }
 
-            this.DetermineWinnerAndAddPot(this.bettingLogic.Pot);
+            this.DetermineWinnerAndAddPot(this.bettingLogic.Pot, this.bettingLogic.SidePots);
 
             foreach (var player in this.players)
             {
@@ -94,7 +94,7 @@
             }
         }
 
-        protected abstract void DetermineWinnerAndAddPot(int pot);
+        protected abstract void DetermineWinnerAndAddPot(int pot, IReadOnlyCollection<SidePot> sidePots);
 
         private void PlayRound(GameRoundType gameRoundType, int communityCardsCount)
         {

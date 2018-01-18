@@ -14,7 +14,7 @@
         {
         }
 
-        protected override void DetermineWinnerAndAddPot(int pot)
+        protected override void DetermineWinnerAndAddPot(int pot, IReadOnlyCollection<SidePot> sidePot)
         {
             if (this.Players.Count(x => x.PlayerMoney.InHand) == 1)
             {
@@ -33,52 +33,76 @@
                 }
 
                 // Bubble sort
-                var players = this.Players.ToArray();
-                for (int element = 0; element < players.Length - 1; element++)
+                var playersInHand = this.Players.Where(p => p.PlayerMoney.InHand).ToArray();
+                for (int element = 0; element < playersInHand.Length - 1; element++)
                 {
-                    for (int i = 0; i < players.Length - (element + 1); i++)
+                    for (int i = 0; i < playersInHand.Length - (element + 1); i++)
                     {
                         if (Helpers.CompareCards(
-                            players[i].Cards.Concat(this.CommunityCards),
-                            players[i + 1].Cards.Concat(this.CommunityCards)) < 0)
+                            playersInHand[i].Cards.Concat(this.CommunityCards),
+                            playersInHand[i + 1].Cards.Concat(this.CommunityCards)) > 0)
                         {
-                            var temp = players[i + 1];
-                            players[i + 1] = players[i];
-                            players[i] = temp;
+                            var temp = playersInHand[i + 1];
+                            playersInHand[i + 1] = playersInHand[i];
+                            playersInHand[i] = temp;
                         }
                     }
                 }
 
-                int next = 1;
-                do
+                Stack<List<IInternalPlayer>> sortedByHandStrength = new Stack<List<IInternalPlayer>>();
+                sortedByHandStrength.Push(new List<IInternalPlayer> { playersInHand[0] });
+                for (int i = 0; i < playersInHand.Count() - 1; i++)
                 {
                     var betterHand = Helpers.CompareCards(
-                        players[0].Cards.Concat(this.CommunityCards),
-                        players[next].Cards.Concat(this.CommunityCards));
-                    if (betterHand > 0)
+                        playersInHand[i].Cards.Concat(this.CommunityCards),
+                        playersInHand[i + 1].Cards.Concat(this.CommunityCards));
+
+                    if (betterHand < 0)
                     {
-                        if (next == 1)
-                        {
-                            players[0].PlayerMoney.Money += pot;
-                            break;
-                        }
+                        sortedByHandStrength.Push(new List<IInternalPlayer> { playersInHand[i + 1] });
                     }
                     else if (betterHand == 0)
                     {
-                        next++;
-                        if (next <= players.Count() - 1)
+                        sortedByHandStrength.Peek().Add(playersInHand[i + 1]);
+                    }
+                }
+
+                var remainingPots = sidePot.ToList();
+                remainingPots.Add(
+                    new SidePot(
+                        pot - remainingPots.Sum(x => x.Amount),
+                        playersInHand.Where(x => x.PlayerMoney.Money > 0)
+                            .Select(x => x.Name)
+                            .ToList()
+                            .AsReadOnly()));
+
+                do
+                {
+                    var winners = sortedByHandStrength.Pop();
+
+                    var unusedPots = new List<SidePot>();
+
+                    foreach (var oneOfThePots in remainingPots)
+                    {
+                        var applicantsForThePot = oneOfThePots.NamesOfParticipants.Intersect(winners.Select(s => s.Name));
+                        var count = applicantsForThePot.Count();
+                        if (count > 0)
                         {
-                            continue;
+                            var prize = oneOfThePots.Amount / count;
+                            foreach (var applicant in applicantsForThePot)
+                            {
+                                winners.First(x => x.Name == applicant).PlayerMoney.Money += prize;
+                            }
+                        }
+                        else
+                        {
+                            unusedPots.Add(oneOfThePots);
                         }
                     }
 
-                    for (int i = 0; i < next; i++)
-                    {
-                        // Divide the pot among two or more players
-                        players[i].PlayerMoney.Money += pot / next;
-                    }
+                    remainingPots = unusedPots;
                 }
-                while (true);
+                while (remainingPots.Count > 0);
             }
         }
     }

@@ -156,8 +156,15 @@
                 this.lowerBound = upperBound;
             }
 
-            // A method is needed that will return uncalled bet!!!
-            // this.ReturnMoneyInCaseOfAllIn(); // works only for head-up
+            if (this.allPlayers.Count == 2)
+            {
+                // works only for head-up
+                this.ReturnMoneyInCaseOfAllIn();
+            }
+            else
+            {
+                this.ReturnMoneyInCaseUncalledBet();
+            }
         }
 
         private void PlaceBlinds()
@@ -189,6 +196,15 @@
             foreach (var player in this.allPlayers)
             {
                 player.PlayerMoney.NormalizeBets(minMoneyPerPlayer);
+            }
+        }
+
+        private void ReturnMoneyInCaseUncalledBet()
+        {
+            var group = this.allPlayers.GroupBy(x => x.PlayerMoney.CurrentRoundBet).OrderByDescending(k => k.Key);
+            if (group.First().Count() == 1)
+            {
+                group.First().First().PlayerMoney.NormalizeBets(group.ElementAt(1).First().PlayerMoney.CurrentRoundBet);
             }
         }
 

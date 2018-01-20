@@ -13,13 +13,12 @@
     public class EnumerableExtensionsTests
     {
         [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void ShuffleShouldThrowAnExceptionWhenCalledOnNull()
         {
             IEnumerable<object> collection = null;
 
             // ReSharper disable once ExpressionIsAlwaysNull
-            collection.Shuffle();
+            Assert.Throws<ArgumentNullException>(() => collection.Shuffle());
         }
 
         [Test]

@@ -11,5 +11,11 @@
             Console.SetCursorPosition(col, row);
             Console.Write(text);
         }
+
+        public static string UserInput(int row, int col)
+        {
+            Console.SetCursorPosition(col, row);
+            return Console.ReadLine();
+        }
     }
 }

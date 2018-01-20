@@ -9,6 +9,8 @@
 
         public virtual string Name => this.Player.Name;
 
+        public int BuyIn => this.Player.BuyIn;
+
         protected IPlayer Player { get; }
 
         public virtual void StartGame(IStartGameContext context)
@@ -24,6 +26,11 @@
         public virtual void StartRound(IStartRoundContext context)
         {
             this.Player.StartRound(context);
+        }
+
+        public virtual PlayerAction PostingBlind(IPostingBlindContext context)
+        {
+            return this.Player.PostingBlind(context);
         }
 
         public virtual PlayerAction GetTurn(IGetTurnContext context)

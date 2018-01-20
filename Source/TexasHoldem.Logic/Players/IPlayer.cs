@@ -4,11 +4,15 @@
     {
         string Name { get; }
 
+        int BuyIn { get; }
+
         void StartGame(IStartGameContext context);
 
         void StartHand(IStartHandContext context);
 
         void StartRound(IStartRoundContext context);
+
+        PlayerAction PostingBlind(IPostingBlindContext context);
 
         PlayerAction GetTurn(IGetTurnContext context);
 

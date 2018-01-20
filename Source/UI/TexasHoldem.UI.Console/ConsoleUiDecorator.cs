@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-
     using TexasHoldem.Logic.Cards;
     using TexasHoldem.Logic.Extensions;
     using TexasHoldem.Logic.Players;
@@ -16,6 +15,10 @@
         private readonly int width;
 
         private readonly int commonRow;
+
+        private Card firstCard;
+
+        private Card secondCard;
 
         public ConsoleUiDecorator(IPlayer player, int row, int width, int commonRow)
             : base(player)
@@ -38,8 +41,10 @@
             ConsoleHelper.WriteOnConsole(this.row + 3, 2, "                            ");
 
             ConsoleHelper.WriteOnConsole(this.row + 1, 2, context.MoneyLeft.ToString());
-            this.DrawSingleCard(this.row + 1, 10, context.FirstCard);
-            this.DrawSingleCard(this.row + 1, 14, context.SecondCard);
+            this.firstCard = context.FirstCard.DeepClone();
+            this.secondCard = context.SecondCard.DeepClone();
+            this.DrawSingleCard(this.row + 1, 10, this.firstCard);
+            this.DrawSingleCard(this.row + 1, 14, this.secondCard);
 
             base.StartHand(context);
         }
@@ -53,6 +58,23 @@
             base.StartRound(context);
         }
 
+        public override PlayerAction PostingBlind(IPostingBlindContext context)
+        {
+            this.UpdateCommonRow(context.CurrentPot);
+            ConsoleHelper.WriteOnConsole(this.row + 1, 2, context.CurrentStackSize + "   ");
+
+            var action = base.PostingBlind(context);
+
+            ConsoleHelper.WriteOnConsole(this.row + 2, 2, new string(' ', this.width - 3));
+            ConsoleHelper.WriteOnConsole(this.row + 3, 2, "Last action: " + action.Type + "(" + action.Money + ")");
+
+            var moneyAfterAction = context.CurrentStackSize;
+
+            ConsoleHelper.WriteOnConsole(this.row + 1, 2, moneyAfterAction + "   ");
+
+            return action;
+        }
+
         public override PlayerAction GetTurn(IGetTurnContext context)
         {
             this.UpdateCommonRow(context.CurrentPot);
@@ -60,13 +82,20 @@
 
             var action = base.GetTurn(context);
 
+            if (action.Type == PlayerActionType.Fold)
+            {
+                this.Eliminate(context.MoneyLeft);
+                return action;
+            }
+
             ConsoleHelper.WriteOnConsole(this.row + 2, 2, new string(' ', this.width - 3));
 
             var lastAction = action.Type + (action.Type == PlayerActionType.Fold
                 ? string.Empty
                 : "(" + (action.Money + ((context.MoneyToCall < 0) ? 0 : context.MoneyToCall) + ")"));
 
-            ConsoleHelper.WriteOnConsole(this.row + 3, 2, "Last action: " + lastAction + "            ");
+            ConsoleHelper.WriteOnConsole(this.row + 3, 2, new string(' ', this.width - 3));
+            ConsoleHelper.WriteOnConsole(this.row + 3, 2, "Last action: " + lastAction);
 
             var moneyAfterAction = action.Type == PlayerActionType.Fold
                 ? context.MoneyLeft
@@ -75,6 +104,17 @@
             ConsoleHelper.WriteOnConsole(this.row + 1, 2, moneyAfterAction + "   ");
 
             return action;
+        }
+
+        private void Eliminate(int moneyLeft)
+        {
+            ConsoleHelper.WriteOnConsole(this.row + 1, 2, moneyLeft + "   ");
+            ConsoleHelper.WriteOnConsole(this.row + 2, 2, new string(' ', this.width - 3));
+            ConsoleHelper.WriteOnConsole(this.row + 3, 2, new string(' ', this.width - 3));
+            ConsoleHelper.WriteOnConsole(this.row + 3, 2, "A player is eliminated");
+
+            this.DrawMuckedSingleCard(this.row + 1, 10, this.firstCard);
+            this.DrawMuckedSingleCard(this.row + 1, 14, this.secondCard);
         }
 
         private void UpdateCommonRow(int pot)
@@ -128,6 +168,11 @@
             var cardColor = this.GetCardColor(card);
             ConsoleHelper.WriteOnConsole(row, col, " " + card + " ", cardColor, ConsoleColor.White);
             ConsoleHelper.WriteOnConsole(row, col + 2 + card.ToString().Length, " ");
+        }
+
+        private void DrawMuckedSingleCard(int row, int col, Card card)
+        {
+            ConsoleHelper.WriteOnConsole(row, col, " " + card + " ", ConsoleColor.Gray, ConsoleColor.DarkGray);
         }
 
         private ConsoleColor GetCardColor(Card card)

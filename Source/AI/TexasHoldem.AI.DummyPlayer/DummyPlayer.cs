@@ -27,8 +27,23 @@
 
             if (chanceForAction <= 15)
             {
-                // Minimum raise
-                return PlayerAction.Raise(1);
+                if (context.AvailablePlayerOptions.Contains(PlayerActionType.Raise))
+                {
+                    if (context.MinRaise > context.MoneyLeft)
+                    {
+                        // All-in
+                        return PlayerAction.Raise(context.MoneyLeft - context.MoneyToCall);
+                    }
+                    else
+                    {
+                        // Minimum raise
+                        return PlayerAction.Raise(context.MinRaise - context.MoneyToCall);
+                    }
+                }
+                else
+                {
+                    return PlayerAction.CheckOrCall();
+                }
             }
 
             // Play safe

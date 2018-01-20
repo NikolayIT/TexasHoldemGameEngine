@@ -111,10 +111,7 @@
                 this.HandsPlayed++;
 
                 // Every 10 hands the blind increases
-                // var smallBlind = SmallBlinds[(this.HandsPlayed - 1) / 10];
-
-                // Cash game with unchanged size of the blinds
-                var smallBlind = SmallBlinds[4];
+                var smallBlind = SmallBlinds[(this.HandsPlayed - 1) / 10];
 
                 // Players are shifted in order of priority to make a move
                 shifted.Add(shifted.First());

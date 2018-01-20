@@ -73,6 +73,11 @@
                 playerIndex = this.initialPlayerIndex + 2;
             }
 
+            if (this.allPlayers.Count(x => x.PlayerMoney.ShouldPlayInRound) <= 1)
+            {
+                return;
+            }
+
             while (this.allPlayers.Count(x => x.PlayerMoney.InHand) >= 2
                    && this.allPlayers.Any(x => x.PlayerMoney.ShouldPlayInRound))
             {

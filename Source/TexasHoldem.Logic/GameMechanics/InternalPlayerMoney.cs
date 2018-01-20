@@ -39,7 +39,7 @@
         public void NewRound()
         {
             this.CurrentRoundBet = 0;
-            if (this.InHand)
+            if (this.InHand && this.Money > 0)
             {
                 this.ShouldPlayInRound = true;
             }

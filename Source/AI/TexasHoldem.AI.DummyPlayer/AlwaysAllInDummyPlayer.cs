@@ -12,7 +12,7 @@
 
         public override PlayerAction PostingBlind(IPostingBlindContext context)
         {
-            throw new NotImplementedException();
+            return context.BlindAction;
         }
 
         public override PlayerAction GetTurn(IGetTurnContext context)

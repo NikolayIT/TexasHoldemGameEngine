@@ -22,7 +22,7 @@
             if (chanceForAction == 1 && context.MoneyLeft > 0)
             {
                 // All-in
-                return PlayerAction.Raise(context.MoneyLeft);
+                return PlayerAction.Raise(context.MoneyLeft - context.MoneyToCall);
             }
 
             if (chanceForAction <= 15)

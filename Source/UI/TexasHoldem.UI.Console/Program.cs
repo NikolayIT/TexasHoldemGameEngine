@@ -10,53 +10,56 @@
     {
         private const string ProgramName = "TexasHoldem.UI.Console (c) 2015-2018";
 
+        private const int GameWidth = 66;
+
         public static void Main()
         {
-            // HeadsUp(12, 66);
-            MultiplePlayers(36, 66);
+            // HeadsUp();
+            MultiplePlayers(6);
         }
 
-        private static void HeadsUp(int gameHeight, int gameWidth)
+        private static void HeadsUp()
         {
-            Stand(gameHeight, gameWidth);
+            Stand(12);
 
-            var consolePlayer1 = new ConsoleUiDecorator(new ConsolePlayer(0), 0, gameWidth, 5);
-            var consolePlayer2 = new ConsoleUiDecorator(new SmartPlayer(), 6, gameWidth, 5);
+            var consolePlayer1 = new ConsoleUiDecorator(new ConsolePlayer(0), 0, GameWidth, 5);
+            var consolePlayer2 = new ConsoleUiDecorator(new SmartPlayer(), 6, GameWidth, 5);
             ITexasHoldemGame game = new TexasHoldemGame(consolePlayer1, consolePlayer2);
             game.Start();
         }
 
-        private static void MultiplePlayers(int gameHeight, int gameWidth)
+        private static void MultiplePlayers(int numberOfPlayers)
         {
-            Stand(gameHeight, gameWidth);
+            if (numberOfPlayers == 2)
+            {
+                HeadsUp();
+                return;
+            }
 
-            //var consolePlayer1 = new ConsoleUiDecorator(new ConsolePlayer(0, "ConsolePlayer_1", 250), 0, gameWidth, 5);
-            //var consolePlayer2 = new ConsoleUiDecorator(new ConsolePlayer(6, "ConsolePlayer_2", 220), 6, gameWidth, 5);
-            //var consolePlayer3 = new ConsoleUiDecorator(new ConsolePlayer(12, "ConsolePlayer_3", 200), 12, gameWidth, 5);
-            //var consolePlayer4 = new ConsoleUiDecorator(new ConsolePlayer(18, "ConsolePlayer_4", 100), 18, gameWidth, 5);
-            //var consolePlayer5 = new ConsoleUiDecorator(new ConsolePlayer(24, "ConsolePlayer_5", 50), 24, gameWidth, 5);
-            //var consolePlayer6 = new ConsoleUiDecorator(new ConsolePlayer(30, "ConsolePlayer_6", 100), 30, gameWidth, 5);
-            //ITexasHoldemGame game = new TexasHoldemGame(new[] { consolePlayer1, consolePlayer2, consolePlayer3 });
+            var numberOfCommonRows = 3; // Place for community cards, pot, main pot, side pots
+            int gameHeight = (6 * numberOfPlayers) + numberOfCommonRows;
+            Stand(gameHeight);
 
-            var consolePlayer1 = new ConsoleUiDecorator(new ConsolePlayer(0, "ConsolePlayer_1", 250), 0, gameWidth, 5);
-            var consolePlayer2 = new ConsoleUiDecorator(new DummyPlayer(), 6, gameWidth, 5);
-            var consolePlayer3 = new ConsoleUiDecorator(new DummyPlayer(), 12, gameWidth, 5);
-            var consolePlayer4 = new ConsoleUiDecorator(new DummyPlayer(), 18, gameWidth, 5);
-            var consolePlayer5 = new ConsoleUiDecorator(new DummyPlayer(), 24, gameWidth, 5);
-            var consolePlayer6 = new ConsoleUiDecorator(new DummyPlayer(), 30, gameWidth, 5);
-            ITexasHoldemGame game = new TexasHoldemGame(
-                new[] { consolePlayer1, consolePlayer2, consolePlayer3, consolePlayer4, consolePlayer5, consolePlayer6, });
+            ConsoleUiDecorator[] players = new ConsoleUiDecorator[numberOfPlayers];
+            players[0] = new ConsoleUiDecorator(
+                new ConsolePlayer(numberOfCommonRows, "ConsolePlayer_1", 250), numberOfCommonRows, GameWidth, 1);
+            for (int i = 1; i < numberOfPlayers; i++)
+            {
+                players[i] = new ConsoleUiDecorator(new DummyPlayer(), (6 * i) + numberOfCommonRows, GameWidth, 1);
+            }
+
+            ITexasHoldemGame game = new TexasHoldemGame(players);
             game.Start();
         }
 
-        private static void Stand(int gameHeight, int gameWidth)
+        private static void Stand(int gameHeight)
         {
             Console.BackgroundColor = ConsoleColor.Black;
             Console.ForegroundColor = ConsoleColor.Gray;
             Console.BufferHeight = Console.WindowHeight = gameHeight;
-            Console.BufferWidth = Console.WindowWidth = gameWidth;
+            Console.BufferWidth = Console.WindowWidth = GameWidth;
 
-            ConsoleHelper.WriteOnConsole(gameHeight - 1, gameWidth - ProgramName.Length - 1, ProgramName, ConsoleColor.Green);
+            ConsoleHelper.WriteOnConsole(gameHeight - 1, GameWidth - ProgramName.Length - 1, ProgramName, ConsoleColor.Green);
         }
     }
 }

@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using TexasHoldem.Logic.Cards;
     using TexasHoldem.Logic.Extensions;
+    using TexasHoldem.Logic.GameMechanics;
     using TexasHoldem.Logic.Players;
 
     public class ConsoleUiDecorator : PlayerDecorator
@@ -78,6 +79,7 @@
         public override PlayerAction GetTurn(IGetTurnContext context)
         {
             this.UpdateCommonRow(context.CurrentPot);
+            this.UpdateSidePots(context.MainPot, context.SidePots);
             ConsoleHelper.WriteOnConsole(this.row + 1, 2, context.MoneyLeft + "   ");
 
             var action = base.GetTurn(context);
@@ -126,6 +128,27 @@
 
             var potAsString = "Pot: " + pot;
             ConsoleHelper.WriteOnConsole(this.commonRow, this.width - potAsString.Length - 2, potAsString);
+        }
+
+        private void UpdateSidePots(int mainPot, IReadOnlyCollection<SidePot> sidePots)
+        {
+            if (sidePots.Count == 0)
+            {
+                // Clear the side pots
+                ConsoleHelper.WriteOnConsole(this.commonRow + 1, 0, new string(' ', this.width - 1));
+                return;
+            }
+
+            var mainPotAsString = "Main Pot: " + mainPot;
+            ConsoleHelper.WriteOnConsole(this.commonRow, 2, mainPotAsString);
+
+            var sidePotsAsString = "Side Pots: ";
+            foreach (var item in sidePots)
+            {
+                sidePotsAsString += "[" + item.Amount.ToString() + "]";
+            }
+
+            ConsoleHelper.WriteOnConsole(this.commonRow + 1, 2, sidePotsAsString);
         }
 
         private void DrawGameBox()

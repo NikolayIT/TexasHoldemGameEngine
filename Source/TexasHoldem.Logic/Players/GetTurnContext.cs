@@ -1,6 +1,7 @@
 ﻿namespace TexasHoldem.Logic.Players
 {
     using System.Collections.Generic;
+    using TexasHoldem.Logic.GameMechanics;
 
     public class GetTurnContext : IGetTurnContext
     {
@@ -12,7 +13,9 @@
             int currentPot,
             int myMoneyInTheRound,
             int currentMaxBet,
-            int minRaise)
+            int minRaise,
+            int mainPot,
+            IReadOnlyCollection<SidePot> sidePots)
         {
             this.RoundType = roundType;
             this.PreviousRoundActions = previousRoundActions;
@@ -22,6 +25,8 @@
             this.MyMoneyInTheRound = myMoneyInTheRound;
             this.CurrentMaxBet = currentMaxBet;
             this.MinRaise = minRaise;
+            this.MainPot = mainPot;
+            this.SidePots = sidePots;
         }
 
         public GameRoundType RoundType { get; }
@@ -80,5 +85,9 @@
                 }
             }
         }
+
+        public int MainPot { get; }
+
+        public IReadOnlyCollection<SidePot> SidePots { get; }
     }
 }

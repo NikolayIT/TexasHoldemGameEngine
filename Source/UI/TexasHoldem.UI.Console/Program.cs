@@ -1,8 +1,8 @@
 ﻿namespace TexasHoldem.UI.Console
 {
-    using AI.DummyPlayer;
     using System;
 
+    using TexasHoldem.AI.DummyPlayer;
     using TexasHoldem.AI.SmartPlayer;
     using TexasHoldem.Logic.GameMechanics;
 
@@ -20,10 +20,10 @@
 
         private static void HeadsUp()
         {
-            Stand(12);
+            Stand(13);
 
             var consolePlayer1 = new ConsoleUiDecorator(new ConsolePlayer(0), 0, GameWidth, 5);
-            var consolePlayer2 = new ConsoleUiDecorator(new SmartPlayer(), 6, GameWidth, 5);
+            var consolePlayer2 = new ConsoleUiDecorator(new SmartPlayer(), 7, GameWidth, 5);
             ITexasHoldemGame game = new TexasHoldemGame(consolePlayer1, consolePlayer2);
             game.Start();
         }
@@ -46,6 +46,8 @@
             for (int i = 1; i < numberOfPlayers; i++)
             {
                 players[i] = new ConsoleUiDecorator(new DummyPlayer(), (6 * i) + numberOfCommonRows, GameWidth, 1);
+                //players[i] = new ConsoleUiDecorator(
+                //    new ConsolePlayer((6 * i) + numberOfCommonRows, "ConsolePlayer_" + i + 1, 250 - (i * 20)), (6 * i) + numberOfCommonRows, GameWidth, 1);
             }
 
             ITexasHoldemGame game = new TexasHoldemGame(players);

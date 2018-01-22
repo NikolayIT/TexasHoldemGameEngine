@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
-
-namespace TexasHoldem.Logic.Players
+﻿namespace TexasHoldem.Logic.Players
 {
+    using System.Collections.Generic;
+    using TexasHoldem.Logic.GameMechanics;
+
     public interface IGetTurnContext
     {
         bool CanCheck { get; }
@@ -16,5 +17,7 @@ namespace TexasHoldem.Logic.Players
         int SmallBlind { get; }
         int MinRaise { get; }
         ICollection<PlayerActionType> AvailablePlayerOptions { get; }
+        int MainPot { get; }
+        IReadOnlyCollection<SidePot> SidePots { get; }
     }
 }

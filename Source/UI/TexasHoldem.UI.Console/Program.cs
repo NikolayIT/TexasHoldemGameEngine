@@ -30,12 +30,13 @@
         {
             Stand(gameHeight, gameWidth);
 
-            //var consolePlayer1 = new ConsoleUiDecorator(new ConsolePlayer(0, "ConsolePlayer_1", 90), 0, gameWidth, 5);
-            //var consolePlayer2 = new ConsoleUiDecorator(new ConsolePlayer(6, "ConsolePlayer_2", 150), 6, gameWidth, 5);
-            //var consolePlayer3 = new ConsoleUiDecorator(new ConsolePlayer(12, "ConsolePlayer_3", 40), 12, gameWidth, 5);
-            //var consolePlayer4 = new ConsoleUiDecorator(new ConsolePlayer(18, "ConsolePlayer_4", 30), 18, gameWidth, 5);
-            //var consolePlayer5 = new ConsoleUiDecorator(new ConsolePlayer(24, "ConsolePlayer_5"), 24, gameWidth, 5);
-            //var consolePlayer6 = new ConsoleUiDecorator(new ConsolePlayer(30, "ConsolePlayer_6", 60), 30, gameWidth, 5);
+            //var consolePlayer1 = new ConsoleUiDecorator(new ConsolePlayer(0, "ConsolePlayer_1", 250), 0, gameWidth, 5);
+            //var consolePlayer2 = new ConsoleUiDecorator(new ConsolePlayer(6, "ConsolePlayer_2", 220), 6, gameWidth, 5);
+            //var consolePlayer3 = new ConsoleUiDecorator(new ConsolePlayer(12, "ConsolePlayer_3", 200), 12, gameWidth, 5);
+            //var consolePlayer4 = new ConsoleUiDecorator(new ConsolePlayer(18, "ConsolePlayer_4", 100), 18, gameWidth, 5);
+            //var consolePlayer5 = new ConsoleUiDecorator(new ConsolePlayer(24, "ConsolePlayer_5", 50), 24, gameWidth, 5);
+            //var consolePlayer6 = new ConsoleUiDecorator(new ConsolePlayer(30, "ConsolePlayer_6", 100), 30, gameWidth, 5);
+            //ITexasHoldemGame game = new TexasHoldemGame(new[] { consolePlayer1, consolePlayer2, consolePlayer3 });
 
             var consolePlayer1 = new ConsoleUiDecorator(new ConsolePlayer(0, "ConsolePlayer_1", 250), 0, gameWidth, 5);
             var consolePlayer2 = new ConsoleUiDecorator(new DummyPlayer(), 6, gameWidth, 5);

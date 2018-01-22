@@ -70,7 +70,7 @@
                 this.PlayRound(GameRoundType.River, 1);
             }
 
-            this.DetermineWinnerAndAddPot(this.bettingLogic.Pot, this.bettingLogic.SidePots);
+            this.DetermineWinnerAndAddPot(this.bettingLogic.Pot, this.bettingLogic.MainPot, this.bettingLogic.SidePots);
 
             foreach (var player in this.players)
             {
@@ -78,7 +78,7 @@
             }
         }
 
-        private void DetermineWinnerAndAddPot(int pot, IReadOnlyCollection<SidePot> sidePot)
+        private void DetermineWinnerAndAddPot(int pot, int mainPot, IReadOnlyCollection<SidePot> sidePot)
         {
             if (this.players.Count(x => x.PlayerMoney.InHand) == 1)
             {
@@ -153,13 +153,16 @@
                     }
 
                     var remainingPots = sidePot.ToList();
-                    remainingPots.Add(
-                        new SidePot(
-                            pot - remainingPots.Sum(x => x.Amount),
-                            playersInHand.Where(x => x.PlayerMoney.Money > 0)
-                                .Select(x => x.Name)
-                                .ToList()
-                                .AsReadOnly()));
+                    if (mainPot != 0)
+                    {
+                        remainingPots.Add(
+                            new SidePot(
+                                pot - remainingPots.Sum(x => x.Amount),
+                                playersInHand.Where(x => x.PlayerMoney.Money > 0)
+                                    .Select(x => x.Name)
+                                    .ToList()
+                                    .AsReadOnly()));
+                    }
 
                     do
                     {

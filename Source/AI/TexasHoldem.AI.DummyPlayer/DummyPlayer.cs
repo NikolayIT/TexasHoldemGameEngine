@@ -29,7 +29,7 @@
             {
                 if (context.AvailablePlayerOptions.Contains(PlayerActionType.Raise))
                 {
-                    if (context.MinRaise > context.MoneyLeft)
+                    if (context.MinRaise + context.CurrentMaxBet > context.MoneyLeft)
                     {
                         // All-in
                         return PlayerAction.Raise(context.MoneyLeft - context.MoneyToCall);
@@ -37,7 +37,7 @@
                     else
                     {
                         // Minimum raise
-                        return PlayerAction.Raise(context.MinRaise - context.MoneyToCall);
+                        return PlayerAction.Raise(context.MinRaise);
                     }
                 }
                 else

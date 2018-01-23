@@ -15,16 +15,25 @@
         [Test]
         public void MinRaiseShouldReturnANegativeValueOnce()
         {
+            /*
+             * Scenario for hand:
+             * The beginning of the flop. There were no bets yet. MinRaise = 2 * smallBlind. InitiatorName = ""
+             * SB->Bet 35 (MinRaise = 35; InitiatorName = "SB")
+             * BB->Not full Raise(All-In) to 37 (MinRaise = 35[did not change]; InitiatorName = "SB")
+             * BTN->Call 37
+             * SB->Raising is not possible because the queue has returned to the initiator ()
+            */
+
             var minRaises = new List<int>();
 
             var mockBasePlayer1 = new Mock<BasePlayer>();
-            mockBasePlayer1.SetupGet(x => x.Name).Returns("Player_1");
+            mockBasePlayer1.SetupGet(x => x.Name).Returns("BTN");
             mockBasePlayer1.Setup(x => x.GetTurn(It.IsAny<IGetTurnContext>()))
                 .Returns(PlayerAction.CheckOrCall())
                 .Callback<IGetTurnContext>(x => minRaises.Add(x.MinRaise));
 
             var mockBasePlayer2 = new Mock<BasePlayer>();
-            mockBasePlayer2.SetupGet(x => x.Name).Returns("Player_2");
+            mockBasePlayer2.SetupGet(x => x.Name).Returns("SB");
             mockBasePlayer2.Setup(x => x.GetTurn(It.IsAny<IGetTurnContext>()))
                 .Returns(() =>
                 {
@@ -40,7 +49,7 @@
                 .Callback<IGetTurnContext>(x => minRaises.Add(x.MinRaise));
 
             var mockBasePlayer3 = new Mock<BasePlayer>();
-            mockBasePlayer3.SetupGet(x => x.Name).Returns("Player_3");
+            mockBasePlayer3.SetupGet(x => x.Name).Returns("BB");
             mockBasePlayer3.Setup(x => x.GetTurn(It.IsAny<IGetTurnContext>()))
                 .Returns(PlayerAction.Raise(2))
                 .Callback<IGetTurnContext>(x => minRaises.Add(x.MinRaise));
@@ -59,10 +68,10 @@
             var bettingLogic = new BettingLogic(players, 10);
             bettingLogic.Bet(GameRoundType.Flop);
 
-            Assert.AreEqual(20, minRaises[0]); // The beginning of the round. There were no bets yet. MinRaise = 2 * smallBlind
-            Assert.AreEqual(70, minRaises[1]); // Bet(initiator) = 35. MinRaise = 35 + 35
-            Assert.AreEqual(72, minRaises[2]); // Not full raise(All-In) to 37. MinRaise = 37 + 35
-            Assert.AreEqual(-1, minRaises[3]); // Raising is not possible because the queue has returned to the initiator
+            Assert.AreEqual(20, minRaises[0]);
+            Assert.AreEqual(35, minRaises[1]);
+            Assert.AreEqual(35, minRaises[2]);
+            Assert.AreEqual(-1, minRaises[3]);
         }
     }
 }

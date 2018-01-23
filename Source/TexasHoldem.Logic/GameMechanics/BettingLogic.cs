@@ -119,7 +119,7 @@
                             this.Pot,
                             player.PlayerMoney.CurrentRoundBet,
                             maxMoneyPerPlayer,
-                            this.MinRaise(maxMoneyPerPlayer, player.Name),
+                            this.MinRaise(maxMoneyPerPlayer, player.PlayerMoney.CurrentRoundBet, player.Name),
                             this.MainPot,
                             this.SidePots));
 
@@ -203,42 +203,28 @@
             }
         }
 
-        private int MinRaise(int maxMoneyPerPlayer, string currentPlayerName)
+        private int MinRaise(int maxMoneyPerPlayer, int currentRoundBet, string currentPlayerName)
         {
             /*
-             * MinRaise =
-             *      The investment of the current aggressor
-             *      +
-             *      (The investment of the current aggressor - The investment of the previous aggressor)
              * Examples:
-             * 1. SB->5$; BB->10$; UTG->raise 35$; MP->MinRaise=60$ (35$ + 25$)
-             * 2. SB->5$; BB->10$; UTG->raise 35$; MP->re-raise 150$; CO->call 150$; BTN->MinRaise=265$ (150$ + 115$)
-             * 3. SB->5$; BB->10$; UTG->raise 12$(ALL-IN); MP->MinRaise=22$ (12$ + 10$(BB is step of initial raiser))
+             * 1. SB->5$; BB->10$; UTG->raise 35$; MP->minimum raise=60$ (35$ + 25$)
+             * 2. SB->5$; BB->10$; UTG->raise 35$; MP->re-raise 150$; CO->call 150$; BTN->minimum raise=265$ (150$ + 115$)
+             * 3. SB->5$; BB->10$; UTG->raise 12$(ALL-IN); MP->minimum raise=22$ (12$ + 10$)
             */
 
             if (maxMoneyPerPlayer == 0)
             {
                 // Start postflop. Players did not bet.
                 this.lastRoundBet = 0;
-                this.lastStepBet = 2 * this.smallBlind; // Big blind
+                this.lastStepBet = 2 * this.smallBlind; // big blind
                 this.aggressorName = string.Empty;
-            }
-
-            if (this.aggressorName == currentPlayerName)
-            {
-                /*
-                 * SB->5$; BB->10$; BTN->raise 32$; SB->re-raise 34$(ALL-IN); BB->call 34$; BTN->MinRaise=-1$ (SB has made a not full raise);
-                 * Since no players completed a full raise over BTN's initial raise,
-                 * neither BTN nor BB are allowed to re-raise here. Their only options are to call the 34$, or fold.
-                */
-                return -1;
             }
 
             if (maxMoneyPerPlayer > this.lastRoundBet)
             {
-                // We check for the fullness of the raise
                 if (this.lastRoundBet + this.lastStepBet <= maxMoneyPerPlayer)
                 {
+                    // full raise
                     this.lastStepBet = maxMoneyPerPlayer - this.lastRoundBet;
                     this.lastRoundBet = maxMoneyPerPlayer;
                     this.aggressorName = this.RoundBets.Last().PlayerName;
@@ -247,14 +233,23 @@
                 {
                     /*
                      * For example, we are sitting on CO
-                     * SB->5$; BB->10$; UTG->raise 35$; MP->re-raise 37$(ALL-IN); CO->MinRaise 62$ (37$ + 25$(UTG is step of initial raiser))
-                     * then maxMoneyPerPlayer=37$ and MinRaise=maxMoneyPerPlayer+step(25$)
+                     * SB->5$; BB->10$; UTG->raise 35$; MP->re-raise 37$(ALL-IN); CO->minimum raise = 62$ (37$ + 25$)
                     */
                     this.lastRoundBet = maxMoneyPerPlayer;
                 }
             }
 
-            return this.lastRoundBet + this.lastStepBet;
+            if (this.aggressorName == currentPlayerName)
+            {
+                /*
+                 * SB->5$; BB->10$; BTN->raise 32$; SB->re-raise 34$(ALL-IN); BB->call 34$; BTN->minimum raise is not possible
+                 * Since no players completed a full raise over BTN's initial raise,
+                 * neither BTN nor BB are allowed to re-raise here. Their only options are to call the 34$, or fold.
+                */
+                return -1;
+            }
+
+            return this.lastStepBet;
         }
 
         private void CreateSidePots()

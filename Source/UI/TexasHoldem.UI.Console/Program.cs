@@ -47,7 +47,10 @@
             {
                 players[i] = new ConsoleUiDecorator(new DummyPlayer(), (6 * i) + numberOfCommonRows, GameWidth, 1);
                 //players[i] = new ConsoleUiDecorator(
-                //    new ConsolePlayer((6 * i) + numberOfCommonRows, "ConsolePlayer_" + i + 1, 250 - (i * 20)), (6 * i) + numberOfCommonRows, GameWidth, 1);
+                //    new ConsolePlayer((6 * i) + numberOfCommonRows, "ConsolePlayer_" + i + 1, 250 - (i * 20)),
+                //    (6 * i) + numberOfCommonRows,
+                //    GameWidth,
+                //    1);
             }
 
             ITexasHoldemGame game = new TexasHoldemGame(players);

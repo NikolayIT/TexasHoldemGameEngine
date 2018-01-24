@@ -19,7 +19,7 @@
         {
             if (context.MoneyLeft > 0)
             {
-                return PlayerAction.Raise(context.MoneyLeft);
+                return PlayerAction.Raise(context.MoneyLeft - context.MoneyToCall);
             }
             else
             {

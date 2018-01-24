@@ -36,22 +36,38 @@
                     }
                 }
 
-                if (playHand == CardValuationType.Risky)
+                var isRaiseOptionAvailable = context.AvailablePlayerOptions.Contains(PlayerActionType.Raise);
+                if (playHand == CardValuationType.Risky && isRaiseOptionAvailable)
                 {
-                    var smallBlindsTimes = RandomProvider.Next(1, 8);
-                    return PlayerAction.Raise(context.SmallBlind * smallBlindsTimes);
+                    var factor = RandomProvider.Next(1, 4);
+                    return this.RaiseOrAllIn(
+                        context.MinRaise, context.CurrentMaxBet, context.MoneyLeft, context.MoneyToCall, factor);
                 }
 
-                if (playHand == CardValuationType.Recommended)
+                if (playHand == CardValuationType.Recommended && isRaiseOptionAvailable)
                 {
-                    var smallBlindsTimes = RandomProvider.Next(6, 14);
-                    return PlayerAction.Raise(context.SmallBlind * smallBlindsTimes);
+                    var factor = RandomProvider.Next(3, 6);
+                    return this.RaiseOrAllIn(
+                        context.MinRaise, context.CurrentMaxBet, context.MoneyLeft, context.MoneyToCall, factor);
                 }
 
                 return PlayerAction.CheckOrCall();
             }
 
             return PlayerAction.CheckOrCall();
+        }
+
+        private PlayerAction RaiseOrAllIn(int minRaise, int currentMaxBet, int moneyLeft, int moneyToCall, int factor)
+        {
+            if ((minRaise * factor) + currentMaxBet > moneyLeft)
+            {
+                // All-in
+                return PlayerAction.Raise(moneyLeft - moneyToCall);
+            }
+            else
+            {
+                return PlayerAction.Raise(minRaise * factor);
+            }
         }
     }
 }

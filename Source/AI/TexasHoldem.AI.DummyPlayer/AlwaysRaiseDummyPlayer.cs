@@ -17,7 +17,7 @@
 
         public override PlayerAction GetTurn(IGetTurnContext context)
         {
-            return PlayerAction.Raise(context.SmallBlind);
+            return PlayerAction.Raise(context.MoneyLeft - context.MoneyToCall);
         }
     }
 }

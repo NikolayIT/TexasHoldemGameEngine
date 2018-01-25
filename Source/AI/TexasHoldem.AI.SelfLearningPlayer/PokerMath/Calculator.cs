@@ -94,9 +94,10 @@
             return potsWon / games;
         }
 
-        public double EV(int pot, int wager)
+        public double BetToNeutralEV(int pot)
         {
-            throw new NotImplementedException();
+            var equity = this.Equity();
+            return equity == 1.0 ? double.MaxValue : (pot * equity) / (1.0 - equity);
         }
     }
 }

@@ -4,6 +4,6 @@
     {
         double Equity();
 
-        double EV(int pot, int wager);
+        double BetToNeutralEV(int pot);
     }
 }

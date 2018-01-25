@@ -1,5 +1,6 @@
 ﻿namespace TexasHoldem.AI.SelfLearningPlayer.PokerMath
 {
+    using System;
     using System.Collections.Generic;
     using System.Text;
 
@@ -11,6 +12,11 @@
 
         public CardAdapter(ICollection<Card> cards)
         {
+            if (cards == null)
+            {
+                throw new ArgumentNullException(nameof(cards));
+            }
+
             this.cards = cards;
         }
 

@@ -45,6 +45,7 @@
     <Compile Include="Learner.cs" />
     <Compile Include="PokerMath\Calculator.cs" />
     <Compile Include="PokerMath\ICalculator.cs" />
+    <Compile Include="PokerMath\CardAdapter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

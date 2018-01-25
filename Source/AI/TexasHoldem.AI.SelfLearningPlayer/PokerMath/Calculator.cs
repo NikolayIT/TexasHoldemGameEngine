@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     using TexasHoldem.Logic.Cards;
 
@@ -52,7 +53,11 @@
 
         public double Equity()
         {
-            throw new NotImplementedException();
+            double[] heroOdds;
+            double[] opponentOdds;
+            HoldemHand.Hand.HandWinOdds(
+                new ulong[] { this.hero }, this.opponents.ToArray(), this.communityCards, out heroOdds, out opponentOdds);
+            return heroOdds[0];
         }
 
         public double EV(int pot, int wager)

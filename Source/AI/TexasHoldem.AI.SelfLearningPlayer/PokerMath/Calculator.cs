@@ -30,7 +30,7 @@
             {
                 throw new ArgumentNullException(nameof(opponentsHoleCards));
             }
-            else if (opponentsHoleCards.Count == 0)
+            else if (opponentsHoleCards.Any(x => x.Count != 2))
             {
                 throw new ArgumentOutOfRangeException(nameof(opponentsHoleCards), "At least two hole cards are required");
             }
@@ -53,11 +53,45 @@
 
         public double Equity()
         {
-            double[] heroOdds;
-            double[] opponentOdds;
-            HoldemHand.Hand.HandWinOdds(
-                new ulong[] { this.hero }, this.opponents.ToArray(), this.communityCards, out heroOdds, out opponentOdds);
-            return heroOdds[0];
+            var potsWon = 0.0;
+            var games = 0.0;
+            var dead = this.hero | this.opponents.Aggregate((x, next) => next | x);
+            foreach (var nextCommunityCards in HoldemHand.Hand.Hands(this.communityCards, dead, 5))
+            {
+                var heroBest = HoldemHand.Hand.Evaluate(this.hero | nextCommunityCards, 7);
+                bool greaterThan = true;
+                bool greaterThanEqual = true;
+                var ties = 1.0;
+                foreach (var oppHoleCards in this.opponents)
+                {
+                    var oppBest = HoldemHand.Hand.Evaluate(oppHoleCards | nextCommunityCards, 7);
+
+                    if (heroBest < oppBest)
+                    {
+                        greaterThan = greaterThanEqual = false;
+                        ties = 0;
+                        break;
+                    }
+                    else if (heroBest <= oppBest)
+                    {
+                        greaterThan = false;
+                        ties += 1.0;
+                    }
+                }
+
+                if (greaterThan)
+                {
+                    potsWon += 1.0;
+                }
+                else if (greaterThanEqual)
+                {
+                    potsWon += 1.0 / ties;
+                }
+
+                games++;
+            }
+
+            return potsWon / games;
         }
 
         public double EV(int pot, int wager)

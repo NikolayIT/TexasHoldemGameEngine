@@ -6,12 +6,18 @@
 
     public class StartRoundContext : IStartRoundContext
     {
-        public StartRoundContext(GameRoundType roundType, IReadOnlyCollection<Card> communityCards, int moneyLeft, int currentPot)
+        public StartRoundContext(
+            GameRoundType roundType,
+            IReadOnlyCollection<Card> communityCards,
+            int moneyLeft,
+            int currentPot,
+            IDictionary<string, IReadOnlyCollection<Card>> holeCardsOfOpponentsWhoAreInHand)
         {
             this.RoundType = roundType;
             this.CommunityCards = communityCards;
             this.MoneyLeft = moneyLeft;
             this.CurrentPot = currentPot;
+            this.HoleCardsOfOpponentsWhoAreInHand = holeCardsOfOpponentsWhoAreInHand;
         }
 
         public GameRoundType RoundType { get; }
@@ -21,5 +27,7 @@
         public int MoneyLeft { get; }
 
         public int CurrentPot { get; }
+
+        public IDictionary<string, IReadOnlyCollection<Card>> HoleCardsOfOpponentsWhoAreInHand { get; }
     }
 }

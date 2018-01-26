@@ -204,11 +204,15 @@
 
             foreach (var player in this.players)
             {
+                var holeCardsOfOpponentsWhoAreInHand = this.players.Where(x => x.PlayerMoney.InHand && x.Name != player.Name)
+                    .ToDictionary(k => k.Name, e => (IReadOnlyCollection<Card>)e.Cards.AsReadOnly());
+
                 var startRoundContext = new StartRoundContext(
                     gameRoundType,
                     this.communityCards.AsReadOnly(),
                     player.PlayerMoney.Money,
-                    this.bettingLogic.Pot);
+                    this.bettingLogic.Pot,
+                    holeCardsOfOpponentsWhoAreInHand);
                 player.StartRound(startRoundContext);
             }
 

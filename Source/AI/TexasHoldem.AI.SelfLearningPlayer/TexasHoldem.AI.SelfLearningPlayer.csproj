@@ -46,6 +46,9 @@
     <Compile Include="PokerMath\Calculator.cs" />
     <Compile Include="PokerMath\ICalculator.cs" />
     <Compile Include="PokerMath\CardAdapter.cs" />
+    <Compile Include="PokerMath\HandStrength.cs" />
+    <Compile Include="PokerMath\IPocket.cs" />
+    <Compile Include="PokerMath\Pocket.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

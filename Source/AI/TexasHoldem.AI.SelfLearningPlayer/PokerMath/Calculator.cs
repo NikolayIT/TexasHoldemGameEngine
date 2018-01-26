@@ -8,31 +8,19 @@
 
     public class Calculator : ICalculator
     {
-        private readonly ulong hero;
-
-        private readonly IList<ulong> opponents;
+        private readonly IList<IPocket> pockets;
 
         private readonly ulong communityCards;
 
-        public Calculator(
-            ICollection<Card> heroHoleCards, IList<ICollection<Card>> opponentsHoleCards, ICollection<Card> communityCards)
+        public Calculator(IList<IPocket> pockets, ICollection<Card> communityCards)
         {
-            if (heroHoleCards == null)
+            if (pockets == null)
             {
-                throw new ArgumentNullException(nameof(heroHoleCards));
+                throw new ArgumentNullException(nameof(pockets));
             }
-            else if (heroHoleCards.Count != 2)
+            else if (pockets.Count < 2)
             {
-                throw new ArgumentOutOfRangeException(nameof(heroHoleCards), "At least two hole cards are required");
-            }
-
-            if (opponentsHoleCards == null)
-            {
-                throw new ArgumentNullException(nameof(opponentsHoleCards));
-            }
-            else if (opponentsHoleCards.Any(x => x.Count != 2))
-            {
-                throw new ArgumentOutOfRangeException(nameof(opponentsHoleCards), "At least two hole cards are required");
+                throw new ArgumentOutOfRangeException(nameof(pockets), "At least two pockets are required");
             }
 
             if (communityCards == null)
@@ -40,64 +28,52 @@
                 throw new ArgumentNullException(nameof(communityCards));
             }
 
-            this.hero = new CardAdapter(heroHoleCards).Mask;
-
-            this.opponents = new List<ulong>();
-            foreach (var item in opponentsHoleCards)
-            {
-                this.opponents.Add(new CardAdapter(item).Mask);
-            }
-
+            this.pockets = pockets;
             this.communityCards = new CardAdapter(communityCards).Mask;
         }
 
-        public double Equity()
+        public ICollection<HandStrength> Equity()
         {
-            var potsWon = 0.0;
+            var maskValue = new Dictionary<ulong, uint>();
+            var potsWon = new Dictionary<ulong, double>();
+            var dead = 0UL;
+
+            foreach (var item in this.pockets)
+            {
+                maskValue.Add(item.Mask, 0);
+                potsWon.Add(item.Mask, 0);
+                dead |= item.Mask;
+            }
+
             var games = 0.0;
-            var dead = this.hero | this.opponents.Aggregate((x, next) => next | x);
+
             foreach (var nextCommunityCards in HoldemHand.Hand.Hands(this.communityCards, dead, 5))
             {
-                var heroBest = HoldemHand.Hand.Evaluate(this.hero | nextCommunityCards, 7);
-                bool greaterThan = true;
-                bool greaterThanEqual = true;
-                var ties = 1.0;
-                foreach (var oppHoleCards in this.opponents)
+                foreach (var item in this.pockets)
                 {
-                    var oppBest = HoldemHand.Hand.Evaluate(oppHoleCards | nextCommunityCards, 7);
-
-                    if (heroBest < oppBest)
-                    {
-                        greaterThan = greaterThanEqual = false;
-                        ties = 0;
-                        break;
-                    }
-                    else if (heroBest <= oppBest)
-                    {
-                        greaterThan = false;
-                        ties += 1.0;
-                    }
+                    maskValue[item.Mask] = HoldemHand.Hand.Evaluate(item.Mask | nextCommunityCards, 7);
                 }
 
-                if (greaterThan)
+                var winners = maskValue.GroupBy(x => x.Value)
+                    .OrderByDescending(x => x.Key)
+                    .First()
+                    .Select(x => x.Key);
+
+                foreach (var item in winners)
                 {
-                    potsWon += 1.0;
-                }
-                else if (greaterThanEqual)
-                {
-                    potsWon += 1.0 / ties;
+                    potsWon[item] += 1.0 / winners.Count();
                 }
 
                 games++;
             }
 
-            return potsWon / games;
-        }
+            var result = new List<HandStrength>();
+            foreach (var item in potsWon)
+            {
+                result.Add(new HandStrength(new Pocket(item.Key), item.Value / games));
+            }
 
-        public double BetToNeutralEV(int pot)
-        {
-            var equity = this.Equity();
-            return equity == 1.0 ? double.MaxValue : (pot * equity) / (1.0 - equity);
+            return result;
         }
     }
 }

@@ -1,9 +1,9 @@
 ﻿namespace TexasHoldem.AI.SelfLearningPlayer.PokerMath
 {
+    using System.Collections.Generic;
+
     public interface ICalculator
     {
-        double Equity();
-
-        double BetToNeutralEV(int pot);
+        ICollection<HandStrength> Equity();
     }
 }

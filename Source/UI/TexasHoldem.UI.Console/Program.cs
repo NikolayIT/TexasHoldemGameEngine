@@ -3,6 +3,7 @@
     using System;
 
     using TexasHoldem.AI.DummyPlayer;
+    using TexasHoldem.AI.SelfLearningPlayer;
     using TexasHoldem.AI.SmartPlayer;
     using TexasHoldem.Logic.GameMechanics;
 
@@ -17,7 +18,8 @@
             // var game = HeadsUp();
             // var game = HumanVsDummy(4);
             // var game = HumanVsHuman(3);
-            var game = HumanVsSmart(6);
+            // var game = HumanVsSmart(6);
+            var game = HumanVsCheater(6);
 
             game.Start();
         }
@@ -35,6 +37,8 @@
                     return new TexasHoldemGame(consolePlayer1, new ConsoleUiDecorator(new SmartPlayer(), 7, GameWidth, 5));
                 case 3:
                     return new TexasHoldemGame(consolePlayer1, new ConsoleUiDecorator(new ConsolePlayer(7, "Human_2"), 7, GameWidth, 5));
+                case 4:
+                    return new TexasHoldemGame(consolePlayer1, new ConsoleUiDecorator(new Cheater(new PlayingStyle()), 7, GameWidth, 5));
                 default:
                     throw new Exception();
             }
@@ -69,6 +73,9 @@
                         players[i] = new ConsoleUiDecorator(
                             new ConsolePlayer(row, "Human_" + i + 1, 250 - (i * 20)), row, GameWidth, 1);
                         break;
+                    case 4:
+                        players[i] = new ConsoleUiDecorator(new Cheater(new PlayingStyle()), (6 * i) + numberOfCommonRows, GameWidth, 1);
+                        break;
                     default:
                         break;
                 }
@@ -90,6 +97,11 @@
         private static ITexasHoldemGame HumanVsHuman(int numberOfPlayers)
         {
             return MultiplePlayers(numberOfPlayers, 3);
+        }
+
+        private static ITexasHoldemGame HumanVsCheater(int numberOfPlayers)
+        {
+            return MultiplePlayers(numberOfPlayers, 4);
         }
 
         private static void Stand(int gameHeight)

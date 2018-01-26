@@ -78,6 +78,10 @@
       <Project>{8f8a872b-a022-4085-aabc-d3bc12b7c1d8}</Project>
       <Name>TexasHoldem.AI.DummyPlayer</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\AI\TexasHoldem.AI.SelfLearningPlayer\TexasHoldem.AI.SelfLearningPlayer.csproj">
+      <Project>{9e0598f9-5092-484e-a8e8-70aeebb96dc5}</Project>
+      <Name>TexasHoldem.AI.SelfLearningPlayer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\AI\TexasHoldem.AI.SmartPlayer\TexasHoldem.AI.SmartPlayer.csproj">
       <Project>{e7ba8017-d56e-485c-81d1-a1ccdaae624f}</Project>
       <Name>TexasHoldem.AI.SmartPlayer</Name>

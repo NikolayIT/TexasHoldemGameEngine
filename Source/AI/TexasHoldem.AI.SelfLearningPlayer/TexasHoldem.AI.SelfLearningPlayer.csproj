@@ -43,6 +43,7 @@
     <Compile Include="Cheater.cs" />
     <Compile Include="IPlayingStyle.cs" />
     <Compile Include="Learner.cs" />
+    <Compile Include="PlayingStyle.cs" />
     <Compile Include="PokerMath\Calculator.cs" />
     <Compile Include="PokerMath\ICalculator.cs" />
     <Compile Include="PokerMath\CardAdapter.cs" />

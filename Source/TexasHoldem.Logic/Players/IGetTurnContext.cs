@@ -19,5 +19,6 @@
         ICollection<PlayerActionType> AvailablePlayerOptions { get; }
         int MainPot { get; }
         IReadOnlyCollection<SidePot> SidePots { get; }
+        ICollection<Opponent> Opponents { get; }
     }
 }

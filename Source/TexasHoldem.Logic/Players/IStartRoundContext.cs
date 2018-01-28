@@ -9,6 +9,5 @@ namespace TexasHoldem.Logic.Players
         int CurrentPot { get; }
         int MoneyLeft { get; }
         GameRoundType RoundType { get; }
-        IDictionary<string, IReadOnlyCollection<Card>> HoleCardsOfOpponentsWhoAreInHand { get; }
     }
 }

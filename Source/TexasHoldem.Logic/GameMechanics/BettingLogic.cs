@@ -121,7 +121,8 @@
                             maxMoneyPerPlayer,
                             this.MinRaise(maxMoneyPerPlayer, player.PlayerMoney.CurrentRoundBet, player.Name),
                             this.MainPot,
-                            this.SidePots));
+                            this.SidePots,
+                            this.InformationAboutOpponents(player.Name)));
 
                 action = player.PlayerMoney.DoPlayerAction(action, maxMoneyPerPlayer);
                 this.RoundBets.Add(new PlayerActionAndName(player.Name, action));
@@ -295,6 +296,23 @@
                     namesOfParticipants));
                 this.lowerBound = upperBound;
             }
+        }
+
+        private ICollection<Opponent> InformationAboutOpponents(string hero)
+        {
+            var opponents = new List<Opponent>();
+            var position = 0;
+            foreach (var item in this.allPlayers)
+            {
+                if (item.Name == hero)
+                {
+                    continue;
+                }
+
+                opponents.Add(new Opponent(item.Name, position++, item.Cards, item.PlayerMoney.InHand, item.PlayerMoney.Money));
+            }
+
+            return opponents;
         }
     }
 }

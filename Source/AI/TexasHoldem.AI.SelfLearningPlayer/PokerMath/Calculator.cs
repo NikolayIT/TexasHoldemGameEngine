@@ -4,15 +4,18 @@
     using System.Collections.Generic;
     using System.Linq;
 
+    using TexasHoldem.AI.SelfLearningPlayer.Helpers;
     using TexasHoldem.Logic.Cards;
 
     public class Calculator : ICalculator
     {
-        private readonly IList<IPocket> pockets;
+        private readonly ICollection<IPocket> pockets;
+
+        private readonly ulong dead;
 
         private readonly ulong communityCards;
 
-        public Calculator(IList<IPocket> pockets, ICollection<Card> communityCards)
+        public Calculator(ICollection<IPocket> pockets, ICollection<Card> dead, ICollection<Card> communityCards)
         {
             if (pockets == null)
             {
@@ -20,7 +23,12 @@
             }
             else if (pockets.Count < 2)
             {
-                throw new ArgumentOutOfRangeException(nameof(pockets), "At least two pockets are required");
+                throw new ArgumentOutOfRangeException(nameof(pockets), "Requires at least two pockets");
+            }
+
+            if (dead == null)
+            {
+                throw new ArgumentNullException(nameof(dead));
             }
 
             if (communityCards == null)
@@ -29,6 +37,7 @@
             }
 
             this.pockets = pockets;
+            this.dead = new CardAdapter(dead).Mask;
             this.communityCards = new CardAdapter(communityCards).Mask;
         }
 
@@ -36,7 +45,7 @@
         {
             var maskValue = new Dictionary<ulong, uint>();
             var potsWon = new Dictionary<ulong, double>();
-            var dead = 0UL;
+            var dead = this.dead;
 
             foreach (var item in this.pockets)
             {
@@ -70,7 +79,7 @@
             var result = new List<HandStrength>();
             foreach (var item in potsWon)
             {
-                result.Add(new HandStrength(new Pocket(item.Key), item.Value / games));
+                result.Add(new HandStrength(this.pockets.First(x => x.Mask == item.Key), item.Value / games));
             }
 
             return result;

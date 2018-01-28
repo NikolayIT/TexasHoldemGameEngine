@@ -1,4 +1,4 @@
-﻿namespace TexasHoldem.AI.SelfLearningPlayer
+﻿namespace TexasHoldem.AI.SelfLearningPlayer.Strategy
 {
     using System;
 

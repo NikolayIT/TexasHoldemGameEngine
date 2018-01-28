@@ -2,29 +2,32 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
+    using TexasHoldem.AI.SelfLearningPlayer.Helpers;
     using TexasHoldem.Logic.Cards;
 
     public class Pocket : IPocket
     {
-        public Pocket(ICollection<Card> card)
+        private readonly ICollection<Card> cards;
+
+        public Pocket(ICollection<Card> cards)
         {
-            if (card.Count != 2)
+            if (cards.Count != 2)
             {
-                throw new ArgumentOutOfRangeException(nameof(card), "Two hole cards are required");
+                throw new ArgumentOutOfRangeException(nameof(cards), "Two hole cards are required");
             }
 
-            this.Mask = new CardAdapter(card).Mask;
+            this.cards = cards;
+            this.Mask = new CardAdapter(cards).Mask;
         }
 
-        public Pocket(ulong mask)
+        public ICollection<Card> NativeType
         {
-            if (HoldemHand.Hand.BitCount(mask) != 2)
+            get
             {
-                throw new ArgumentOutOfRangeException(nameof(mask), "Two hole cards are required");
+                return this.cards.ToList();
             }
-
-            this.Mask = mask;
         }
 
         public ulong Mask { get; }

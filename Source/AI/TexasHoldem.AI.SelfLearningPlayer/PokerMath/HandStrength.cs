@@ -2,13 +2,13 @@
 {
     public struct HandStrength
     {
-        public HandStrength(Pocket pocket, double equity)
+        public HandStrength(IPocket pocket, double equity)
         {
             this.Pocket = pocket;
             this.Equity = equity;
         }
 
-        public Pocket Pocket { get; }
+        public IPocket Pocket { get; }
 
         public double Equity { get; }
     }

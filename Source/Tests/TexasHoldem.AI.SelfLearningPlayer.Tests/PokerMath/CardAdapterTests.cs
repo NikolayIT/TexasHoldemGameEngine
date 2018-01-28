@@ -4,6 +4,7 @@
     using System.Collections.Generic;
 
     using NUnit.Framework;
+    using TexasHoldem.AI.SelfLearningPlayer.Helpers;
     using TexasHoldem.AI.SelfLearningPlayer.PokerMath;
     using TexasHoldem.Logic.Cards;
 

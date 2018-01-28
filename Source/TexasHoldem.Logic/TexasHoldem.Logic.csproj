@@ -80,6 +80,7 @@
     <Compile Include="Players\IStartGameContext.cs" />
     <Compile Include="Players\IStartHandContext.cs" />
     <Compile Include="Players\IStartRoundContext.cs" />
+    <Compile Include="Players\Opponent.cs" />
     <Compile Include="Players\PlayerActionAndName.cs" />
     <Compile Include="Players\PlayerDecorator.cs" />
     <Compile Include="Players\PlayerAction.cs" />

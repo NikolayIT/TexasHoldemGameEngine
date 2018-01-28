@@ -1,5 +1,6 @@
 ﻿namespace TexasHoldem.Logic.Players
 {
+    using System;
     using System.Collections.Generic;
     using TexasHoldem.Logic.GameMechanics;
 
@@ -15,7 +16,8 @@
             int currentMaxBet,
             int minRaise,
             int mainPot,
-            IReadOnlyCollection<SidePot> sidePots)
+            IReadOnlyCollection<SidePot> sidePots,
+            ICollection<Opponent> opponents)
         {
             this.RoundType = roundType;
             this.PreviousRoundActions = previousRoundActions;
@@ -27,6 +29,7 @@
             this.MinRaise = minRaise;
             this.MainPot = mainPot;
             this.SidePots = sidePots;
+            this.Opponents = opponents;
         }
 
         public GameRoundType RoundType { get; }
@@ -89,5 +92,7 @@
         public int MainPot { get; }
 
         public IReadOnlyCollection<SidePot> SidePots { get; }
+
+        public ICollection<Opponent> Opponents { get; }
     }
 }

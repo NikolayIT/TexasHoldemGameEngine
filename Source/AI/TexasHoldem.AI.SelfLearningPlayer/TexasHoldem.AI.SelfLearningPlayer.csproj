@@ -40,13 +40,14 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Cheater.cs" />
-    <Compile Include="IPlayingStyle.cs" />
+    <Compile Include="Strategy\Conduct.cs" />
+    <Compile Include="Champion.cs" />
+    <Compile Include="Strategy\IPlayingStyle.cs" />
     <Compile Include="Learner.cs" />
-    <Compile Include="PlayingStyle.cs" />
+    <Compile Include="Strategy\PlayingStyle.cs" />
     <Compile Include="PokerMath\Calculator.cs" />
     <Compile Include="PokerMath\ICalculator.cs" />
-    <Compile Include="PokerMath\CardAdapter.cs" />
+    <Compile Include="Helpers\CardAdapter.cs" />
     <Compile Include="PokerMath\HandStrength.cs" />
     <Compile Include="PokerMath\IPocket.cs" />
     <Compile Include="PokerMath\Pocket.cs" />

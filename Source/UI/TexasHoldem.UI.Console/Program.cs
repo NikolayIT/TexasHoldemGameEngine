@@ -4,6 +4,7 @@
 
     using TexasHoldem.AI.DummyPlayer;
     using TexasHoldem.AI.SelfLearningPlayer;
+    using TexasHoldem.AI.SelfLearningPlayer.Strategy;
     using TexasHoldem.AI.SmartPlayer;
     using TexasHoldem.Logic.GameMechanics;
 
@@ -38,7 +39,7 @@
                 case 3:
                     return new TexasHoldemGame(consolePlayer1, new ConsoleUiDecorator(new ConsolePlayer(7, "Human_2"), 7, GameWidth, 5));
                 case 4:
-                    return new TexasHoldemGame(consolePlayer1, new ConsoleUiDecorator(new Cheater(new PlayingStyle()), 7, GameWidth, 5));
+                    return new TexasHoldemGame(consolePlayer1, new ConsoleUiDecorator(new Champion(new PlayingStyle()), 7, GameWidth, 5));
                 default:
                     throw new Exception();
             }
@@ -74,7 +75,7 @@
                             new ConsolePlayer(row, "Human_" + i + 1, 250 - (i * 20)), row, GameWidth, 1);
                         break;
                     case 4:
-                        players[i] = new ConsoleUiDecorator(new Cheater(new PlayingStyle()), (6 * i) + numberOfCommonRows, GameWidth, 1);
+                        players[i] = new ConsoleUiDecorator(new Champion(new PlayingStyle()), (6 * i) + numberOfCommonRows, GameWidth, 1);
                         break;
                     default:
                         break;

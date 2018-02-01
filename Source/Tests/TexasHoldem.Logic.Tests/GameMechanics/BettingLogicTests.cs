@@ -5,7 +5,6 @@
 
     using Moq;
     using NUnit.Framework;
-
     using TexasHoldem.Logic.GameMechanics;
     using TexasHoldem.Logic.Players;
 
@@ -54,7 +53,7 @@
                 .Returns(PlayerAction.Raise(2))
                 .Callback<IGetTurnContext>(x => minRaises.Add(x.MinRaise));
 
-            var players = new List<IInternalPlayer>
+            var players = new List<InternalPlayer>
             {
                 new InternalPlayer(mockBasePlayer1.Object),
                 new InternalPlayer(mockBasePlayer2.Object),

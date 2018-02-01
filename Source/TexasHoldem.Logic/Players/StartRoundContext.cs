@@ -6,7 +6,11 @@
 
     public class StartRoundContext : IStartRoundContext
     {
-        public StartRoundContext(GameRoundType roundType, IReadOnlyCollection<Card> communityCards, int moneyLeft, int currentPot)
+        public StartRoundContext(
+            GameRoundType roundType,
+            IReadOnlyCollection<Card> communityCards,
+            int moneyLeft,
+            int currentPot)
         {
             this.RoundType = roundType;
             this.CommunityCards = communityCards;

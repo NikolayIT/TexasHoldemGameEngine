@@ -15,7 +15,7 @@
                 10000, 15000, 20000, 30000, 40000, 50000, 60000, 80000, 100000
             };
 
-        private readonly ICollection<IInternalPlayer> allPlayers;
+        private readonly ICollection<InternalPlayer> allPlayers;
 
         private int initialMoney;
 
@@ -70,7 +70,7 @@
                 throw new ArgumentOutOfRangeException(nameof(initialMoney), "Initial money should be greater than 0 and less than 200000");
             }
 
-            this.allPlayers = new List<IInternalPlayer>(players.Count);
+            this.allPlayers = new List<InternalPlayer>(players.Count);
             foreach (var item in players)
             {
                 this.allPlayers.Add(new InternalPlayer(item));

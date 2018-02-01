@@ -56,6 +56,7 @@
             this.UpdateCommonRow(context.CurrentPot);
 
             ConsoleHelper.WriteOnConsole(this.row + 1, this.width - 11, context.RoundType + "   ");
+            ConsoleHelper.WriteOnConsole(this.row + 3, 2, "                            ");
             base.StartRound(context);
         }
 
@@ -87,14 +88,9 @@
             if (action.Type == PlayerActionType.Fold)
             {
                 this.Eliminate(context.MoneyLeft);
-                return action;
             }
 
             ConsoleHelper.WriteOnConsole(this.row + 2, 2, new string(' ', this.width - 3));
-
-            //var lastAction = action.Type + (action.Type == PlayerActionType.Fold
-            //    ? string.Empty
-            //    : "(" + (action.Money + ((context.MoneyToCall < 0) ? 0 : context.MoneyToCall) + ")"));
 
             var lastAction = action.Type + (action.Type == PlayerActionType.Fold
                 ? string.Empty
@@ -114,11 +110,6 @@
 
         private void Eliminate(int moneyLeft)
         {
-            ConsoleHelper.WriteOnConsole(this.row + 1, 2, moneyLeft + "   ");
-            ConsoleHelper.WriteOnConsole(this.row + 2, 2, new string(' ', this.width - 3));
-            ConsoleHelper.WriteOnConsole(this.row + 3, 2, new string(' ', this.width - 3));
-            ConsoleHelper.WriteOnConsole(this.row + 3, 2, "A player is eliminated");
-
             this.DrawMuckedSingleCard(this.row + 1, 10, this.firstCard);
             this.DrawMuckedSingleCard(this.row + 1, 14, this.secondCard);
         }

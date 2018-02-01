@@ -9,7 +9,7 @@
     {
         private readonly int initialPlayerIndex;
 
-        private readonly IList<IInternalPlayer> allPlayers;
+        private readonly IList<InternalPlayer> allPlayers;
 
         private readonly int smallBlind;
 
@@ -25,7 +25,7 @@
 
         private int lowerBound;
 
-        public BettingLogic(IList<IInternalPlayer> players, int smallBlind)
+        public BettingLogic(IList<InternalPlayer> players, int smallBlind)
         {
             this.initialPlayerIndex = players.Count == 2 ? 0 : 1;
             this.allPlayers = players;
@@ -109,6 +109,8 @@
                 }
 
                 var maxMoneyPerPlayer = this.allPlayers.Max(x => x.PlayerMoney.CurrentRoundBet);
+                var position = this.allPlayers.TakeWhile(x => x.Name != player.Name).Count();
+                position = position == 0 ? this.allPlayers.Count - 1 : position - 1;
                 var action =
                     player.GetTurn(
                         new GetTurnContext(
@@ -121,7 +123,9 @@
                             maxMoneyPerPlayer,
                             this.MinRaise(maxMoneyPerPlayer, player.PlayerMoney.CurrentRoundBet, player.Name),
                             this.MainPot,
-                            this.SidePots));
+                            this.SidePots,
+                            position,
+                            this.InformationAboutOpponents(player.Name)));
 
                 action = player.PlayerMoney.DoPlayerAction(action, maxMoneyPerPlayer);
                 this.RoundBets.Add(new PlayerActionAndName(player.Name, action));
@@ -295,6 +299,30 @@
                     namesOfParticipants));
                 this.lowerBound = upperBound;
             }
+        }
+
+        private ICollection<Opponent> InformationAboutOpponents(string hero)
+        {
+            var opponents = new List<Opponent>();
+            var position = -2;
+            foreach (var item in this.allPlayers)
+            {
+                position++;
+
+                if (item.Name == hero)
+                {
+                    continue;
+                }
+
+                opponents.Add(new Opponent(
+                    item.Name,
+                    position < 0 ? this.allPlayers.Count - 1 : position,
+                    item.Cards,
+                    item.PlayerMoney.InHand,
+                    item.PlayerMoney.Money));
+            }
+
+            return opponents;
         }
     }
 }

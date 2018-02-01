@@ -40,6 +40,8 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\Distribution.cs" />
+    <Compile Include="Statistics\Stats.cs" />
     <Compile Include="Strategy\Conduct.cs" />
     <Compile Include="Champion.cs" />
     <Compile Include="Strategy\IPlayingStyle.cs" />

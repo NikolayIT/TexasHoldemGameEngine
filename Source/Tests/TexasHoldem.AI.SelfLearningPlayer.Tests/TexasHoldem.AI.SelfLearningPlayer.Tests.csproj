@@ -65,9 +65,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\DistributionTests.cs" />
     <Compile Include="PokerMath\CalculatorTests.cs" />
-    <Compile Include="PokerMath\CardAdapterTests.cs" />
+    <Compile Include="Helpers\CardAdapterTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Strategy\ConductTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -1,4 +1,4 @@
-﻿namespace TexasHoldem.AI.SelfLearningPlayer.Tests.PokerMath
+﻿namespace TexasHoldem.AI.SelfLearningPlayer.Tests.Helpers
 {
     using System;
     using System.Collections.Generic;

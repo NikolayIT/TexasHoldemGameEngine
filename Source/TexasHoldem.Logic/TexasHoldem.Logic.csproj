@@ -53,7 +53,6 @@
     <Compile Include="GameMechanics\HandLogic.cs" />
     <Compile Include="GameMechanics\TexasHoldemGame.cs" />
     <Compile Include="GameMechanics\IHandLogic.cs" />
-    <Compile Include="GameMechanics\IInternalPlayer.cs" />
     <Compile Include="GameMechanics\InternalPlayerMoney.cs" />
     <Compile Include="GameMechanics\ITexasHoldemGame.cs" />
     <Compile Include="GameMechanics\SidePot.cs" />

@@ -18,7 +18,7 @@
             this.trait = trait;
         }
 
-        public override string Name { get; } = "Cheater_" + Guid.NewGuid();
+        public override string Name { get; } = "Champion_" + Guid.NewGuid();
 
         public override int BuyIn { get; } = -1;
 
@@ -30,7 +30,8 @@
         public override PlayerAction GetTurn(IGetTurnContext context)
         {
             var holeCardsOfOpponentsWhoAreInHand = new List<IPocket>();
-            holeCardsOfOpponentsWhoAreInHand.Add(new Pocket(new[] { this.FirstCard, this.SecondCard }));
+            var heroPocket = new Pocket(new[] { this.FirstCard, this.SecondCard });
+            holeCardsOfOpponentsWhoAreInHand.Add(heroPocket);
             var deadCards = new List<Card>();
             foreach (var item in context.Opponents)
             {
@@ -48,7 +49,7 @@
                 holeCardsOfOpponentsWhoAreInHand,
                 deadCards,
                 this.CommunityCards.ToList());
-            var conduct = new Conduct(new[] { this.FirstCard, this.SecondCard }, context, calculator, this.trait);
+            var conduct = new Conduct(heroPocket, context, calculator, this.trait);
             return conduct.OptimalAction();
         }
     }

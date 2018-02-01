@@ -20,7 +20,7 @@
             // var game = HumanVsDummy(4);
             // var game = HumanVsHuman(3);
             // var game = HumanVsSmart(6);
-            var game = HumanVsCheater(6);
+            var game = HumanVsChampion(6);
 
             game.Start();
         }
@@ -39,7 +39,8 @@
                 case 3:
                     return new TexasHoldemGame(consolePlayer1, new ConsoleUiDecorator(new ConsolePlayer(7, "Human_2"), 7, GameWidth, 5));
                 case 4:
-                    return new TexasHoldemGame(consolePlayer1, new ConsoleUiDecorator(new Champion(new PlayingStyle()), 7, GameWidth, 5));
+                    var looseAggressivePlayer = new PlayingStyle(0.26, 0.22, 0.09);
+                    return new TexasHoldemGame(consolePlayer1, new ConsoleUiDecorator(new Champion(looseAggressivePlayer), 7, GameWidth, 5));
                 default:
                     throw new Exception();
             }
@@ -75,7 +76,8 @@
                             new ConsolePlayer(row, "Human_" + i + 1, 250 - (i * 20)), row, GameWidth, 1);
                         break;
                     case 4:
-                        players[i] = new ConsoleUiDecorator(new Champion(new PlayingStyle()), (6 * i) + numberOfCommonRows, GameWidth, 1);
+                        var looseAggressivePlayer = new PlayingStyle(0.26, 0.22, 0.09);
+                        players[i] = new ConsoleUiDecorator(new Champion(looseAggressivePlayer), (6 * i) + numberOfCommonRows, GameWidth, 1);
                         break;
                     default:
                         break;
@@ -100,7 +102,7 @@
             return MultiplePlayers(numberOfPlayers, 3);
         }
 
-        private static ITexasHoldemGame HumanVsCheater(int numberOfPlayers)
+        private static ITexasHoldemGame HumanVsChampion(int numberOfPlayers)
         {
             return MultiplePlayers(numberOfPlayers, 4);
         }

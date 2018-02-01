@@ -5,5 +5,7 @@
         double VPIP { get; }
 
         double PFR { get; }
+
+        double PreflopThreeBet { get; }
     }
 }

@@ -13,7 +13,7 @@
 
         private readonly int smallBlind;
 
-        private readonly IList<IInternalPlayer> players;
+        private readonly IList<InternalPlayer> players;
 
         private readonly Deck deck;
 
@@ -23,7 +23,7 @@
 
         private Dictionary<string, ICollection<Card>> showdownCards;
 
-        public HandLogic(IList<IInternalPlayer> players, int handNumber, int smallBlind)
+        public HandLogic(IList<InternalPlayer> players, int handNumber, int smallBlind)
         {
             this.handNumber = handNumber;
             this.smallBlind = smallBlind;
@@ -134,8 +134,8 @@
                         }
                     }
 
-                    Stack<List<IInternalPlayer>> sortedByHandStrength = new Stack<List<IInternalPlayer>>();
-                    sortedByHandStrength.Push(new List<IInternalPlayer> { playersInHand[0] });
+                    Stack<List<InternalPlayer>> sortedByHandStrength = new Stack<List<InternalPlayer>>();
+                    sortedByHandStrength.Push(new List<InternalPlayer> { playersInHand[0] });
                     for (int i = 0; i < playersInHand.Count() - 1; i++)
                     {
                         var betterHand = Helpers.CompareCards(
@@ -144,7 +144,7 @@
 
                         if (betterHand < 0)
                         {
-                            sortedByHandStrength.Push(new List<IInternalPlayer> { playersInHand[i + 1] });
+                            sortedByHandStrength.Push(new List<InternalPlayer> { playersInHand[i + 1] });
                         }
                         else if (betterHand == 0)
                         {

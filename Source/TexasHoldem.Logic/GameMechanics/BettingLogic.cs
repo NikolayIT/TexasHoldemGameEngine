@@ -137,10 +137,10 @@
 
                 if (player.PlayerMoney.Money <= 0)
                 {
-                    var totalMoney = this.allPlayers.Where(x => x.Name != player.Name)
+                    var maxPlayerStack = this.allPlayers.Where(x => x.PlayerMoney.InHand && x.Name != player.Name)
                         .Max(x => x.PlayerMoney.CurrentlyInPot + x.PlayerMoney.Money);
 
-                    if (player.PlayerMoney.CurrentlyInPot <= totalMoney)
+                    if (player.PlayerMoney.CurrentlyInPot <= maxPlayerStack)
                     {
                         this.boundsOfSidePots.Add(player.PlayerMoney.CurrentlyInPot);
                     }

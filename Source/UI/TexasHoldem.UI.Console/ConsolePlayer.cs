@@ -51,7 +51,7 @@
                         }
 
                         action = PlayerAction.Raise(
-                            this.RaiseAmount(context.MoneyLeft, context.MinRaise, context.MoneyToCall, context.CurrentMaxBet));
+                            this.RaiseAmount(context.MoneyLeft, context.MinRaise, context.MoneyToCall));
                         break;
                     case ConsoleKey.F:
                         action = PlayerAction.Fold();
@@ -75,9 +75,9 @@
             }
         }
 
-        private int RaiseAmount(int moneyLeft, int minRaise, int moneyToCall, int currentMaxBet)
+        private int RaiseAmount(int moneyLeft, int minRaise, int moneyToCall)
         {
-            var wholeMinRaise = minRaise + currentMaxBet;
+            var wholeMinRaise = minRaise + moneyToCall;
             if (wholeMinRaise >= moneyLeft)
             {
                 // Instant All-In
@@ -104,7 +104,7 @@
                         return moneyLeft - moneyToCall;
                     }
 
-                    return result - currentMaxBet;
+                    return result - moneyToCall;
                 }
             }
             while (true);

@@ -9,7 +9,7 @@
     {
         private readonly int initialPlayerIndex;
 
-        private readonly IList<IInternalPlayer> allPlayers;
+        private readonly IList<InternalPlayer> allPlayers;
 
         private readonly int smallBlind;
 
@@ -19,13 +19,9 @@
 
         private string aggressorName;
 
-        private List<SidePot> sidePots;
+        private PotCreator potCreator;
 
-        private SortedSet<int> boundsOfSidePots;
-
-        private int lowerBound;
-
-        public BettingLogic(IList<IInternalPlayer> players, int smallBlind)
+        public BettingLogic(IList<InternalPlayer> players, int smallBlind)
         {
             this.initialPlayerIndex = players.Count == 2 ? 0 : 1;
             this.allPlayers = players;
@@ -36,10 +32,7 @@
             this.lastStepBet = this.lastRoundBet;
             this.aggressorName = string.Empty;
 
-            this.sidePots = new List<SidePot>();
-
-            this.boundsOfSidePots = new SortedSet<int>();
-            this.lowerBound = 0;
+            this.potCreator = new PotCreator(this.allPlayers);
         }
 
         public int Pot
@@ -50,19 +43,19 @@
             }
         }
 
-        public int MainPot
+        public Pot MainPot
         {
             get
             {
-                return this.Pot - this.sidePots.Sum(x => x.Amount);
+                return this.potCreator.MainPot;
             }
         }
 
-        public IReadOnlyCollection<SidePot> SidePots
+        public List<Pot> SidePots
         {
             get
             {
-                return this.sidePots.AsReadOnly();
+                return this.potCreator.SidePots;
             }
         }
 
@@ -135,30 +128,18 @@
                     }
                 }
 
-                if (player.PlayerMoney.Money <= 0)
-                {
-                    var maxPlayerStack = this.allPlayers.Where(x => x.PlayerMoney.InHand && x.Name != player.Name)
-                        .Max(x => x.PlayerMoney.CurrentlyInPot + x.PlayerMoney.Money);
-
-                    if (player.PlayerMoney.CurrentlyInPot <= maxPlayerStack)
-                    {
-                        this.boundsOfSidePots.Add(player.PlayerMoney.CurrentlyInPot);
-                    }
-                }
-
                 player.PlayerMoney.ShouldPlayInRound = false;
                 playerIndex++;
             }
 
             if (this.allPlayers.Count == 2)
             {
-                // works only for head-up
+                // works only for heads-up
                 this.ReturnMoneyInCaseOfAllIn();
             }
             else
             {
                 this.ReturnMoneyInCaseUncalledBet();
-                this.CreateSidePots();
             }
         }
 
@@ -250,51 +231,6 @@
             }
 
             return this.lastStepBet;
-        }
-
-        private void CreateSidePots()
-        {
-            if (this.boundsOfSidePots.Count == 0)
-            {
-                return;
-            }
-
-            if (this.allPlayers.Count(x => x.PlayerMoney.Money <= 0) >= this.allPlayers.Count - 1)
-            {
-                this.boundsOfSidePots.Remove(this.boundsOfSidePots.Max);
-            }
-
-            foreach (var upperBound in this.boundsOfSidePots)
-            {
-                if (this.lowerBound >= upperBound)
-                {
-                    continue;
-                }
-
-                var namesOfParticipants = new List<string>();
-                var amount = 0;
-                foreach (var item in this.allPlayers)
-                {
-                    if (item.PlayerMoney.CurrentlyInPot > this.lowerBound)
-                    {
-                        // The player participates in the side pot
-                        namesOfParticipants.Add(item.Name);
-                        if (item.PlayerMoney.CurrentlyInPot >= upperBound)
-                        {
-                            amount += upperBound - this.lowerBound;
-                        }
-                        else
-                        {
-                            amount += item.PlayerMoney.CurrentlyInPot - this.lowerBound;
-                        }
-                    }
-                }
-
-                this.sidePots.Add(new SidePot(
-                    amount,
-                    namesOfParticipants));
-                this.lowerBound = upperBound;
-            }
         }
     }
 }

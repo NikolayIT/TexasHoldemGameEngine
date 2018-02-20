@@ -15,7 +15,7 @@
                 10000, 15000, 20000, 30000, 40000, 50000, 60000, 80000, 100000
             };
 
-        private readonly ICollection<IInternalPlayer> allPlayers;
+        private readonly ICollection<InternalPlayer> allPlayers;
 
         private int initialMoney;
 
@@ -70,7 +70,7 @@
                 throw new ArgumentOutOfRangeException(nameof(initialMoney), "Initial money should be greater than 0 and less than 200000");
             }
 
-            this.allPlayers = new List<IInternalPlayer>(players.Count);
+            this.allPlayers = new List<InternalPlayer>(players.Count);
             foreach (var item in players)
             {
                 this.allPlayers.Add(new InternalPlayer(item));
@@ -101,6 +101,18 @@
             return winner;
         }
 
+        private void Rebuy()
+        {
+            var playerNames = this.allPlayers.Select(x => x.Name).ToList().AsReadOnly();
+            foreach (var player in this.allPlayers)
+            {
+                if (player.PlayerMoney.Money <= 0)
+                {
+                    player.StartGame(new StartGameContext(playerNames, player.BuyIn == -1 ? this.initialMoney : player.BuyIn));
+                }
+            }
+        }
+
         private void PlayHand()
         {
             var shifted = this.allPlayers.ToList();
@@ -111,7 +123,8 @@
                 this.HandsPlayed++;
 
                 // Every 10 hands the blind increases
-                var smallBlind = SmallBlinds[(this.HandsPlayed - 1) / 10];
+                // var smallBlind = SmallBlinds[(this.HandsPlayed - 1) / 10];
+                var smallBlind = SmallBlinds[0];
 
                 // Players are shifted in order of priority to make a move
                 shifted.Add(shifted.First());
@@ -121,6 +134,8 @@
                 IHandLogic hand = new HandLogic(shifted, this.HandsPlayed, smallBlind);
 
                 hand.Play();
+
+                this.Rebuy();
             }
         }
     }

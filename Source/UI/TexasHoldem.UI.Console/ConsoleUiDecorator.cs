@@ -62,7 +62,6 @@
         public override PlayerAction PostingBlind(IPostingBlindContext context)
         {
             this.UpdateCommonRow(context.CurrentPot);
-            ConsoleHelper.WriteOnConsole(this.row + 1, 2, context.CurrentStackSize + "   ");
 
             var action = base.PostingBlind(context);
 
@@ -79,7 +78,7 @@
         public override PlayerAction GetTurn(IGetTurnContext context)
         {
             this.UpdateCommonRow(context.CurrentPot);
-            this.UpdateSidePots(context.MainPot, context.SidePots);
+            this.UpdateMainAndSidePots(context.MainPot, context.SidePots);
             ConsoleHelper.WriteOnConsole(this.row + 1, 2, context.MoneyLeft + "   ");
 
             var action = base.GetTurn(context);
@@ -130,7 +129,7 @@
             ConsoleHelper.WriteOnConsole(this.commonRow, this.width - potAsString.Length - 2, potAsString);
         }
 
-        private void UpdateSidePots(int mainPot, IReadOnlyCollection<SidePot> sidePots)
+        private void UpdateMainAndSidePots(Pot mainPot, List<Pot> sidePots)
         {
             if (sidePots.Count == 0)
             {
@@ -139,16 +138,16 @@
                 return;
             }
 
-            var mainPotAsString = "Main Pot: " + mainPot;
+            var mainPotAsString = "Main Pot: " + mainPot.AmountOfMoney;
             ConsoleHelper.WriteOnConsole(this.commonRow, 2, mainPotAsString);
 
             var sidePotsAsString = "Side Pots: ";
             foreach (var item in sidePots)
             {
-                sidePotsAsString += "[" + item.Amount.ToString() + "]";
+                sidePotsAsString += item.AmountOfMoney + " | ";
             }
 
-            ConsoleHelper.WriteOnConsole(this.commonRow + 1, 2, sidePotsAsString);
+            ConsoleHelper.WriteOnConsole(this.commonRow + 1, 2, sidePotsAsString.Remove(sidePotsAsString.Length - 2, 2));
         }
 
         private void DrawGameBox()

@@ -1,10 +1,12 @@
 ﻿namespace TexasHoldem.UI.Console
 {
     using System;
+    using System.Collections.Generic;
 
     using TexasHoldem.AI.DummyPlayer;
     using TexasHoldem.AI.SmartPlayer;
     using TexasHoldem.Logic.GameMechanics;
+    using TexasHoldem.Logic.Players;
 
     public static class Program
     {
@@ -12,87 +14,60 @@
 
         private const int GameWidth = 66;
 
+        private const int NumberOfCommonRows = 3; // place for community cards, pot, main pot, side pots
+
+        private static List<IPlayer> players;
+
         public static void Main()
         {
-            // var game = HeadsUp();
-            // var game = HumanVsDummy(4);
-            // var game = HumanVsHuman(3);
-            var game = HumanVsSmart(6);
+            players = new List<IPlayer>();
 
+            CreateAIPlayers<DummyPlayer>(2);
+            // CreateConsolePlayers(1);
+            CreateAIPlayers<SmartPlayer>(1);
+            CreateAIPlayers<DummyPlayer>(1);
+            CreateAIPlayers<SmartPlayer>(2);
+
+            int gameHeight = (6 * players.Count) + NumberOfCommonRows;
+            Table(gameHeight);
+
+            var game = new TexasHoldemGame(Fill().ToArray());
             game.Start();
         }
 
-        private static ITexasHoldemGame HeadsUp(int opponentTypeId = 2)
+        private static void CreateAIPlayers<T>(int numberOfPlayers)
+            where T : new()
         {
-            Stand(13);
-
-            var consolePlayer1 = new ConsoleUiDecorator(new ConsolePlayer(0), 0, GameWidth, 5);
-            switch (opponentTypeId)
+            for (int i = 0; i < numberOfPlayers; i++)
             {
-                case 1:
-                    return new TexasHoldemGame(consolePlayer1, new ConsoleUiDecorator(new DummyPlayer(), 7, GameWidth, 5));
-                case 2:
-                    return new TexasHoldemGame(consolePlayer1, new ConsoleUiDecorator(new SmartPlayer(), 7, GameWidth, 5));
-                case 3:
-                    return new TexasHoldemGame(consolePlayer1, new ConsoleUiDecorator(new ConsolePlayer(7, "Human_2"), 7, GameWidth, 5));
-                default:
-                    throw new Exception();
+                players.Add((IPlayer)new T());
             }
         }
 
-        private static ITexasHoldemGame MultiplePlayers(int numberOfPlayers, int opponentTypeId)
+        private static void CreateConsolePlayers(int numberOfPlayers)
         {
-            if (numberOfPlayers == 2)
+            var count = players.Count;
+
+            for (int i = count; i < numberOfPlayers + count; i++)
             {
-                return HeadsUp(opponentTypeId);
+                var row = (6 * i) + NumberOfCommonRows;
+                players.Add(new ConsolePlayer(row));
+            }
+        }
+
+        private static List<ConsoleUiDecorator> Fill()
+        {
+            var list = new List<ConsoleUiDecorator>();
+
+            for (int i = 0; i < players.Count; i++)
+            {
+                list.Add(new ConsoleUiDecorator(players[i], (6 * i) + NumberOfCommonRows, GameWidth, 1));
             }
 
-            var numberOfCommonRows = 3; // Place for community cards, pot, main pot, side pots
-            int gameHeight = (6 * numberOfPlayers) + numberOfCommonRows;
-            Stand(gameHeight);
-
-            ConsoleUiDecorator[] players = new ConsoleUiDecorator[numberOfPlayers];
-            players[0] = new ConsoleUiDecorator(
-                new ConsolePlayer(numberOfCommonRows, "Human_1", 250), numberOfCommonRows, GameWidth, 1);
-            for (int i = 1; i < numberOfPlayers; i++)
-            {
-                switch (opponentTypeId)
-                {
-                    case 1:
-                        players[i] = new ConsoleUiDecorator(new DummyPlayer(), (6 * i) + numberOfCommonRows, GameWidth, 1);
-                        break;
-                    case 2:
-                        players[i] = new ConsoleUiDecorator(new SmartPlayer(), (6 * i) + numberOfCommonRows, GameWidth, 1);
-                        break;
-                    case 3:
-                        var row = (6 * i) + numberOfCommonRows;
-                        players[i] = new ConsoleUiDecorator(
-                            new ConsolePlayer(row, "Human_" + i + 1, 250 - (i * 20)), row, GameWidth, 1);
-                        break;
-                    default:
-                        break;
-                }
-            }
-
-            return new TexasHoldemGame(players);
+            return list;
         }
 
-        private static ITexasHoldemGame HumanVsDummy(int numberOfPlayers)
-        {
-            return MultiplePlayers(numberOfPlayers, 1);
-        }
-
-        private static ITexasHoldemGame HumanVsSmart(int numberOfPlayers)
-        {
-            return MultiplePlayers(numberOfPlayers, 2);
-        }
-
-        private static ITexasHoldemGame HumanVsHuman(int numberOfPlayers)
-        {
-            return MultiplePlayers(numberOfPlayers, 3);
-        }
-
-        private static void Stand(int gameHeight)
+        private static void Table(int gameHeight)
         {
             Console.BackgroundColor = ConsoleColor.Black;
             Console.ForegroundColor = ConsoleColor.Gray;

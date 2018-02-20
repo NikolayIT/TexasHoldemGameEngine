@@ -14,8 +14,8 @@
             int myMoneyInTheRound,
             int currentMaxBet,
             int minRaise,
-            int mainPot,
-            IReadOnlyCollection<SidePot> sidePots)
+            Pot mainPot,
+            List<Pot> sidePots)
         {
             this.RoundType = roundType;
             this.PreviousRoundActions = previousRoundActions;
@@ -86,8 +86,8 @@
             }
         }
 
-        public int MainPot { get; }
+        public Pot MainPot { get; }
 
-        public IReadOnlyCollection<SidePot> SidePots { get; }
+        public List<Pot> SidePots { get; }
     }
 }

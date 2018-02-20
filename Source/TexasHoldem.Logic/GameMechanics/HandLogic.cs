@@ -13,7 +13,7 @@
 
         private readonly int smallBlind;
 
-        private readonly IList<IInternalPlayer> players;
+        private readonly IList<InternalPlayer> players;
 
         private readonly Deck deck;
 
@@ -23,7 +23,7 @@
 
         private Dictionary<string, ICollection<Card>> showdownCards;
 
-        public HandLogic(IList<IInternalPlayer> players, int handNumber, int smallBlind)
+        public HandLogic(IList<InternalPlayer> players, int handNumber, int smallBlind)
         {
             this.handNumber = handNumber;
             this.smallBlind = smallBlind;
@@ -78,7 +78,7 @@
             }
         }
 
-        private void DetermineWinnerAndAddPot(int pot, int mainPot, IReadOnlyCollection<SidePot> sidePot)
+        private void DetermineWinnerAndAddPot(int pot, Pot mainPot, List<Pot> sidePot)
         {
             if (this.players.Count(x => x.PlayerMoney.InHand) == 1)
             {
@@ -134,8 +134,8 @@
                         }
                     }
 
-                    Stack<List<IInternalPlayer>> sortedByHandStrength = new Stack<List<IInternalPlayer>>();
-                    sortedByHandStrength.Push(new List<IInternalPlayer> { playersInHand[0] });
+                    var sortedByHandStrength = new Stack<List<InternalPlayer>>();
+                    sortedByHandStrength.Push(new List<InternalPlayer> { playersInHand[0] });
                     for (int i = 0; i < playersInHand.Count() - 1; i++)
                     {
                         var betterHand = Helpers.CompareCards(
@@ -144,7 +144,7 @@
 
                         if (betterHand < 0)
                         {
-                            sortedByHandStrength.Push(new List<IInternalPlayer> { playersInHand[i + 1] });
+                            sortedByHandStrength.Push(new List<InternalPlayer> { playersInHand[i + 1] });
                         }
                         else if (betterHand == 0)
                         {
@@ -152,31 +152,22 @@
                         }
                     }
 
-                    var remainingPots = sidePot.ToList();
-                    if (mainPot != 0)
-                    {
-                        remainingPots.Add(
-                            new SidePot(
-                                pot - remainingPots.Sum(x => x.Amount),
-                                playersInHand.Where(x => x.PlayerMoney.Money > 0)
-                                    .Select(x => x.Name)
-                                    .ToList()
-                                    .AsReadOnly()));
-                    }
+                    var remainingPots = new List<Pot>(sidePot);
+                    remainingPots.Add(mainPot);
 
                     do
                     {
                         var winners = sortedByHandStrength.Pop();
 
-                        var unusedPots = new List<SidePot>();
+                        var unusedPots = new List<Pot>();
 
                         foreach (var oneOfThePots in remainingPots)
                         {
-                            var applicantsForThePot = oneOfThePots.NamesOfParticipants.Intersect(winners.Select(s => s.Name));
+                            var applicantsForThePot = oneOfThePots.Participants.Intersect(winners.Select(s => s.Name));
                             var count = applicantsForThePot.Count();
                             if (count > 0)
                             {
-                                var prize = oneOfThePots.Amount / count;
+                                var prize = oneOfThePots.AmountOfMoney / count;
                                 foreach (var applicant in applicantsForThePot)
                                 {
                                     winners.First(x => x.Name == applicant).PlayerMoney.Money += prize;

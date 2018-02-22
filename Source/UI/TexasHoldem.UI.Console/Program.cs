@@ -23,9 +23,9 @@
             players = new List<IPlayer>();
 
             CreateAIPlayers<DummyPlayer>(2);
-            // CreateConsolePlayers(1);
+            CreateConsolePlayers(1);
             CreateAIPlayers<SmartPlayer>(1);
-            CreateAIPlayers<DummyPlayer>(1);
+            // CreateAIPlayers<DummyPlayer>(1);
             CreateAIPlayers<SmartPlayer>(2);
 
             int gameHeight = (6 * players.Count) + NumberOfCommonRows;

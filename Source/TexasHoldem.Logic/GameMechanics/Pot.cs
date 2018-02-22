@@ -7,11 +7,11 @@
         public Pot(int amountOfMoney, IReadOnlyList<string> participants)
         {
             this.AmountOfMoney = amountOfMoney;
-            this.Participants = participants;
+            this.ActivePlayer = participants;
         }
 
         public int AmountOfMoney { get; }
 
-        public IReadOnlyList<string> Participants { get; }
+        public IReadOnlyList<string> ActivePlayer { get; }
     }
 }

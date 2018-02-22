@@ -146,22 +146,22 @@
                         {
                             var oneOfThePots = pots.Pop();
 
-                            if (oneOfThePots.Participants.Count == 0)
+                            if (oneOfThePots.ActivePlayer.Count == 0)
                             {
                                 throw new Exception("There are no players in the pot");
                             }
-                            else if (oneOfThePots.Participants.Count == 1)
+                            else if (oneOfThePots.ActivePlayer.Count == 1)
                             {
                                 continue;
                             }
                             else
                             {
-                                var nominees = oneOfThePots.Participants.Intersect(playersWithTheBestHand.Value);
+                                var nominees = oneOfThePots.ActivePlayer.Intersect(playersWithTheBestHand.Value);
                                 var count = nominees.Count();
 
                                 if (count > 0)
                                 {
-                                    var prize = oneOfThePots.AmountOfMoney / count;
+                                    var prize = oneOfThePots.AmountOfMoney / count; // TODO: If there are odd chips in a split pot.
 
                                     foreach (var nominee in nominees)
                                     {

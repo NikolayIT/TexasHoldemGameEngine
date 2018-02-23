@@ -2,6 +2,8 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
+
     using TexasHoldem.Logic.Cards;
     using TexasHoldem.Logic.Extensions;
     using TexasHoldem.Logic.GameMechanics;
@@ -35,7 +37,7 @@
 
         public override void StartHand(IStartHandContext context)
         {
-            this.UpdateCommonRow(0);
+            this.UpdateCommonRows(0, 0, new int[] { });
             var dealerSymbol = context.FirstPlayerName == this.Player.Name ? "D" : " ";
 
             ConsoleHelper.WriteOnConsole(this.row + 1, 1, dealerSymbol, ConsoleColor.Green);
@@ -53,15 +55,19 @@
         public override void StartRound(IStartRoundContext context)
         {
             this.CommunityCards = context.CommunityCards;
-            this.UpdateCommonRow(context.CurrentPot);
+            this.UpdateCommonRows(
+                context.CurrentPot,
+                context.CurrentMainPot.AmountOfMoney,
+                context.CurrentSidePots.Select(s => s.AmountOfMoney));
 
             ConsoleHelper.WriteOnConsole(this.row + 1, this.width - 11, context.RoundType + "   ");
+            ConsoleHelper.WriteOnConsole(this.row + 3, 2, new string(' ', this.width - 3));
             base.StartRound(context);
         }
 
         public override PlayerAction PostingBlind(IPostingBlindContext context)
         {
-            this.UpdateCommonRow(context.CurrentPot);
+            this.UpdateCommonRows(context.CurrentPot, context.CurrentPot, new int[] { });
 
             var action = base.PostingBlind(context);
 
@@ -77,23 +83,32 @@
 
         public override PlayerAction GetTurn(IGetTurnContext context)
         {
-            this.UpdateCommonRow(context.CurrentPot);
-            this.UpdateMainAndSidePots(context.MainPot, context.SidePots);
+            this.UpdateCommonRows(
+                context.CurrentPot,
+                context.MainPot.AmountOfMoney,
+                context.SidePots.Select(s => s.AmountOfMoney));
+
             ConsoleHelper.WriteOnConsole(this.row + 1, 2, context.MoneyLeft + "   ");
 
             var action = base.GetTurn(context);
 
             if (action.Type == PlayerActionType.Fold)
             {
-                this.Eliminate(context.MoneyLeft);
-                return action;
+                this.Muck(context.MoneyLeft);
             }
 
             ConsoleHelper.WriteOnConsole(this.row + 2, 2, new string(' ', this.width - 3));
 
-            var lastAction = action.Type + (action.Type == PlayerActionType.Fold
-                ? string.Empty
-                : "(" + (action.Money + ((context.MoneyToCall < 0) ? 0 : context.MoneyToCall) + ")"));
+            var lastAction = action.Type.ToString();
+
+            if (action.Type == PlayerActionType.CheckCall)
+            {
+                lastAction += $"({context.MoneyToCall})";
+            }
+            else if (action.Type == PlayerActionType.Raise)
+            {
+                lastAction += $"({action.Money + context.MyMoneyInTheRound + context.MoneyToCall})";
+            }
 
             ConsoleHelper.WriteOnConsole(this.row + 3, 2, new string(' ', this.width - 3));
             ConsoleHelper.WriteOnConsole(this.row + 3, 2, "Last action: " + lastAction);
@@ -107,47 +122,40 @@
             return action;
         }
 
-        private void Eliminate(int moneyLeft)
+        private void Muck(int moneyLeft)
         {
-            ConsoleHelper.WriteOnConsole(this.row + 1, 2, moneyLeft + "   ");
-            ConsoleHelper.WriteOnConsole(this.row + 2, 2, new string(' ', this.width - 3));
-            ConsoleHelper.WriteOnConsole(this.row + 3, 2, new string(' ', this.width - 3));
-            ConsoleHelper.WriteOnConsole(this.row + 3, 2, "A player is eliminated");
-
             this.DrawMuckedSingleCard(this.row + 1, 10, this.firstCard);
             this.DrawMuckedSingleCard(this.row + 1, 14, this.secondCard);
         }
 
-        private void UpdateCommonRow(int pot)
+        private void UpdateCommonRows(int pot, int mainPot, IEnumerable<int> sidePots)
         {
-            // Clear the common row
+            // Clear the first common row
             ConsoleHelper.WriteOnConsole(this.commonRow, 0, new string(' ', this.width - 1));
 
             this.DrawCommunityCards();
 
             var potAsString = "Pot: " + pot;
             ConsoleHelper.WriteOnConsole(this.commonRow, this.width - potAsString.Length - 2, potAsString);
-        }
 
-        private void UpdateMainAndSidePots(Pot mainPot, List<Pot> sidePots)
-        {
-            if (sidePots.Count == 0)
+            if (sidePots.Count() == 0)
             {
                 // Clear the side pots
                 ConsoleHelper.WriteOnConsole(this.commonRow + 1, 0, new string(' ', this.width - 1));
-                return;
             }
-
-            var mainPotAsString = "Main Pot: " + mainPot.AmountOfMoney;
-            ConsoleHelper.WriteOnConsole(this.commonRow, 2, mainPotAsString);
-
-            var sidePotsAsString = "Side Pots: ";
-            foreach (var item in sidePots)
+            else
             {
-                sidePotsAsString += item.AmountOfMoney + " | ";
-            }
+                var mainPotAsString = "Main Pot: " + mainPot;
+                ConsoleHelper.WriteOnConsole(this.commonRow, 2, mainPotAsString);
 
-            ConsoleHelper.WriteOnConsole(this.commonRow + 1, 2, sidePotsAsString.Remove(sidePotsAsString.Length - 2, 2));
+                var sidePotsAsString = "Side Pots: ";
+                foreach (var item in sidePots)
+                {
+                    sidePotsAsString += item + " | ";
+                }
+
+                ConsoleHelper.WriteOnConsole(this.commonRow + 1, 2, sidePotsAsString.Remove(sidePotsAsString.Length - 2, 2));
+            }
         }
 
         private void DrawGameBox()

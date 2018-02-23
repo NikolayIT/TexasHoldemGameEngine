@@ -88,6 +88,6 @@
 
         public Pot MainPot { get; }
 
-        public List<Pot> SidePots { get; }
+        public IReadOnlyCollection<Pot> SidePots { get; }
     }
 }

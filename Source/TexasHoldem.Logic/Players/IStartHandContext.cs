@@ -1,7 +1,7 @@
-﻿using TexasHoldem.Logic.Cards;
-
-namespace TexasHoldem.Logic.Players
+﻿namespace TexasHoldem.Logic.Players
 {
+    using TexasHoldem.Logic.Cards;
+
     public interface IStartHandContext
     {
         Card FirstCard { get; }

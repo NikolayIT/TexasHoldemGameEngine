@@ -90,7 +90,7 @@
                 player.StartGame(new StartGameContext(playerNames, player.BuyIn == -1 ? this.initialMoney : player.BuyIn));
             }
 
-            this.PlayHand();
+            this.PlayGame();
 
             var winner = this.allPlayers.FirstOrDefault(x => x.PlayerMoney.Money > 0);
             foreach (var player in this.allPlayers)
@@ -113,7 +113,7 @@
             }
         }
 
-        private void PlayHand()
+        private void PlayGame()
         {
             var shifted = this.allPlayers.ToList();
 

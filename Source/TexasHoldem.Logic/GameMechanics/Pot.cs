@@ -4,14 +4,14 @@
 
     public struct Pot
     {
-        public Pot(int amountOfMoney, IReadOnlyList<string> participants)
+        public Pot(int amountOfMoney, IReadOnlyList<string> activePlayer)
         {
             this.AmountOfMoney = amountOfMoney;
-            this.Participants = participants;
+            this.ActivePlayer = activePlayer;
         }
 
         public int AmountOfMoney { get; }
 
-        public IReadOnlyList<string> Participants { get; }
+        public IReadOnlyList<string> ActivePlayer { get; }
     }
 }

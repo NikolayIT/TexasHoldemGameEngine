@@ -66,23 +66,31 @@
         private Pot Create(int lowerLimit, int upperLimit)
         {
             var amountOfMoney = 0;
-            var participants = new List<string>();
+            var activePlayer = new List<string>();
 
             foreach (var item in this.players)
             {
                 if (item.PlayerMoney.CurrentlyInPot > lowerLimit && item.PlayerMoney.CurrentlyInPot <= upperLimit)
                 {
                     amountOfMoney += item.PlayerMoney.CurrentlyInPot - lowerLimit;
-                    participants.Add(item.Name);
+
+                    if (item.PlayerMoney.InHand)
+                    {
+                        activePlayer.Add(item.Name);
+                    }
                 }
                 else if (item.PlayerMoney.CurrentlyInPot > upperLimit)
                 {
                     amountOfMoney += upperLimit - lowerLimit;
-                    participants.Add(item.Name);
+
+                    if (item.PlayerMoney.InHand)
+                    {
+                        activePlayer.Add(item.Name);
+                    }
                 }
             }
 
-            return new Pot(amountOfMoney, participants);
+            return new Pot(amountOfMoney, activePlayer);
         }
     }
 }

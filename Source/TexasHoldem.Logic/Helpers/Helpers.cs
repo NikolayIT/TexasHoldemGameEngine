@@ -1,6 +1,7 @@
 ﻿namespace TexasHoldem.Logic.Helpers
 {
     using System.Collections.Generic;
+    using System.Linq;
 
     using TexasHoldem.Logic.Cards;
 
@@ -33,6 +34,29 @@
             var firstPlayerBestHand = HandEvaluator.GetBestHand(firstPlayerCards);
             var secondPlayerBestHand = HandEvaluator.GetBestHand(secondPlayerCards);
             return firstPlayerBestHand.CompareTo(secondPlayerBestHand);
+        }
+
+        public static int GetHandRankValue(
+            IEnumerable<Card> player,
+            IEnumerable<IEnumerable<Card>> opponents,
+            IEnumerable<Card> communityCards)
+        {
+            var playerHand = player.Concat(communityCards);
+            var playerBestHand = HandEvaluator.GetBestHand(playerHand);
+            var playerHandValue = (int)playerBestHand.RankType;
+
+            foreach (var opponent in opponents)
+            {
+                var opponentHand = opponent.Concat(communityCards);
+                var opponentBestHand = HandEvaluator.GetBestHand(opponentHand);
+
+                if (playerBestHand.CompareTo(opponentBestHand) > 0)
+                {
+                    playerHandValue++;
+                }
+            }
+
+            return playerHandValue;
         }
     }
 }

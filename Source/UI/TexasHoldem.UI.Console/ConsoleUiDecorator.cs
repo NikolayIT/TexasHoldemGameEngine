@@ -99,9 +99,16 @@
 
             ConsoleHelper.WriteOnConsole(this.row + 2, 2, new string(' ', this.width - 3));
 
-            var lastAction = action.Type + (action.Type == PlayerActionType.Fold
-                ? string.Empty
-                : "(" + (action.Money + ((context.MoneyToCall < 0) ? 0 : context.MoneyToCall) + ")"));
+            var lastAction = action.Type.ToString();
+
+            if (action.Type == PlayerActionType.CheckCall)
+            {
+                lastAction += $"({context.MoneyToCall})";
+            }
+            else if (action.Type == PlayerActionType.Raise)
+            {
+                lastAction += $"({action.Money + context.MyMoneyInTheRound + context.MoneyToCall})";
+            }
 
             ConsoleHelper.WriteOnConsole(this.row + 3, 2, new string(' ', this.width - 3));
             ConsoleHelper.WriteOnConsole(this.row + 3, 2, "Last action: " + lastAction);

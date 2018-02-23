@@ -51,7 +51,7 @@
                         }
 
                         action = PlayerAction.Raise(
-                            this.RaiseAmount(context.MoneyLeft, context.MinRaise, context.MoneyToCall));
+                            this.RaiseAmount(context.MoneyLeft, context.MinRaise, context.MoneyToCall, context.MyMoneyInTheRound));
                         break;
                     case ConsoleKey.F:
                         action = PlayerAction.Fold();
@@ -75,36 +75,38 @@
             }
         }
 
-        private int RaiseAmount(int moneyLeft, int minRaise, int moneyToCall)
+        private int RaiseAmount(int moneyLeft, int minRaise, int moneyToCall, int myMoneyInTheRound)
         {
-            var wholeMinRaise = minRaise + moneyToCall;
-            if (wholeMinRaise >= moneyLeft)
+            var wholeMinRaise = minRaise + myMoneyInTheRound + moneyToCall;
+            if (wholeMinRaise >= moneyLeft + myMoneyInTheRound)
             {
                 // Instant All-In
                 return moneyLeft - moneyToCall;
             }
 
-            var perfix = $"Raise amount [{wholeMinRaise}-{moneyLeft}]:";
+            var perfix = $"Raise amount [{wholeMinRaise}-{moneyLeft + myMoneyInTheRound}]:";
 
             do
             {
                 ConsoleHelper.WriteOnConsole(this.row + 2, 2, new string(' ', Console.WindowWidth - 3));
                 ConsoleHelper.WriteOnConsole(this.row + 2, 2, perfix);
+
                 var text = ConsoleHelper.UserInput(this.row + 2, perfix.Length + 3);
                 int result;
+
                 if (int.TryParse(text, out result))
                 {
                     if (result < wholeMinRaise)
                     {
                         return minRaise;
                     }
-                    else if (result > moneyLeft)
+                    else if (result >= moneyLeft + myMoneyInTheRound)
                     {
                         // Raise All-in
                         return moneyLeft - moneyToCall;
                     }
 
-                    return result - moneyToCall;
+                    return result - (myMoneyInTheRound + moneyToCall);
                 }
             }
             while (true);

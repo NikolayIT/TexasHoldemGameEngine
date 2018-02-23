@@ -16,31 +16,28 @@
 
         private const int NumberOfCommonRows = 3; // place for community cards, pot, main pot, side pots
 
-        private static List<IPlayer> players;
+        private static List<IPlayer> players = new List<IPlayer>();
 
         public static void Main()
         {
-            players = new List<IPlayer>();
-
             CreateAIPlayers<DummyPlayer>(2);
             CreateConsolePlayers(1);
-            CreateAIPlayers<SmartPlayer>(1);
-            // CreateAIPlayers<DummyPlayer>(1);
+            CreateAIPlayers<DummyPlayer>(1);
             CreateAIPlayers<SmartPlayer>(2);
 
             int gameHeight = (6 * players.Count) + NumberOfCommonRows;
             Table(gameHeight);
 
-            var game = new TexasHoldemGame(Fill().ToArray());
+            var game = new TexasHoldemGame(FillTheTableWithPlayers().ToArray());
             game.Start();
         }
 
         private static void CreateAIPlayers<T>(int numberOfPlayers)
-            where T : new()
+            where T : BasePlayer, new()
         {
             for (int i = 0; i < numberOfPlayers; i++)
             {
-                players.Add((IPlayer)new T());
+                players.Add(new T());
             }
         }
 
@@ -55,7 +52,7 @@
             }
         }
 
-        private static List<ConsoleUiDecorator> Fill()
+        private static List<ConsoleUiDecorator> FillTheTableWithPlayers()
         {
             var list = new List<ConsoleUiDecorator>();
 

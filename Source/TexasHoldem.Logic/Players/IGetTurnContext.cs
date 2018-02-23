@@ -18,6 +18,6 @@
         int MinRaise { get; }
         ICollection<PlayerActionType> AvailablePlayerOptions { get; }
         Pot MainPot { get; }
-        List<Pot> SidePots { get; }
+        IReadOnlyCollection<Pot> SidePots { get; }
     }
 }

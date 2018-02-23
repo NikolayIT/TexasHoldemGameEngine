@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
-using TexasHoldem.Logic.Cards;
-using TexasHoldem.Logic.GameMechanics;
-
-namespace TexasHoldem.Logic.Players
+﻿namespace TexasHoldem.Logic.Players
 {
+    using System.Collections.Generic;
+
+    using TexasHoldem.Logic.Cards;
+    using TexasHoldem.Logic.GameMechanics;
+
     public interface IStartRoundContext
     {
         IReadOnlyCollection<Card> CommunityCards { get; }
@@ -11,6 +12,6 @@ namespace TexasHoldem.Logic.Players
         int MoneyLeft { get; }
         GameRoundType RoundType { get; }
         Pot CurrentMainPot { get; }
-        List<Pot> CurrentSidePots { get; }
+        IReadOnlyCollection<Pot> CurrentSidePots { get; }
     }
 }

@@ -33,6 +33,6 @@
 
         public Pot CurrentMainPot { get; }
 
-        public List<Pot> CurrentSidePots { get; }
+        public IReadOnlyCollection<Pot> CurrentSidePots { get; }
     }
 }

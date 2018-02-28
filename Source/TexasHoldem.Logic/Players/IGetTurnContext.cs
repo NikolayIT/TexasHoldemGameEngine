@@ -6,6 +6,7 @@
     public interface IGetTurnContext
     {
         bool CanCheck { get; }
+        bool CanRaise { get; }
         int CurrentMaxBet { get; }
         int CurrentPot { get; }
         bool IsAllIn { get; }
@@ -16,7 +17,6 @@
         GameRoundType RoundType { get; }
         int SmallBlind { get; }
         int MinRaise { get; }
-        ICollection<PlayerActionType> AvailablePlayerOptions { get; }
         Pot MainPot { get; }
         IReadOnlyCollection<Pot> SidePots { get; }
     }

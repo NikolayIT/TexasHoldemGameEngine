@@ -51,6 +51,7 @@
     <Compile Include="Extensions\RandomProvider.cs" />
     <Compile Include="GameMechanics\BettingLogic.cs" />
     <Compile Include="GameMechanics\HandLogic.cs" />
+    <Compile Include="GameMechanics\MinRaise.cs" />
     <Compile Include="GameMechanics\TexasHoldemGame.cs" />
     <Compile Include="GameMechanics\IHandLogic.cs" />
     <Compile Include="GameMechanics\InternalPlayerMoney.cs" />

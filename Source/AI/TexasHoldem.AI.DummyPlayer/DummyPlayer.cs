@@ -27,7 +27,7 @@
 
             if (chanceForAction <= 15)
             {
-                if (context.AvailablePlayerOptions.Contains(PlayerActionType.Raise))
+                if (context.CanRaise)
                 {
                     if (context.MinRaise + context.CurrentMaxBet > context.MoneyLeft)
                     {

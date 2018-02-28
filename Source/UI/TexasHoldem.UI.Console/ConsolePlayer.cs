@@ -8,14 +8,13 @@
     {
         private readonly int row;
 
-        public ConsolePlayer(int row, string playerName = "ConsolePlayer", int buyIn = -1)
+        public ConsolePlayer(int row, int buyIn = -1)
         {
             this.row = row;
-            this.Name = playerName;
             this.BuyIn = buyIn;
         }
 
-        public override string Name { get; }
+        public override string Name { get; } = "ConsolePlayer_" + Guid.NewGuid();
 
         public override int BuyIn { get; }
 
@@ -26,7 +25,7 @@
 
         public override PlayerAction GetTurn(IGetTurnContext context)
         {
-            if (!context.AvailablePlayerOptions.Contains(PlayerActionType.Raise))
+            if (!context.CanRaise)
             {
                 this.DrawRestrictedPlayerOptions(context.MoneyToCall);
             }
@@ -45,7 +44,7 @@
                         action = PlayerAction.CheckOrCall();
                         break;
                     case ConsoleKey.R:
-                        if (!context.AvailablePlayerOptions.Contains(PlayerActionType.Raise))
+                        if (!context.CanRaise)
                         {
                             continue;
                         }
@@ -57,7 +56,7 @@
                         action = PlayerAction.Fold();
                         break;
                     case ConsoleKey.A:
-                        if (!context.AvailablePlayerOptions.Contains(PlayerActionType.Raise))
+                        if (!context.CanRaise)
                         {
                             continue;
                         }

@@ -20,48 +20,30 @@
 
         public static void Main()
         {
-            CreateAIPlayers<DummyPlayer>(2);
-            CreateConsolePlayers(1);
-            CreateAIPlayers<DummyPlayer>(1);
-            CreateAIPlayers<SmartPlayer>(2);
+            players.Add(new DummyPlayer());
+            players.Add(new SmartPlayer());
+            players.Add(new ConsolePlayer((6 * players.Count) + NumberOfCommonRows));
+            players.Add(new DummyPlayer());
+            players.Add(new SmartPlayer());
+            players.Add(new DummyPlayer());
 
-            int gameHeight = (6 * players.Count) + NumberOfCommonRows;
+            var gameHeight = (6 * players.Count) + NumberOfCommonRows;
             Table(gameHeight);
 
-            var game = new TexasHoldemGame(FillTheTableWithPlayers().ToArray());
+            var game = Game();
             game.Start();
         }
 
-        private static void CreateAIPlayers<T>(int numberOfPlayers)
-            where T : BasePlayer, new()
+        private static ITexasHoldemGame Game()
         {
-            for (int i = 0; i < numberOfPlayers; i++)
-            {
-                players.Add(new T());
-            }
-        }
-
-        private static void CreateConsolePlayers(int numberOfPlayers)
-        {
-            var count = players.Count;
-
-            for (int i = count; i < numberOfPlayers + count; i++)
-            {
-                var row = (6 * i) + NumberOfCommonRows;
-                players.Add(new ConsolePlayer(row));
-            }
-        }
-
-        private static List<ConsoleUiDecorator> FillTheTableWithPlayers()
-        {
-            var list = new List<ConsoleUiDecorator>();
+            var list = new List<IPlayer>();
 
             for (int i = 0; i < players.Count; i++)
             {
                 list.Add(new ConsoleUiDecorator(players[i], (6 * i) + NumberOfCommonRows, GameWidth, 1));
             }
 
-            return list;
+            return new TexasHoldemGame(list);
         }
 
         private static void Table(int gameHeight)

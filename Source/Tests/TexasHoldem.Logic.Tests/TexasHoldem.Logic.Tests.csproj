@@ -71,8 +71,8 @@
     <Compile Include="Cards\DeckTests.cs" />
     <Compile Include="Extensions\EnumerableExtensionsTests.cs" />
     <Compile Include="Extensions\RandomProviderTests.cs" />
-    <Compile Include="GameMechanics\BettingLogicTests.cs" />
     <Compile Include="GameMechanics\InternalPlayerMoneyTests.cs" />
+    <Compile Include="GameMechanics\MinRaiseTests.cs" />
     <Compile Include="GameMechanics\TexasHoldemGameTests.cs" />
     <Compile Include="Helpers\BestHandTests.cs" />
     <Compile Include="Helpers\HandEvaluatorTests.cs" />

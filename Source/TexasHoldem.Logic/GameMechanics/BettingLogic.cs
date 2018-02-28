@@ -13,13 +13,9 @@
 
         private readonly int smallBlind;
 
-        private int lastRoundBet;
-
-        private int lastStepBet;
-
-        private string aggressorName;
-
         private PotCreator potCreator;
+
+        private MinRaise minRaise;
 
         public BettingLogic(IList<InternalPlayer> players, int smallBlind)
         {
@@ -27,12 +23,8 @@
             this.allPlayers = players;
             this.smallBlind = smallBlind;
             this.RoundBets = new List<PlayerActionAndName>();
-
-            this.lastRoundBet = 2 * smallBlind; // Big blind
-            this.lastStepBet = this.lastRoundBet;
-            this.aggressorName = string.Empty;
-
             this.potCreator = new PotCreator(this.allPlayers);
+            this.minRaise = new MinRaise(this.smallBlind);
         }
 
         public int Pot
@@ -64,6 +56,7 @@
         public void Bet(GameRoundType gameRoundType)
         {
             this.RoundBets.Clear();
+            this.minRaise.Reset();
             var playerIndex = gameRoundType == GameRoundType.PreFlop
                 ? this.initialPlayerIndex
                 : 1;
@@ -112,7 +105,7 @@
                             this.Pot,
                             player.PlayerMoney.CurrentRoundBet,
                             maxMoneyPerPlayer,
-                            this.MinRaise(maxMoneyPerPlayer, player.PlayerMoney.CurrentRoundBet, player.Name),
+                            this.minRaise.Amount(player.Name),
                             this.MainPot,
                             this.SidePots));
 
@@ -128,6 +121,7 @@
                     }
                 }
 
+                this.minRaise.Update(player.Name, maxMoneyPerPlayer, player.PlayerMoney.CurrentRoundBet);
                 player.PlayerMoney.ShouldPlayInRound = false;
                 playerIndex++;
             }
@@ -182,55 +176,6 @@
             {
                 group.First().First().PlayerMoney.NormalizeBets(group.ElementAt(1).First().PlayerMoney.CurrentRoundBet);
             }
-        }
-
-        private int MinRaise(int maxMoneyPerPlayer, int currentRoundBet, string currentPlayerName)
-        {
-            /*
-             * Examples:
-             * 1. SB->5$; BB->10$; UTG->raise 35$; MP->minimum raise=60$ (35$ + 25$)
-             * 2. SB->5$; BB->10$; UTG->raise 35$; MP->re-raise 150$; CO->call 150$; BTN->minimum raise=265$ (150$ + 115$)
-             * 3. SB->5$; BB->10$; UTG->raise 12$(ALL-IN); MP->minimum raise=22$ (12$ + 10$)
-            */
-
-            if (maxMoneyPerPlayer == 0)
-            {
-                // Start postflop. Players did not bet.
-                this.lastRoundBet = 0;
-                this.lastStepBet = 2 * this.smallBlind; // big blind
-                this.aggressorName = string.Empty;
-            }
-
-            if (maxMoneyPerPlayer > this.lastRoundBet)
-            {
-                if (this.lastRoundBet + this.lastStepBet <= maxMoneyPerPlayer)
-                {
-                    // full raise
-                    this.lastStepBet = maxMoneyPerPlayer - this.lastRoundBet;
-                    this.lastRoundBet = maxMoneyPerPlayer;
-                    this.aggressorName = this.RoundBets.Last().PlayerName;
-                }
-                else
-                {
-                    /*
-                     * For example, we are sitting on CO
-                     * SB->5$; BB->10$; UTG->raise 35$; MP->re-raise 37$(ALL-IN); CO->minimum raise = 62$ (37$ + 25$)
-                    */
-                    this.lastRoundBet = maxMoneyPerPlayer;
-                }
-            }
-
-            if (this.aggressorName == currentPlayerName)
-            {
-                /*
-                 * SB->5$; BB->10$; BTN->raise 32$; SB->re-raise 34$(ALL-IN); BB->call 34$; BTN->minimum raise is not possible
-                 * Since no players completed a full raise over BTN's initial raise,
-                 * neither BTN nor BB are allowed to re-raise here. Their only options are to call the 34$, or fold.
-                */
-                return -1;
-            }
-
-            return this.lastStepBet;
         }
     }
 }

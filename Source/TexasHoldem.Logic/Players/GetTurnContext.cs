@@ -45,6 +45,8 @@
 
         public bool CanCheck => this.MyMoneyInTheRound == this.CurrentMaxBet;
 
+        public bool CanRaise => this.MinRaise > 0 && this.MoneyLeft > this.MoneyToCall;
+
         public int MoneyToCall
         {
             get
@@ -65,26 +67,6 @@
         public bool IsAllIn => this.MoneyLeft <= 0;
 
         public int MinRaise { get; }
-
-        public ICollection<PlayerActionType> AvailablePlayerOptions
-        {
-            get
-            {
-                if (this.MinRaise == -1 || this.MoneyToCall >= this.MoneyLeft)
-                {
-                    return new List<PlayerActionType> { PlayerActionType.Fold, PlayerActionType.CheckCall };
-                }
-                else
-                {
-                    return new List<PlayerActionType>
-                    {
-                        PlayerActionType.Fold,
-                        PlayerActionType.CheckCall,
-                        PlayerActionType.Raise
-                    };
-                }
-            }
-        }
 
         public Pot MainPot { get; }
 

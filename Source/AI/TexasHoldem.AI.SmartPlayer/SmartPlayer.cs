@@ -36,7 +36,7 @@
                     }
                 }
 
-                var isRaiseOptionAvailable = context.AvailablePlayerOptions.Contains(PlayerActionType.Raise);
+                var isRaiseOptionAvailable = context.CanRaise;
                 if (playHand == CardValuationType.Risky && isRaiseOptionAvailable)
                 {
                     var factor = RandomProvider.Next(1, 4);

@@ -24,12 +24,12 @@
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentException))]
         public void CardSuitToFriendlyStringShouldThrowAnExceptionWhenCalledOnAnInvalidValue()
         {
             var cardSuits = Enum.GetValues(typeof(CardSuit));
             var cardSuit = cardSuits.OfType<CardSuit>().Max() + 1;
-            cardSuit.ToFriendlyString();
+
+            Assert.Throws<ArgumentException>(() => cardSuit.ToFriendlyString());
         }
 
         [Test]
@@ -45,12 +45,12 @@
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentException))]
         public void CardTypeToFriendlyStringShouldThrowAnExceptionWhenCalledOnAnInvalidValue()
         {
             var cardTypes = Enum.GetValues(typeof(CardType));
             var cardType = cardTypes.OfType<CardType>().Max() + 1;
-            cardType.ToFriendlyString();
+
+            Assert.Throws<ArgumentException>(() => cardType.ToFriendlyString());
         }
     }
 }

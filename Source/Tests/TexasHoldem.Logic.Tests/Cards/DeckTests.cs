@@ -35,13 +35,14 @@
         }
 
         [Test]
-        [ExpectedException(typeof(InternalGameException))]
         public void GetNextCardShouldThrowExceptionWhenCalled53Times()
         {
             IDeck deck = new Deck();
             for (var i = 0; i < 53; i++)
             {
-                deck.GetNextCard();
+                //deck.GetNextCard();
+
+                Assert.Throws<InternalGameException>(() => deck.GetNextCard());
             }
         }
     }

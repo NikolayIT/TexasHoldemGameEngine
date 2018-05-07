@@ -7,7 +7,7 @@
 
     public static class Program
     {
-        private const string ProgramName = "TexasHoldem.UI.Console (c) 2015";
+        private const string ProgramName = "TexasHoldem.UI.Console (c) 2018";
         private const int GameHeight = 12;
         private const int GameWidth = 66;
 

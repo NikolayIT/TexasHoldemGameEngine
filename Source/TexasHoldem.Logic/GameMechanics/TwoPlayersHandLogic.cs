@@ -32,7 +32,7 @@
             this.communityCards = new List<Card>(5);
             this.bettingLogic = new TwoPlayersBettingLogic(this.players, smallBlind);
             this.showdownCards = new Dictionary<string, ICollection<Card>>();
-    }
+        }
 
         public void Play()
         {

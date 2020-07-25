@@ -127,7 +127,8 @@
                 var smallBlind = SmallBlinds[0];
                 // Players are shifted in order of priority to make a move
                 shifted = shifted.WithMoney().ToList();
-                ShiftPlayers();
+                shifted.Add(shifted.First());
+                shifted.RemoveAt(0);
 
                 // Rotate players
                 IHandLogic hand = new HandLogic(shifted, this.HandsPlayed, smallBlind);
@@ -135,13 +136,6 @@
                 hand.Play();
 
                 this.Rebuy();
-
-            }
-
-            void ShiftPlayers()
-            {
-                shifted.Add(shifted.First());
-                shifted.RemoveAt(0);
             }
         }
     }

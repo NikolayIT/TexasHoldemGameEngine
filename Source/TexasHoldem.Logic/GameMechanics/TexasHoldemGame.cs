@@ -92,7 +92,7 @@
 
             this.PlayGame();
 
-            var winner = this.allPlayers.FirstOrDefault(x => x.PlayerMoney.Money > 0);
+            var winner = this.allPlayers.WithMoney().FirstOrDefault();
             foreach (var player in this.allPlayers)
             {
                 player.EndGame(new EndGameContext(winner.Name));
@@ -118,17 +118,16 @@
             var shifted = this.allPlayers.ToList();
 
             // While at least two players have money
-            while (this.allPlayers.Count(x => x.PlayerMoney.Money > 0) > 1)
+            while (this.allPlayers.WithMoney().Count() > 1)
             {
                 this.HandsPlayed++;
 
                 // Every 10 hands the blind increases
                 // var smallBlind = SmallBlinds[(this.HandsPlayed - 1) / 10];
                 var smallBlind = SmallBlinds[0];
-
                 // Players are shifted in order of priority to make a move
-                shifted.Add(shifted.First());
-                shifted.RemoveAt(0);
+                shifted = shifted.WithMoney().ToList();
+                ShiftPlayers();
 
                 // Rotate players
                 IHandLogic hand = new HandLogic(shifted, this.HandsPlayed, smallBlind);
@@ -136,6 +135,13 @@
                 hand.Play();
 
                 this.Rebuy();
+
+            }
+
+            void ShiftPlayers()
+            {
+                shifted.Add(shifted.First());
+                shifted.RemoveAt(0);
             }
         }
     }

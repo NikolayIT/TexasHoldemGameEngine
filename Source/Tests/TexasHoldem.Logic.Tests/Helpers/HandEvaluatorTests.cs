@@ -674,7 +674,7 @@
             IHandEvaluator handEvaluator = new HandEvaluator();
             var bestHand = handEvaluator.GetBestHand(playerCards.Shuffle().ToList());
             Assert.Equal(expectedHandRankType, bestHand.RankType);
-            Assert.Equal(expectedBestHandCards, bestHand.Cards);
+            CollectionsAssert.SameElements(expectedBestHandCards, bestHand.Cards);
         }
     }
 }

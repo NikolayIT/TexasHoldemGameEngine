@@ -30,7 +30,7 @@
                 cards.Add(deck.GetNextCard());
             }
 
-            Assert.Equal(Deck.AllCards, cards);
+            CollectionsAssert.SameElements(Deck.AllCards, cards);
         }
 
         [Fact]

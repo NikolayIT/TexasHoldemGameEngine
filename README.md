@@ -2,10 +2,10 @@
 
 Texas Hold 'em Poker Game Engine
 
-### Build status
+## Build status
 
-[![Build status](https://ci.appveyor.com/api/projects/status/0yv04slssjxul3u7?svg=true)](https://ci.appveyor.com/project/NikolayIT/texasholdemgameengine)
+[![Build Status](https://nikolayit.visualstudio.com/TexasHoldemGameEngine/_apis/build/status/NikolayIT.TexasHoldemGameEngine?branchName=master)](https://nikolayit.visualstudio.com/TexasHoldemGameEngine/_build/latest?definitionId=18&branchName=master)
 
-### NuGet
+## NuGet
 
-https://www.nuget.org/packages/TexasHoldemGameEngine
+<https://www.nuget.org/packages/TexasHoldemGameEngine>

@@ -13,8 +13,8 @@
         /// <summary>
         /// Finds the best possible hand given a player's cards and all revealed comunity cards.
         /// </summary>
-        /// <param name="cards">A player's cards + all revealed comunity cards (at lesat 5 in total)</param>
-        /// <returns>Returns an object of type BestHand</returns>
+        /// <param name="cards">A player's cards + all revealed comunity cards (at lesat 5 in total).</param>
+        /// <returns>Returns an object of type BestHand.</returns>
         public BestHand GetBestHand(IEnumerable<Card> cards)
         {
             var cardSuitCounts = new int[(int)CardSuit.Spade + 1];
@@ -61,7 +61,7 @@
                                         bestFourOfAKind,
                                         bestFourOfAKind,
                                         bestFourOfAKind,
-                                        cards.Where(x => x.Type != bestFourOfAKind).Max(x => x.Type)
+                                        cards.Where(x => x.Type != bestFourOfAKind).Max(x => x.Type),
                                     };
 
                 return new BestHand(HandRankType.FourOfAKind, bestCards);
@@ -128,7 +128,7 @@
                                         pairTypes[1],
                                         pairTypes[1],
                                         cards.Where(x => x.Type != pairTypes[0] && x.Type != pairTypes[1])
-                                            .Max(x => x.Type)
+                                            .Max(x => x.Type),
                                     };
                 return new BestHand(HandRankType.TwoPairs, bestCards);
             }

@@ -23,7 +23,7 @@
             Assert.Equal(1337, value);
         }
 
-        [Fact ]
+        [Fact]
         public void NextShouldReturnRandomValues()
         {
             var randomNumbers = new Dictionary<int, int>();

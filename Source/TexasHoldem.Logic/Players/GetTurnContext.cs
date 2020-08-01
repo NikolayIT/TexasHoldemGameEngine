@@ -1,6 +1,7 @@
 ﻿namespace TexasHoldem.Logic.Players
 {
     using System.Collections.Generic;
+
     using TexasHoldem.Logic.GameMechanics;
 
     public class GetTurnContext : IGetTurnContext

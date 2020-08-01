@@ -8,6 +8,20 @@
     <ProjectReference Include="..\..\TexasHoldem.Logic\TexasHoldem.Logic.csproj" />
   </ItemGroup>
 
+  <PropertyGroup>
+    <CodeAnalysisRuleSet>..\..\Rules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <AdditionalFiles Include="..\..\stylecop.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.205">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
   <ItemGroup>
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
       <_Parameter1>TexasHoldem.Tests.GameSimulations</_Parameter1>

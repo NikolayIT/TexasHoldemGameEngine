@@ -56,7 +56,7 @@
                            FirstPlayerWins = firstPlayerWins,
                            SecondPlayerWins = secondPlayerWins,
                            HandsPlayed = handsPlayed,
-                           SimulationDuration = simulationDuration
+                           SimulationDuration = simulationDuration,
                        };
         }
 

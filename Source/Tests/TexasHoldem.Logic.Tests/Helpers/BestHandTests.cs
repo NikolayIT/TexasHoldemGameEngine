@@ -23,15 +23,15 @@
                             {
                                 CardType.Ace, CardType.King,
                                 CardType.Seven, CardType.Six,
-                                CardType.Five
+                                CardType.Five,
                             },
                         HandRankType.Pair,
                         new[]
                             {
                                 CardType.Ace, CardType.Ace,
                                 CardType.Seven, CardType.Six,
-                                CardType.Five
-                            }
+                                CardType.Five,
+                            },
                     },
                 new object[]
                     {
@@ -41,16 +41,16 @@
                             {
                                 CardType.King, CardType.Queen,
                                 CardType.Jack, CardType.Ten,
-                                CardType.Nine
+                                CardType.Nine,
                             },
                         HandRankType.Flush,
                         new[]
                             {
                                 CardType.Ace, CardType.King,
                                 CardType.Queen, CardType.Jack,
-                                CardType.Nine
-                            }
-                    }
+                                CardType.Nine,
+                            },
+                    },
             };
 
         public static readonly IEnumerable<object[]> BothHaveHighCardCases =
@@ -64,15 +64,15 @@
                             {
                                 CardType.Ace, CardType.King,
                                 CardType.Queen, CardType.Jack,
-                                CardType.Nine
+                                CardType.Nine,
                             },
                         HandRankType.HighCard,
                         new[]
                             {
                                 CardType.Ace, CardType.King,
                                 CardType.Queen, CardType.Jack,
-                                CardType.Nine
-                            }
+                                CardType.Nine,
+                            },
                     },
                 new object[]
                     {
@@ -82,15 +82,15 @@
                             {
                                 CardType.Ace, CardType.King,
                                 CardType.Queen, CardType.Jack,
-                                CardType.Nine
+                                CardType.Nine,
                             },
                         HandRankType.HighCard,
                         new[]
                             {
                                 CardType.Ace, CardType.King,
                                 CardType.Queen, CardType.Jack,
-                                CardType.Eight
-                            }
+                                CardType.Eight,
+                            },
                     },
                 new object[]
                     {
@@ -100,15 +100,15 @@
                             {
                                 CardType.Ace, CardType.King,
                                 CardType.Queen, CardType.Jack,
-                                CardType.Two
+                                CardType.Two,
                             },
                         HandRankType.HighCard,
                         new[]
                             {
                                 CardType.King, CardType.Queen,
                                 CardType.Jack, CardType.Ten,
-                                CardType.Three
-                            }
+                                CardType.Three,
+                            },
                     },
                 new object[]
                     {
@@ -118,16 +118,16 @@
                             {
                                 CardType.Ace, CardType.King,
                                 CardType.Queen, CardType.Jack,
-                                CardType.Two
+                                CardType.Two,
                             },
                         HandRankType.HighCard,
                         new[]
                             {
                                 CardType.Ace, CardType.King,
                                 CardType.Queen, CardType.Jack,
-                                CardType.Three
-                            }
-                    }
+                                CardType.Three,
+                            },
+                    },
             };
 
         public static readonly IEnumerable<object[]> BothHavePairCases =
@@ -140,14 +140,14 @@
                         new[]
                             {
                                 CardType.Ace, CardType.King, CardType.King,
-                                CardType.Queen, CardType.Jack
+                                CardType.Queen, CardType.Jack,
                             },
                         HandRankType.Pair,
                         new[]
                             {
                                 CardType.Ace, CardType.King, CardType.King,
                                 CardType.Queen, CardType.Jack,
-                            }
+                            },
                     },
                 new object[]
                     {
@@ -156,14 +156,14 @@
                         new[]
                             {
                                 CardType.Ace, CardType.Ace, CardType.Four,
-                                CardType.Three, CardType.Two
+                                CardType.Three, CardType.Two,
                             },
                         HandRankType.Pair,
                         new[]
                             {
                                 CardType.Two, CardType.Two, CardType.Ace,
-                                CardType.King, CardType.Jack
-                            }
+                                CardType.King, CardType.Jack,
+                            },
                     },
                 new object[]
                     {
@@ -172,14 +172,14 @@
                         new[]
                             {
                                 CardType.Ace, CardType.King, CardType.King,
-                                CardType.Queen, CardType.Jack
+                                CardType.Queen, CardType.Jack,
                             },
                         HandRankType.Pair,
                         new[]
                             {
                                 CardType.Ace, CardType.King, CardType.King,
-                                CardType.Queen, CardType.Ten
-                            }
+                                CardType.Queen, CardType.Ten,
+                            },
                     },
                 new object[]
                     {
@@ -196,8 +196,8 @@
                             {
                                 CardType.King, CardType.King,
                                 CardType.Queen, CardType.Jack, CardType.Two,
-                            }
-                    }
+                            },
+                    },
             };
 
         public static readonly IEnumerable<object[]> BothHaveTwoPairsCases =
@@ -217,7 +217,7 @@
                             {
                                 CardType.Ace, CardType.Ace,
                                 CardType.King, CardType.King, CardType.Queen,
-                            }
+                            },
                     },
                 new object[]
                     {
@@ -233,7 +233,7 @@
                             {
                                 CardType.Ace, CardType.King,
                                 CardType.King, CardType.Queen, CardType.Queen,
-                            }
+                            },
                     },
                 new object[]
                     {
@@ -249,7 +249,7 @@
                             {
                                 CardType.Ace, CardType.Ace,
                                 CardType.King, CardType.Queen, CardType.Queen,
-                            }
+                            },
                     },
                 new object[]
                     {
@@ -258,14 +258,14 @@
                         new[]
                             {
                                 CardType.King, CardType.King,
-                                CardType.Eight, CardType.Eight, CardType.Two
+                                CardType.Eight, CardType.Eight, CardType.Two,
                             },
                         HandRankType.TwoPairs,
                         new[]
                             {
                                 CardType.Queen, CardType.Queen,
-                                CardType.Eight, CardType.Eight, CardType.Two
-                            }
+                                CardType.Eight, CardType.Eight, CardType.Two,
+                            },
                     },
                 new object[]
                     {
@@ -274,14 +274,14 @@
                         new[]
                             {
                                 CardType.King, CardType.King,
-                                CardType.Seven, CardType.Seven, CardType.Two
+                                CardType.Seven, CardType.Seven, CardType.Two,
                             },
                         HandRankType.TwoPairs,
                         new[]
                             {
                                 CardType.Queen, CardType.Queen,
-                                CardType.Jack, CardType.Jack, CardType.Two
-                            }
+                                CardType.Jack, CardType.Jack, CardType.Two,
+                            },
                     },
                 new object[]
                     {
@@ -290,14 +290,14 @@
                         new[]
                             {
                                 CardType.Ace, CardType.Ace,
-                                CardType.King, CardType.King, CardType.Two
+                                CardType.King, CardType.King, CardType.Two,
                             },
                         HandRankType.TwoPairs,
                         new[]
                             {
                                 CardType.Ace, CardType.Ace,
-                                CardType.Queen, CardType.Queen, CardType.Two
-                            }
+                                CardType.Queen, CardType.Queen, CardType.Two,
+                            },
                     },
                 new object[]
                     {
@@ -306,14 +306,14 @@
                         new[]
                             {
                                 CardType.Ace, CardType.Ace,
-                                CardType.King, CardType.King, CardType.Queen
+                                CardType.King, CardType.King, CardType.Queen,
                             },
                         HandRankType.TwoPairs,
                         new[]
                             {
                                 CardType.Ace, CardType.Ace,
-                                CardType.King, CardType.King, CardType.Jack
-                            }
+                                CardType.King, CardType.King, CardType.Jack,
+                            },
                     },
                 new object[]
                     {
@@ -322,14 +322,14 @@
                         new[]
                             {
                                 CardType.Ace, CardType.Ace,
-                                CardType.King, CardType.King, CardType.Nine
+                                CardType.King, CardType.King, CardType.Nine,
                             },
                         HandRankType.TwoPairs,
                         new[]
                             {
                                 CardType.Ace, CardType.Ace,
-                                CardType.King, CardType.King, CardType.Jack
-                            }
+                                CardType.King, CardType.King, CardType.Jack,
+                            },
                     },
                 new object[]
                     {
@@ -338,14 +338,14 @@
                         new[]
                             {
                                 CardType.Ace, CardType.Queen,
-                                CardType.Queen, CardType.Jack, CardType.Jack
+                                CardType.Queen, CardType.Jack, CardType.Jack,
                             },
                         HandRankType.TwoPairs,
                         new[]
                             {
                                 CardType.King, CardType.Queen,
-                                CardType.Queen, CardType.Jack, CardType.Jack
-                            }
+                                CardType.Queen, CardType.Jack, CardType.Jack,
+                            },
                     },
                 new object[]
                     {
@@ -354,15 +354,15 @@
                         new[]
                             {
                                 CardType.Ace, CardType.Ace,
-                                CardType.Queen, CardType.Two, CardType.Two
+                                CardType.Queen, CardType.Two, CardType.Two,
                             },
                         HandRankType.TwoPairs,
                         new[]
                             {
                                 CardType.Ace, CardType.Ace,
-                                CardType.Seven, CardType.Two, CardType.Two
-                            }
-                    }
+                                CardType.Seven, CardType.Two, CardType.Two,
+                            },
+                    },
             };
 
         public static readonly IEnumerable<object[]> BothHaveThreeOfAKindCases =
@@ -375,14 +375,14 @@
                         new[]
                             {
                                 CardType.Ace, CardType.Ace,
-                                CardType.Ace, CardType.Five, CardType.Two
+                                CardType.Ace, CardType.Five, CardType.Two,
                             },
                         HandRankType.ThreeOfAKind,
                         new[]
                             {
                                 CardType.Ace, CardType.Ace,
-                                CardType.Ace, CardType.Five, CardType.Two
-                            }
+                                CardType.Ace, CardType.Five, CardType.Two,
+                            },
                     },
                 new object[]
                     {
@@ -391,14 +391,14 @@
                         new[]
                             {
                                 CardType.Ace, CardType.King,
-                                CardType.King, CardType.King, CardType.Two
+                                CardType.King, CardType.King, CardType.Two,
                             },
                         HandRankType.ThreeOfAKind,
                         new[]
                             {
                                 CardType.Ace, CardType.King,
-                                CardType.King, CardType.King, CardType.Two
-                            }
+                                CardType.King, CardType.King, CardType.Two,
+                            },
                     },
                 new object[]
                     {
@@ -407,14 +407,14 @@
                         new[]
                             {
                                 CardType.Ace, CardType.King,
-                                CardType.Queen, CardType.Queen, CardType.Queen
+                                CardType.Queen, CardType.Queen, CardType.Queen,
                             },
                         HandRankType.ThreeOfAKind,
                         new[]
                             {
                                 CardType.Ace, CardType.King,
-                                CardType.Queen, CardType.Queen, CardType.Queen
-                            }
+                                CardType.Queen, CardType.Queen, CardType.Queen,
+                            },
                     },
                 new object[]
                     {
@@ -423,14 +423,14 @@
                         new[]
                             {
                                 CardType.Ace, CardType.Ace,
-                                CardType.Ace, CardType.Five, CardType.Two
+                                CardType.Ace, CardType.Five, CardType.Two,
                             },
                         HandRankType.ThreeOfAKind,
                         new[]
                             {
                                 CardType.King, CardType.King,
-                                CardType.King, CardType.Five, CardType.Two
-                            }
+                                CardType.King, CardType.Five, CardType.Two,
+                            },
                     },
                 new object[]
                     {
@@ -439,14 +439,14 @@
                         new[]
                             {
                                 CardType.Ace, CardType.King,
-                                CardType.King, CardType.King, CardType.Two
+                                CardType.King, CardType.King, CardType.Two,
                             },
                         HandRankType.ThreeOfAKind,
                         new[]
                             {
                                 CardType.Ace, CardType.Queen,
-                                CardType.Queen, CardType.Queen, CardType.Two
-                            }
+                                CardType.Queen, CardType.Queen, CardType.Two,
+                            },
                     },
                 new object[]
                     {
@@ -455,14 +455,14 @@
                         new[]
                             {
                                 CardType.Ace, CardType.King,
-                                CardType.Queen, CardType.Queen, CardType.Queen
+                                CardType.Queen, CardType.Queen, CardType.Queen,
                             },
                         HandRankType.ThreeOfAKind,
                         new[]
                             {
                                 CardType.Ace, CardType.King,
-                                CardType.Jack, CardType.Jack, CardType.Jack
-                            }
+                                CardType.Jack, CardType.Jack, CardType.Jack,
+                            },
                     },
                 new object[]
                     {
@@ -471,14 +471,14 @@
                         new[]
                             {
                                 CardType.Ace, CardType.Ace,
-                                CardType.Ace, CardType.Four, CardType.Three
+                                CardType.Ace, CardType.Four, CardType.Three,
                             },
                         HandRankType.ThreeOfAKind,
                         new[]
                             {
                                 CardType.Ace, CardType.Ace,
-                                CardType.Ace, CardType.Four, CardType.Two
-                            }
+                                CardType.Ace, CardType.Four, CardType.Two,
+                            },
                     },
                 new object[]
                     {
@@ -487,14 +487,14 @@
                         new[]
                             {
                                 CardType.Ace, CardType.Ace,
-                                CardType.Ace, CardType.Five, CardType.Two
+                                CardType.Ace, CardType.Five, CardType.Two,
                             },
                         HandRankType.ThreeOfAKind,
                         new[]
                             {
                                 CardType.Ace, CardType.Ace,
-                                CardType.Ace, CardType.Four, CardType.Two
-                            }
+                                CardType.Ace, CardType.Four, CardType.Two,
+                            },
                     },
                 new object[]
                     {
@@ -503,14 +503,14 @@
                         new[]
                             {
                                 CardType.Ace, CardType.Queen,
-                                CardType.Queen, CardType.Queen, CardType.Two
+                                CardType.Queen, CardType.Queen, CardType.Two,
                             },
                         HandRankType.ThreeOfAKind,
                         new[]
                             {
                                 CardType.King, CardType.Queen,
-                                CardType.Queen, CardType.Queen, CardType.Two
-                            }
+                                CardType.Queen, CardType.Queen, CardType.Two,
+                            },
                     },
                 new object[]
                     {
@@ -519,14 +519,14 @@
                         new[]
                             {
                                 CardType.Ace, CardType.Queen,
-                                CardType.Queen, CardType.Queen, CardType.Three
+                                CardType.Queen, CardType.Queen, CardType.Three,
                             },
                         HandRankType.ThreeOfAKind,
                         new[]
                             {
                                 CardType.Ace, CardType.Queen,
-                                CardType.Queen, CardType.Queen, CardType.Two
-                            }
+                                CardType.Queen, CardType.Queen, CardType.Two,
+                            },
                     },
                 new object[]
                     {
@@ -535,14 +535,14 @@
                         new[]
                             {
                                 CardType.Ace, CardType.Jack,
-                                CardType.Three, CardType.Three, CardType.Three
+                                CardType.Three, CardType.Three, CardType.Three,
                             },
                         HandRankType.ThreeOfAKind,
                         new[]
                             {
                                 CardType.King, CardType.Jack,
-                                CardType.Three, CardType.Three, CardType.Three
-                            }
+                                CardType.Three, CardType.Three, CardType.Three,
+                            },
                     },
                 new object[]
                     {
@@ -551,15 +551,15 @@
                         new[]
                             {
                                 CardType.Ace, CardType.Jack,
-                                CardType.Three, CardType.Three, CardType.Three
+                                CardType.Three, CardType.Three, CardType.Three,
                             },
                         HandRankType.ThreeOfAKind,
                         new[]
                             {
                                 CardType.Ace, CardType.Ten,
-                                CardType.Three, CardType.Three, CardType.Three
-                            }
-                    }
+                                CardType.Three, CardType.Three, CardType.Three,
+                            },
+                    },
             };
 
         public static readonly IEnumerable<object[]> BothHaveStraightCases =
@@ -573,15 +573,15 @@
                             {
                                 CardType.Ace, CardType.King,
                                 CardType.Queen, CardType.Jack,
-                                CardType.Ten
+                                CardType.Ten,
                             },
                         HandRankType.Straight,
                         new[]
                             {
                                 CardType.Ace, CardType.King,
                                 CardType.Queen, CardType.Jack,
-                                CardType.Ten
-                            }
+                                CardType.Ten,
+                            },
                     },
                 new object[]
                     {
@@ -591,15 +591,15 @@
                             {
                                 CardType.Six, CardType.Five,
                                 CardType.Four, CardType.Three,
-                                CardType.Two
+                                CardType.Two,
                             },
                         HandRankType.Straight,
                         new[]
                             {
                                 CardType.Six, CardType.Five,
                                 CardType.Four, CardType.Three,
-                                CardType.Two
-                            }
+                                CardType.Two,
+                            },
                     },
                 new object[]
                     {
@@ -609,15 +609,15 @@
                             {
                                 CardType.Five, CardType.Four,
                                 CardType.Three, CardType.Two,
-                                CardType.Ace
+                                CardType.Ace,
                             },
                         HandRankType.Straight,
                         new[]
                             {
                                 CardType.Five, CardType.Four,
                                 CardType.Three, CardType.Two,
-                                CardType.Ace
-                            }
+                                CardType.Ace,
+                            },
                     },
                 new object[]
                     {
@@ -627,15 +627,15 @@
                             {
                                 CardType.Six, CardType.Five,
                                 CardType.Four, CardType.Three,
-                                CardType.Two
+                                CardType.Two,
                             },
                         HandRankType.Straight,
                         new[]
                             {
                                 CardType.Five, CardType.Four,
                                 CardType.Three, CardType.Two,
-                                CardType.Ace
-                            }
+                                CardType.Ace,
+                            },
                     },
                 new object[]
                     {
@@ -645,15 +645,15 @@
                             {
                                 CardType.Ace, CardType.King,
                                 CardType.Queen, CardType.Jack,
-                                CardType.Ten
+                                CardType.Ten,
                             },
                         HandRankType.Straight,
                         new[]
                             {
                                 CardType.Five, CardType.Four,
                                 CardType.Three, CardType.Two,
-                                CardType.Ace
-                            }
+                                CardType.Ace,
+                            },
                     },
                 new object[]
                     {
@@ -663,16 +663,16 @@
                             {
                                 CardType.Ace, CardType.King,
                                 CardType.Queen, CardType.Jack,
-                                CardType.Ten
+                                CardType.Ten,
                             },
                         HandRankType.Straight,
                         new[]
                             {
                                 CardType.King, CardType.Queen,
                                 CardType.Jack, CardType.Ten,
-                                CardType.Nine
-                            }
-                    }
+                                CardType.Nine,
+                            },
+                    },
             };
 
         public static readonly IEnumerable<object[]> BothHaveFlushCases =
@@ -685,14 +685,14 @@
                         new[]
                             {
                                 CardType.Ace, CardType.King, CardType.Ten,
-                                CardType.Eight, CardType.Two
+                                CardType.Eight, CardType.Two,
                             },
                         HandRankType.Flush,
                         new[]
                             {
                                 CardType.Ace, CardType.King, CardType.Nine,
-                                CardType.Eight, CardType.Five
-                            }
+                                CardType.Eight, CardType.Five,
+                            },
                     },
                 new object[]
                     {
@@ -701,15 +701,15 @@
                         new[]
                             {
                                 CardType.Ace, CardType.King, CardType.Ten,
-                                CardType.Eight, CardType.Two
+                                CardType.Eight, CardType.Two,
                             },
                         HandRankType.Flush,
                         new[]
                             {
                                 CardType.Ace, CardType.King, CardType.Ten,
-                                CardType.Eight, CardType.Two
-                            }
-                    }
+                                CardType.Eight, CardType.Two,
+                            },
+                    },
             };
 
         public static readonly IEnumerable<object[]> BothHaveFullHouseCases =
@@ -722,14 +722,14 @@
                         new[]
                             {
                                 CardType.Ace, CardType.Ace, CardType.Ace,
-                                CardType.King, CardType.King
+                                CardType.King, CardType.King,
                             },
                         HandRankType.FullHouse,
                         new[]
                             {
                                 CardType.Ace, CardType.Ace, CardType.Ace,
-                                CardType.King, CardType.King
-                            }
+                                CardType.King, CardType.King,
+                            },
                     },
                 new object[]
                     {
@@ -738,14 +738,14 @@
                         new[]
                             {
                                 CardType.Ace, CardType.Ace,
-                                CardType.King, CardType.King, CardType.King
+                                CardType.King, CardType.King, CardType.King,
                             },
                         HandRankType.FullHouse,
                         new[]
                             {
                                 CardType.Ace, CardType.Ace,
-                                CardType.King, CardType.King, CardType.King
-                            }
+                                CardType.King, CardType.King, CardType.King,
+                            },
                     },
                 new object[]
                     {
@@ -754,14 +754,14 @@
                         new[]
                             {
                                 CardType.Three, CardType.Three, CardType.Three,
-                                CardType.Ace, CardType.Ace
+                                CardType.Ace, CardType.Ace,
                             },
                         HandRankType.FullHouse,
                         new[]
                             {
                                 CardType.Two, CardType.Two, CardType.Two,
-                                CardType.Ace, CardType.Ace
-                            }
+                                CardType.Ace, CardType.Ace,
+                            },
                     },
                 new object[]
                     {
@@ -770,14 +770,14 @@
                         new[]
                             {
                                 CardType.Three, CardType.Three, CardType.Three,
-                                CardType.Four, CardType.Four
+                                CardType.Four, CardType.Four,
                             },
                         HandRankType.FullHouse,
                         new[]
                             {
                                 CardType.Two, CardType.Two, CardType.Two,
-                                CardType.Ace, CardType.Ace
-                            }
+                                CardType.Ace, CardType.Ace,
+                            },
                     },
             };
 
@@ -792,15 +792,15 @@
                             {
                                 CardType.Ace, CardType.Ace,
                                 CardType.Ace, CardType.Ace,
-                                CardType.King
+                                CardType.King,
                             },
                         HandRankType.FourOfAKind,
                         new[]
                             {
                                 CardType.Ace, CardType.Ace,
                                 CardType.Ace, CardType.Ace,
-                                CardType.King
-                            }
+                                CardType.King,
+                            },
                     },
                 new object[]
                     {
@@ -810,15 +810,15 @@
                             {
                                 CardType.Three, CardType.Two,
                                 CardType.Two, CardType.Two,
-                                CardType.Two
+                                CardType.Two,
                             },
                         HandRankType.FourOfAKind,
                         new[]
                             {
                                 CardType.Three, CardType.Two,
                                 CardType.Two, CardType.Two,
-                                CardType.Two
-                            }
+                                CardType.Two,
+                            },
                     },
                 new object[]
                     {
@@ -828,15 +828,15 @@
                             {
                                 CardType.Ace, CardType.Ace,
                                 CardType.Ace, CardType.Ace,
-                                CardType.Jack
+                                CardType.Jack,
                             },
                         HandRankType.FourOfAKind,
                         new[]
                             {
                                 CardType.King, CardType.King,
                                 CardType.King, CardType.King,
-                                CardType.Queen
-                            }
+                                CardType.Queen,
+                            },
                     },
                 new object[]
                     {
@@ -846,15 +846,15 @@
                             {
                                 CardType.Four, CardType.Three,
                                 CardType.Three, CardType.Three,
-                                CardType.Three
+                                CardType.Three,
                             },
                         HandRankType.FourOfAKind,
                         new[]
                             {
                                 CardType.Five, CardType.Two,
                                 CardType.Two, CardType.Two,
-                                CardType.Two
-                            }
+                                CardType.Two,
+                            },
                     },
                 new object[]
                     {
@@ -864,15 +864,15 @@
                             {
                                 CardType.Ace, CardType.Ace,
                                 CardType.Ace, CardType.Ace,
-                                CardType.King
+                                CardType.King,
                             },
                         HandRankType.FourOfAKind,
                         new[]
                             {
                                 CardType.Ace, CardType.Ace,
                                 CardType.Ace, CardType.Ace,
-                                CardType.Queen
-                            }
+                                CardType.Queen,
+                            },
                     },
                 new object[]
                     {
@@ -882,16 +882,16 @@
                             {
                                 CardType.Ace, CardType.Two,
                                 CardType.Two, CardType.Two,
-                                CardType.Two
+                                CardType.Two,
                             },
                         HandRankType.FourOfAKind,
                         new[]
                             {
                                 CardType.King, CardType.Two,
                                 CardType.Two, CardType.Two,
-                                CardType.Two
-                            }
-                    }
+                                CardType.Two,
+                            },
+                    },
             };
 
         public static readonly IEnumerable<object[]> BothHaveStraightFlushCases =
@@ -905,15 +905,15 @@
                             {
                                 CardType.Ace, CardType.King,
                                 CardType.Queen, CardType.Jack,
-                                CardType.Ten
+                                CardType.Ten,
                             },
                         HandRankType.StraightFlush,
                         new[]
                             {
                                 CardType.Ace, CardType.King,
                                 CardType.Queen, CardType.Jack,
-                                CardType.Ten
-                            }
+                                CardType.Ten,
+                            },
                     },
                 new object[]
                     {
@@ -923,15 +923,15 @@
                             {
                                 CardType.Ace, CardType.King,
                                 CardType.Queen, CardType.Jack,
-                                CardType.Ten
+                                CardType.Ten,
                             },
                         HandRankType.StraightFlush,
                         new[]
                             {
                                 CardType.King, CardType.Queen,
                                 CardType.Jack, CardType.Ten,
-                                CardType.Nine
-                            }
+                                CardType.Nine,
+                            },
                     },
                 new object[]
                     {
@@ -941,16 +941,16 @@
                             {
                                 CardType.Ace, CardType.King,
                                 CardType.Queen, CardType.Jack,
-                                CardType.Ten
+                                CardType.Ten,
                             },
                         HandRankType.StraightFlush,
                         new[]
                             {
                                 CardType.Five, CardType.Four,
                                 CardType.Three, CardType.Two,
-                                CardType.Ace
-                            }
-                    }
+                                CardType.Ace,
+                            },
+                    },
             };
 
         public enum ExpectedCompareResult
@@ -1012,7 +1012,7 @@
                                     CardType.Three,
                                     CardType.Four,
                                     CardType.Five,
-                                    CardType.Two
+                                    CardType.Two,
                                 };
             var bestHand = new BestHand(rankType, cardTypes);
             Assert.Equal(rankType, bestHand.RankType);

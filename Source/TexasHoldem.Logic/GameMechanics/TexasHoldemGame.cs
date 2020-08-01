@@ -12,7 +12,7 @@
             {
                 1, 2, 3, 5, 10, 15, 20, 25, 30, 40, 50, 60, 80, 100, 150, 200, 300,
                 400, 500, 600, 800, 1000, 1500, 2000, 3000, 4000, 5000, 6000, 8000,
-                10000, 15000, 20000, 30000, 40000, 50000, 60000, 80000, 100000
+                10000, 15000, 20000, 30000, 40000, 50000, 60000, 80000, 100000,
             };
 
         private readonly ICollection<InternalPlayer> allPlayers;
@@ -125,6 +125,7 @@
                 // Every 10 hands the blind increases
                 // var smallBlind = SmallBlinds[(this.HandsPlayed - 1) / 10];
                 var smallBlind = SmallBlinds[0];
+
                 // Players are shifted in order of priority to make a move
                 shifted = shifted.WithMoney().ToList();
                 shifted.Add(shifted.First());

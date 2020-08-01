@@ -10,6 +10,6 @@
         Flush = 5000,
         FullHouse = 6000,
         FourOfAKind = 7000,
-        StraightFlush = 8000
+        StraightFlush = 8000,
     }
 }

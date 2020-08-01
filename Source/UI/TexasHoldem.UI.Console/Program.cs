@@ -10,24 +10,24 @@
 
     public static class Program
     {
-        private const string ProgramName = "TexasHoldem.UI.Console (c) 2015-2018";
+        private const string ProgramName = "TexasHoldem.UI.Console (c) 2015-2020";
 
         private const int GameWidth = 66;
 
         private const int NumberOfCommonRows = 3; // place for community cards, pot, main pot, side pots
 
-        private static List<IPlayer> players = new List<IPlayer>();
+        private static readonly List<IPlayer> Players = new List<IPlayer>();
 
         public static void Main()
         {
-            players.Add(new DummyPlayer());
-            players.Add(new SmartPlayer());
-            players.Add(new ConsolePlayer((6 * players.Count) + NumberOfCommonRows));
-            players.Add(new DummyPlayer());
-            players.Add(new SmartPlayer());
-            players.Add(new DummyPlayer());
+            Players.Add(new DummyPlayer());
+            Players.Add(new SmartPlayer());
+            Players.Add(new ConsolePlayer((6 * Players.Count) + NumberOfCommonRows));
+            Players.Add(new DummyPlayer());
+            Players.Add(new SmartPlayer());
+            Players.Add(new DummyPlayer());
 
-            var gameHeight = (6 * players.Count) + NumberOfCommonRows;
+            var gameHeight = (6 * Players.Count) + NumberOfCommonRows;
             Table(gameHeight);
 
             var game = Game();
@@ -38,9 +38,9 @@
         {
             var list = new List<IPlayer>();
 
-            for (int i = 0; i < players.Count; i++)
+            for (int i = 0; i < Players.Count; i++)
             {
-                list.Add(new ConsoleUiDecorator(players[i], (6 * i) + NumberOfCommonRows, GameWidth, 1));
+                list.Add(new ConsoleUiDecorator(Players[i], (6 * i) + NumberOfCommonRows, GameWidth, 1));
             }
 
             return new TexasHoldemGame(list);

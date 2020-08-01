@@ -20,7 +20,7 @@
                 { 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 0, 0 }, // A5o K5o Q5o J5o T5o 95o 85o 75o 65o 55 54s 53s 52s
                 { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0 }, // A4o K4o Q4o J4o T4o 94o 84o 74o 64o 54o 44 43s 42s
                 { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0 }, // A3o K3o Q3o J3o T3o 93o 83o 73o 63o 53o 43o 33 32s
-                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 } // A2o K2o Q2o J2o T2o 92o 82o 72o 62o 52o 42o 32o 22
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 }, // A2o K2o Q2o J2o T2o 92o 82o 72o 62o 52o 42o 32o 22
             };
 
         // http://www.rakebackpros.net/texas-holdem-starting-hands/

@@ -23,7 +23,7 @@
                                                                              CardType.Jack,
                                                                              CardType.Queen,
                                                                              CardType.King,
-                                                                             CardType.Ace
+                                                                             CardType.Ace,
                                                                          };
 
         private static readonly IEnumerable<CardSuit> AllCardSuits = new List<CardSuit>
@@ -31,7 +31,7 @@
                                                                              CardSuit.Club,
                                                                              CardSuit.Diamond,
                                                                              CardSuit.Heart,
-                                                                             CardSuit.Spade
+                                                                             CardSuit.Spade,
                                                                          };
 
         private readonly IList<Card> listOfCards;

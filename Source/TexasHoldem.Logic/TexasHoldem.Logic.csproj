@@ -1,104 +1,13 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{BCF99E8B-2025-444F-83C7-24542FCF33DF}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TexasHoldem.Logic</RootNamespace>
-    <AssemblyName>TexasHoldem.Logic</AssemblyName>
-    <DefaultLanguage>en-US</DefaultLanguage>
-    <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <TargetFrameworkProfile>
-    </TargetFrameworkProfile>
-    <TargetFrameworkVersion>v5.0</TargetFrameworkVersion>
+    <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>..\Rules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>..\Rules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
+
   <ItemGroup>
-    <None Include="project.json" />
-    <!-- A reference to the entire .NET Framework is automatically included -->
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+      <_Parameter1>$(AssemblyName).Tests</_Parameter1>
+    </AssemblyAttribute>
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Cards\Card.cs" />
-    <Compile Include="Cards\CardExtensions.cs" />
-    <Compile Include="Cards\CardSuit.cs" />
-    <Compile Include="Cards\CardType.cs" />
-    <Compile Include="Cards\Deck.cs" />
-    <Compile Include="Cards\IDeck.cs" />
-    <Compile Include="Extensions\EnumerableExtensions.cs" />
-    <Compile Include="Extensions\RandomProvider.cs" />
-    <Compile Include="GameMechanics\BettingLogic.cs" />
-    <Compile Include="GameMechanics\HandLogic.cs" />
-    <Compile Include="GameMechanics\InternalPlayerHelper.cs" />
-    <Compile Include="GameMechanics\MinRaise.cs" />
-    <Compile Include="GameMechanics\TexasHoldemGame.cs" />
-    <Compile Include="GameMechanics\IHandLogic.cs" />
-    <Compile Include="GameMechanics\InternalPlayerMoney.cs" />
-    <Compile Include="GameMechanics\ITexasHoldemGame.cs" />
-    <Compile Include="GameRoundType.cs" />
-    <Compile Include="Helpers\BestHand.cs" />
-    <Compile Include="Helpers\HandEvaluator.cs" />
-    <Compile Include="HandRankType.cs" />
-    <Compile Include="Helpers\Helpers.cs" />
-    <Compile Include="Helpers\IHandEvaluator.cs" />
-    <Compile Include="IDeepCloneable{T}.cs" />
-    <Compile Include="InternalGameException.cs" />
-    <Compile Include="Players\BasePlayer.cs" />
-    <Compile Include="Players\EndGameContext.cs" />
-    <Compile Include="GameMechanics\InternalPlayer.cs" />
-    <Compile Include="Players\EndHandContext.cs" />
-    <Compile Include="Players\EndRoundContext.cs" />
-    <Compile Include="Players\IEndGameContext.cs" />
-    <Compile Include="Players\IEndHandContext.cs" />
-    <Compile Include="Players\IEndRoundContext.cs" />
-    <Compile Include="Players\IGetTurnContext.cs" />
-    <Compile Include="Players\IPlayer.cs" />
-    <Compile Include="Players\GetTurnContext.cs" />
-    <Compile Include="Players\IPostingBlindContext.cs" />
-    <Compile Include="Players\IStartGameContext.cs" />
-    <Compile Include="Players\IStartHandContext.cs" />
-    <Compile Include="Players\IStartRoundContext.cs" />
-    <Compile Include="Players\PlayerActionAndName.cs" />
-    <Compile Include="Players\PlayerDecorator.cs" />
-    <Compile Include="Players\PlayerAction.cs" />
-    <Compile Include="Players\PlayerActionType.cs" />
-    <Compile Include="Players\PostingBlindContext.cs" />
-    <Compile Include="Players\StartGameContext.cs" />
-    <Compile Include="Players\StartHandContext.cs" />
-    <Compile Include="Players\StartRoundContext.cs" />
-    <Compile Include="GameMechanics\Pot.cs" />
-    <Compile Include="GameMechanics\PotCreator.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup />
-  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+
 </Project>

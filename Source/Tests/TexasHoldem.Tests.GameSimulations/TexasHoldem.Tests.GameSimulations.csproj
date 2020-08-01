@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>TexasHoldem.Tests.GameSimulations</RootNamespace>
     <AssemblyName>TexasHoldem.Tests.GameSimulations</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
@@ -76,20 +76,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\AI\TexasHoldem.AI.DummyPlayer\TexasHoldem.AI.DummyPlayer.csproj">
-      <Project>{8F8A872B-A022-4085-AABC-D3BC12B7C1D8}</Project>
-      <Name>TexasHoldem.AI.DummyPlayer</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\AI\TexasHoldem.AI.SmartPlayer\TexasHoldem.AI.SmartPlayer.csproj">
-      <Project>{E7BA8017-D56E-485C-81D1-A1CCDAAE624F}</Project>
-      <Name>TexasHoldem.AI.SmartPlayer</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\TexasHoldem.Logic\TexasHoldem.Logic.csproj">
-      <Project>{BCF99E8B-2025-444F-83C7-24542FCF33DF}</Project>
-      <Name>TexasHoldem.Logic</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6">
       <Visible>False</Visible>
       <ProductName>Microsoft .NET Framework 4.6 %28x86 and x64%29</ProductName>
@@ -104,6 +90,20 @@
   <ItemGroup>
     <Analyzer Include="..\..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
     <Analyzer Include="..\..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\AI\TexasHoldem.AI.DummyPlayer\TexasHoldem.AI.DummyPlayer.csproj">
+      <Project>{e55b5b7a-dd3e-4b41-815d-7fa0cb864c1a}</Project>
+      <Name>TexasHoldem.AI.DummyPlayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\AI\TexasHoldem.AI.SmartPlayer\TexasHoldem.AI.SmartPlayer.csproj">
+      <Project>{339b429e-f937-47de-b8a6-b2a895378e85}</Project>
+      <Name>TexasHoldem.AI.SmartPlayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\TexasHoldem.Logic\TexasHoldem.Logic.csproj">
+      <Project>{e0d96e6f-7f48-48d4-ac01-8f0d0371da84}</Project>
+      <Name>TexasHoldem.Logic</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

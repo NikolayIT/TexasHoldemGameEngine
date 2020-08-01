@@ -2,6 +2,20 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>2.0.0</Version>
+    <PackageId>TexasHoldemGameEngine</PackageId>
+    <Product>Texas Hold'em Game Engine</Product>
+    <Authors>Nikolay.IT</Authors>
+    <Description>Game engine for the Texas Hold'em poker card game (a variation of the standard card game of poker).</Description>
+    <Copyright>Copyright (c) 2015-2020 Nikolay Kostov</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/NikolayIT/TexasHoldemGameEngine</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/NikolayIT/TexasHoldemGameEngine</RepositoryUrl>
+    <RepositoryType>GitHub</RepositoryType>
+    <PackageTags>Texas, Hold'em, holdem, poker, card game</PackageTags>
+    <PackageReleaseNotes>Update to .NET Starndard 2.0. Lots of community improvements. See 
+https://github.com/NikolayIT/TexasHoldemGameEngine/compare/1.1...2.0</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

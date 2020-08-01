@@ -5,14 +5,13 @@
     using System.Diagnostics;
     using System.Linq;
 
-    using NUnit.Framework;
-
     using TexasHoldem.Logic.Extensions;
 
-    [TestFixture]
+    using Xunit;
+
     public class EnumerableExtensionsTests
     {
-        [Test]
+        [Fact]
         public void ShuffleShouldThrowAnExceptionWhenCalledOnNull()
         {
             IEnumerable<object> collection = null;
@@ -21,32 +20,32 @@
             Assert.Throws<ArgumentNullException>(() => collection.Shuffle());
         }
 
-        [Test]
+        [Fact]
         public void ShuffleShouldReturnAllOfTheGivenElements()
         {
             var list = new List<int> { int.MinValue, -1, 0, 1, 100, int.MaxValue };
             var shuffledList = list.Shuffle().ToList();
-            Assert.AreEqual(list.Count, shuffledList.Count);
+            Assert.Equal(list.Count, shuffledList.Count);
             foreach (var item in list)
             {
-                Assert.IsTrue(shuffledList.Contains(item));
+                Assert.Contains(item, shuffledList);
             }
         }
 
-        [Test]
+        [Fact]
         public void ShuffleShouldNotChangeOriginalObjectItemsOrder()
         {
             var list = new List<int> { int.MinValue, -1, 0, 1, 100, int.MaxValue };
             list.Shuffle();
-            Assert.AreEqual(int.MinValue, list[0]);
-            Assert.AreEqual(-1, list[1]);
-            Assert.AreEqual(0, list[2]);
-            Assert.AreEqual(1, list[3]);
-            Assert.AreEqual(100, list[4]);
-            Assert.AreEqual(int.MaxValue, list[5]);
+            Assert.Equal(int.MinValue, list[0]);
+            Assert.Equal(-1, list[1]);
+            Assert.Equal(0, list[2]);
+            Assert.Equal(1, list[3]);
+            Assert.Equal(100, list[4]);
+            Assert.Equal(int.MaxValue, list[5]);
         }
 
-        [Test]
+        [Fact]
         public void ShuffleShouldRandomizeOrderOfItems()
         {
             const int NumberOfItems = 100;
@@ -62,7 +61,7 @@
             }
 
             Debug.Write($"Equal numbers {equalNumbers}");
-            Assert.IsTrue(equalNumbers < NumberOfItems / 2);
+            Assert.True(equalNumbers < NumberOfItems / 2);
         }
     }
 }

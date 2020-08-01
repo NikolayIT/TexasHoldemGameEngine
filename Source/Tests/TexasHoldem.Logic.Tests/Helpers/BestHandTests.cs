@@ -3,17 +3,17 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    using NUnit.Framework;
-
     using TexasHoldem.Logic;
     using TexasHoldem.Logic.Cards;
     using TexasHoldem.Logic.Extensions;
     using TexasHoldem.Logic.Helpers;
 
-    [TestFixture]
+    using Xunit;
+
     public class BestHandTests
     {
-        private static readonly object[] DifferentHandRankTypesCases =
+        public static readonly IEnumerable<object[]> DifferentHandRankTypesCases =
+            new List<object[]>
             {
                 new object[]
                     {
@@ -53,7 +53,8 @@
                     }
             };
 
-        private static readonly object[] BothHaveHighCardCases =
+        public static readonly IEnumerable<object[]> BothHaveHighCardCases =
+            new List<object[]>
             {
                 new object[]
                     {
@@ -129,7 +130,8 @@
                     }
             };
 
-        private static readonly object[] BothHavePairCases =
+        public static readonly IEnumerable<object[]> BothHavePairCases =
+            new List<object[]>
             {
                 new object[]
                     {
@@ -198,7 +200,8 @@
                     }
             };
 
-        private static readonly object[] BothHaveTwoPairsCases =
+        public static readonly IEnumerable<object[]> BothHaveTwoPairsCases =
+            new List<object[]>
             {
                 new object[]
                     {
@@ -362,7 +365,8 @@
                     }
             };
 
-        private static readonly object[] BothHaveThreeOfAKindCases =
+        public static readonly IEnumerable<object[]> BothHaveThreeOfAKindCases =
+            new List<object[]>
             {
                 new object[]
                     {
@@ -558,7 +562,8 @@
                     }
             };
 
-        private static readonly object[] BothHaveStraightCases =
+        public static readonly IEnumerable<object[]> BothHaveStraightCases =
+            new List<object[]>
             {
                 new object[]
                     {
@@ -670,7 +675,8 @@
                     }
             };
 
-        private static readonly object[] BothHaveFlushCases =
+        public static readonly IEnumerable<object[]> BothHaveFlushCases =
+            new List<object[]>
             {
                 new object[]
                     {
@@ -706,7 +712,8 @@
                     }
             };
 
-        private static readonly object[] BothHaveFullHouseCases =
+        public static readonly IEnumerable<object[]> BothHaveFullHouseCases =
+            new List<object[]>
             {
                 new object[]
                     {
@@ -774,7 +781,8 @@
                     },
             };
 
-        private static readonly object[] BothHaveFourOfAKindCases =
+        public static readonly IEnumerable<object[]> BothHaveFourOfAKindCases =
+            new List<object[]>
             {
                 new object[]
                     {
@@ -886,7 +894,8 @@
                     }
             };
 
-        private static readonly object[] BothHaveStraightFlushCases =
+        public static readonly IEnumerable<object[]> BothHaveStraightFlushCases =
+            new List<object[]>
             {
                 new object[]
                     {
@@ -951,17 +960,17 @@
             SecondShouldBeBetter = -1,
         }
 
-        [Test]
-        [TestCaseSource(nameof(DifferentHandRankTypesCases))]
-        [TestCaseSource(nameof(BothHaveHighCardCases))]
-        [TestCaseSource(nameof(BothHavePairCases))]
-        [TestCaseSource(nameof(BothHaveTwoPairsCases))]
-        [TestCaseSource(nameof(BothHaveThreeOfAKindCases))]
-        [TestCaseSource(nameof(BothHaveStraightCases))]
-        [TestCaseSource(nameof(BothHaveFlushCases))]
-        [TestCaseSource(nameof(BothHaveFullHouseCases))]
-        [TestCaseSource(nameof(BothHaveFourOfAKindCases))]
-        [TestCaseSource(nameof(BothHaveStraightFlushCases))]
+        [Theory]
+        [MemberData(nameof(DifferentHandRankTypesCases))]
+        [MemberData(nameof(BothHaveHighCardCases))]
+        [MemberData(nameof(BothHavePairCases))]
+        [MemberData(nameof(BothHaveTwoPairsCases))]
+        [MemberData(nameof(BothHaveThreeOfAKindCases))]
+        [MemberData(nameof(BothHaveStraightCases))]
+        [MemberData(nameof(BothHaveFlushCases))]
+        [MemberData(nameof(BothHaveFullHouseCases))]
+        [MemberData(nameof(BothHaveFourOfAKindCases))]
+        [MemberData(nameof(BothHaveStraightFlushCases))]
         public void CompareToShouldWorkCorrectly(
             ExpectedCompareResult expectedCompareResult,
             HandRankType firstHandRankType,
@@ -976,24 +985,24 @@
             switch (expectedCompareResult)
             {
                 case ExpectedCompareResult.FirstShouldBeBetter:
-                    Assert.IsTrue(compareToResultFirstSecond > 0, "compareToResultFirstSecond > 0");
-                    Assert.IsTrue(compareToResultSecondFirst < 0, "compareToResultSecondFirst < 0");
+                    Assert.True(compareToResultFirstSecond > 0, "compareToResultFirstSecond > 0");
+                    Assert.True(compareToResultSecondFirst < 0, "compareToResultSecondFirst < 0");
                     break;
                 case ExpectedCompareResult.SecondShouldBeBetter:
-                    Assert.IsTrue(compareToResultFirstSecond < 0, "compareToResultFirstSecond < 0");
-                    Assert.IsTrue(compareToResultSecondFirst > 0, "compareToResultSecondFirst > 0");
+                    Assert.True(compareToResultFirstSecond < 0, "compareToResultFirstSecond < 0");
+                    Assert.True(compareToResultSecondFirst > 0, "compareToResultSecondFirst > 0");
                     break;
                 case ExpectedCompareResult.TheyShouldBeEqual:
-                    Assert.AreEqual(0, compareToResultFirstSecond);
-                    Assert.AreEqual(0, compareToResultSecondFirst);
+                    Assert.Equal(0, compareToResultFirstSecond);
+                    Assert.Equal(0, compareToResultSecondFirst);
                     break;
                 default:
-                    Assert.Fail("Invalid ExpectedCompareResult value");
+                    Assert.True(false, "Invalid ExpectedCompareResult value");
                     break;
             }
         }
 
-        [Test]
+        [Fact]
         public void ConstructorSetsProperties()
         {
             var rankType = HandRankType.Straight;
@@ -1006,8 +1015,8 @@
                                     CardType.Two
                                 };
             var bestHand = new BestHand(rankType, cardTypes);
-            Assert.AreEqual(rankType, bestHand.RankType);
-            CollectionAssert.AreEquivalent(cardTypes, bestHand.Cards);
+            Assert.Equal(rankType, bestHand.RankType);
+            Assert.Equal(cardTypes, bestHand.Cards);
         }
     }
 }

@@ -3,28 +3,27 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    using NUnit.Framework;
-
     using TexasHoldem.Logic.Extensions;
 
-    [TestFixture]
+    using Xunit;
+
     public class RandomProviderTests
     {
-        [Test]
+        [Fact]
         public void NextWithParametersWithParameters1And2ShouldReturn1()
         {
             var value = RandomProvider.Next(1, 2);
-            Assert.AreEqual(1, value);
+            Assert.Equal(1, value);
         }
 
-        [Test]
+        [Fact]
         public void NextWithParametersWithLimitedBoundariesShouldReturnCorrectValue()
         {
             var value = RandomProvider.Next(1337, 1338);
-            Assert.AreEqual(1337, value);
+            Assert.Equal(1337, value);
         }
 
-        [Test]
+        [Fact ]
         public void NextShouldReturnRandomValues()
         {
             var randomNumbers = new Dictionary<int, int>();
@@ -39,13 +38,13 @@
                 randomNumbers[value]++;
             }
 
-            Assert.IsFalse(randomNumbers.ContainsKey(0));
-            Assert.IsTrue(randomNumbers[1] > 0);
-            Assert.IsTrue(randomNumbers[100] > 0);
-            Assert.IsFalse(randomNumbers.ContainsKey(101));
+            Assert.False(randomNumbers.ContainsKey(0));
+            Assert.True(randomNumbers[1] > 0);
+            Assert.True(randomNumbers[100] > 0);
+            Assert.False(randomNumbers.ContainsKey(101));
 
             var difference = randomNumbers.Values.Max() - randomNumbers.Values.Min();
-            Assert.IsTrue(difference < 2000);
+            Assert.True(difference < 2000);
         }
     }
 }

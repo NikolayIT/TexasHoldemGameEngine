@@ -4,26 +4,25 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    using NUnit.Framework;
-
     using TexasHoldem.Logic.Cards;
 
-    [TestFixture]
+    using Xunit;
+
     public class CardExtensionsTests
     {
-        [Test]
+        [Fact]
         public void CardSuitToFriendlyStringShouldReturnDifferentValidValueForEachPossibleParameter()
         {
             var values = new HashSet<string>();
             foreach (CardSuit cardSuitValue in Enum.GetValues(typeof(CardSuit)))
             {
                 var stringValue = cardSuitValue.ToFriendlyString();
-                Assert.IsFalse(values.Contains(stringValue), $"Duplicate string value \"{stringValue}\" for card suit \"{cardSuitValue}\"");
+                Assert.False(values.Contains(stringValue), $"Duplicate string value \"{stringValue}\" for card suit \"{cardSuitValue}\"");
                 values.Add(stringValue);
             }
         }
 
-        [Test]
+        [Fact]
         public void CardSuitToFriendlyStringShouldThrowAnExceptionWhenCalledOnAnInvalidValue()
         {
             var cardSuits = Enum.GetValues(typeof(CardSuit));
@@ -31,19 +30,19 @@
             Assert.Throws<ArgumentException>(() => cardSuit.ToFriendlyString());
         }
 
-        [Test]
+        [Fact]
         public void CardTypeToFriendlyStringShouldReturnDifferentValidValueForEachPossibleParameter()
         {
             var values = new HashSet<string>();
             foreach (CardType cardTypeValue in Enum.GetValues(typeof(CardType)))
             {
                 var stringValue = cardTypeValue.ToFriendlyString();
-                Assert.IsFalse(values.Contains(stringValue), $"Duplicate string value \"{stringValue}\" for card suit \"{cardTypeValue}\"");
+                Assert.False(values.Contains(stringValue), $"Duplicate string value \"{stringValue}\" for card suit \"{cardTypeValue}\"");
                 values.Add(stringValue);
             }
         }
 
-        [Test]
+        [Fact]
         public void CardTypeToFriendlyStringShouldThrowAnExceptionWhenCalledOnAnInvalidValue()
         {
             var cardTypes = Enum.GetValues(typeof(CardType));

@@ -2,15 +2,14 @@
 {
     using System.Collections.Generic;
 
-    using NUnit.Framework;
-
     using TexasHoldem.Logic;
     using TexasHoldem.Logic.Cards;
 
-    [TestFixture]
+    using Xunit;
+
     public class DeckTests
     {
-        [Test]
+        [Fact]
         public void GetNextCardShouldNotThrowExceptionWhenCalled52Times()
         {
             IDeck deck = new Deck();
@@ -20,7 +19,7 @@
             }
         }
 
-        [Test]
+        [Fact]
         public void GetNextCardShouldReturnAll52CardsOnce()
         {
             IDeck deck = new Deck();
@@ -31,10 +30,10 @@
                 cards.Add(deck.GetNextCard());
             }
 
-            CollectionAssert.AreEquivalent(Deck.AllCards, cards);
+            Assert.Equal(Deck.AllCards, cards);
         }
 
-        [Test]
+        [Fact]
         public void GetNextCardShouldThrowExceptionWhenCalled53Times()
         {
             IDeck deck = new Deck();

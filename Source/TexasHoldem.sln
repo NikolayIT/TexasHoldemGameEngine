@@ -9,17 +9,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AI", "AI", "{213AAF11-5E1C-
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{42762B9F-D044-43B8-B834-79C455907AD2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TexasHoldem.UI.Console", "UI\TexasHoldem.UI.Console\TexasHoldem.UI.Console.csproj", "{89E963BC-4E4A-4DC3-933B-FFFF63886C24}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TexasHoldem.Logic", "TexasHoldem.Logic\TexasHoldem.Logic.csproj", "{E0D96E6F-7F48-48D4-AC01-8F0D0371DA84}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TexasHoldem.Logic.Tests", "Tests\TexasHoldem.Logic.Tests\TexasHoldem.Logic.Tests.csproj", "{9FFA4BF2-F50F-43EE-8DBE-B88DED9E0E9F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TexasHoldem.AI.DummyPlayer", "AI\TexasHoldem.AI.DummyPlayer\TexasHoldem.AI.DummyPlayer.csproj", "{E55B5B7A-DD3E-4B41-815D-7FA0CB864C1A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TexasHoldem.Tests.GameSimulations", "Tests\TexasHoldem.Tests.GameSimulations\TexasHoldem.Tests.GameSimulations.csproj", "{E4A11A76-0F2F-4A0F-80E8-6B5026BFB78A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TexasHoldem.AI.SmartPlayer", "AI\TexasHoldem.AI.SmartPlayer\TexasHoldem.AI.SmartPlayer.csproj", "{339B429E-F937-47DE-B8A6-B2A895378E85}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TexasHoldem.Logic", "TexasHoldem.Logic\TexasHoldem.Logic.csproj", "{E0D96E6F-7F48-48D4-AC01-8F0D0371DA84}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TexasHoldem.UI.Console", "UI\TexasHoldem.UI.Console\TexasHoldem.UI.Console.csproj", "{819C34BC-F44C-4F04-8095-FBCC79192AB0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TexasHoldem.AI.DummyPlayer", "AI\TexasHoldem.AI.DummyPlayer\TexasHoldem.AI.DummyPlayer.csproj", "{E55B5B7A-DD3E-4B41-815D-7FA0CB864C1A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TexasHoldem.Logic.Tests", "Tests\TexasHoldem.Logic.Tests\TexasHoldem.Logic.Tests.csproj", "{2D9933A9-A19B-4A5E-9BDE-280FB864797E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TexasHoldem.AI.SmartPlayer", "AI\TexasHoldem.AI.SmartPlayer\TexasHoldem.AI.SmartPlayer.csproj", "{339B429E-F937-47DE-B8A6-B2A895378E85}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TexasHoldem.Tests.GameSimulations", "Tests\TexasHoldem.Tests.GameSimulations\TexasHoldem.Tests.GameSimulations.csproj", "{E0D97FBC-3BB2-4F29-BBB3-283459E53435}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,18 +27,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{89E963BC-4E4A-4DC3-933B-FFFF63886C24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{89E963BC-4E4A-4DC3-933B-FFFF63886C24}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{89E963BC-4E4A-4DC3-933B-FFFF63886C24}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{89E963BC-4E4A-4DC3-933B-FFFF63886C24}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9FFA4BF2-F50F-43EE-8DBE-B88DED9E0E9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9FFA4BF2-F50F-43EE-8DBE-B88DED9E0E9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9FFA4BF2-F50F-43EE-8DBE-B88DED9E0E9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9FFA4BF2-F50F-43EE-8DBE-B88DED9E0E9F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E4A11A76-0F2F-4A0F-80E8-6B5026BFB78A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E4A11A76-0F2F-4A0F-80E8-6B5026BFB78A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E4A11A76-0F2F-4A0F-80E8-6B5026BFB78A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E4A11A76-0F2F-4A0F-80E8-6B5026BFB78A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E0D96E6F-7F48-48D4-AC01-8F0D0371DA84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E0D96E6F-7F48-48D4-AC01-8F0D0371DA84}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E0D96E6F-7F48-48D4-AC01-8F0D0371DA84}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -51,16 +39,28 @@ Global
 		{339B429E-F937-47DE-B8A6-B2A895378E85}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{339B429E-F937-47DE-B8A6-B2A895378E85}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{339B429E-F937-47DE-B8A6-B2A895378E85}.Release|Any CPU.Build.0 = Release|Any CPU
+		{819C34BC-F44C-4F04-8095-FBCC79192AB0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{819C34BC-F44C-4F04-8095-FBCC79192AB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{819C34BC-F44C-4F04-8095-FBCC79192AB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{819C34BC-F44C-4F04-8095-FBCC79192AB0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D9933A9-A19B-4A5E-9BDE-280FB864797E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D9933A9-A19B-4A5E-9BDE-280FB864797E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D9933A9-A19B-4A5E-9BDE-280FB864797E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D9933A9-A19B-4A5E-9BDE-280FB864797E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0D97FBC-3BB2-4F29-BBB3-283459E53435}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0D97FBC-3BB2-4F29-BBB3-283459E53435}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0D97FBC-3BB2-4F29-BBB3-283459E53435}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0D97FBC-3BB2-4F29-BBB3-283459E53435}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{89E963BC-4E4A-4DC3-933B-FFFF63886C24} = {4FD9DCC0-C03A-48A4-AC10-BE144B0270A8}
-		{9FFA4BF2-F50F-43EE-8DBE-B88DED9E0E9F} = {42762B9F-D044-43B8-B834-79C455907AD2}
-		{E4A11A76-0F2F-4A0F-80E8-6B5026BFB78A} = {42762B9F-D044-43B8-B834-79C455907AD2}
 		{E55B5B7A-DD3E-4B41-815D-7FA0CB864C1A} = {213AAF11-5E1C-4C23-ABAE-3324EBA1C3A6}
 		{339B429E-F937-47DE-B8A6-B2A895378E85} = {213AAF11-5E1C-4C23-ABAE-3324EBA1C3A6}
+		{819C34BC-F44C-4F04-8095-FBCC79192AB0} = {4FD9DCC0-C03A-48A4-AC10-BE144B0270A8}
+		{2D9933A9-A19B-4A5E-9BDE-280FB864797E} = {42762B9F-D044-43B8-B834-79C455907AD2}
+		{E0D97FBC-3BB2-4F29-BBB3-283459E53435} = {42762B9F-D044-43B8-B834-79C455907AD2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0758E6AF-994A-4C4F-BDE3-6CABA87F964C}

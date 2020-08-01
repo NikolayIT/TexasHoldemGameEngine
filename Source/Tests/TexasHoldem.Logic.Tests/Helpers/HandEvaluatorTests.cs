@@ -3,16 +3,17 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    using NUnit.Framework;
-
     using TexasHoldem.Logic;
     using TexasHoldem.Logic.Cards;
     using TexasHoldem.Logic.Extensions;
     using TexasHoldem.Logic.Helpers;
 
+    using Xunit;
+
     public class HandEvaluatorTests
     {
-        private static readonly object[] HighCardCases =
+        public static readonly IEnumerable<object[]> HighCardCases =
+            new List<object[]>
             {
                 new object[]
                     {
@@ -55,7 +56,8 @@
                     }
             };
 
-        private static readonly object[] PairCases =
+        public static readonly IEnumerable<object[]> PairCases =
+            new List<object[]>
             {
                 new object[]
                     {
@@ -116,7 +118,8 @@
                     }
             };
 
-        private static readonly object[] TwoPairsCases =
+        public static readonly IEnumerable<object[]> TwoPairsCases =
+            new List<object[]>
             {
                 new object[]
                     {
@@ -177,7 +180,8 @@
                     }
             };
 
-        private static readonly object[] ThreeOfAKindCases =
+        public static readonly IEnumerable<object[]> ThreeOfAKindCases =
+            new List<object[]>
             {
                 new object[]
                     {
@@ -238,7 +242,8 @@
                     }
             };
 
-        private static readonly object[] StraightCases =
+        public static readonly IEnumerable<object[]> StraightCases =
+            new List<object[]>
             {
                 new object[]
                     {
@@ -356,7 +361,8 @@
                     }
             };
 
-        private static readonly object[] FlushCases =
+        public static readonly IEnumerable<object[]> FlushCases =
+            new List<object[]>
             {
                 new object[]
                     {
@@ -436,7 +442,8 @@
                     }
             };
 
-        private static readonly object[] FullHouseCases =
+        public static readonly IEnumerable<object[]> FullHouseCases =
+            new List<object[]>
             {
                 new object[]
                     {
@@ -497,7 +504,8 @@
                     }
             };
 
-        private static readonly object[] FourOfAKindCases =
+        public static readonly IEnumerable<object[]> FourOfAKindCases =
+            new List<object[]>
             {
                 new object[]
                     {
@@ -540,7 +548,8 @@
                     },
             };
 
-        private static readonly object[] StraightFlushCases =
+        public static readonly IEnumerable<object[]> StraightFlushCases =
+            new List<object[]>
             {
                 new object[]
                     {
@@ -650,22 +659,22 @@
                     }
             };
 
-        [Test]
-        [TestCaseSource(nameof(HighCardCases))]
-        [TestCaseSource(nameof(PairCases))]
-        [TestCaseSource(nameof(TwoPairsCases))]
-        [TestCaseSource(nameof(ThreeOfAKindCases))]
-        [TestCaseSource(nameof(StraightCases))]
-        [TestCaseSource(nameof(FlushCases))]
-        [TestCaseSource(nameof(FullHouseCases))]
-        [TestCaseSource(nameof(FourOfAKindCases))]
-        [TestCaseSource(nameof(StraightFlushCases))]
+        [Theory]
+        [MemberData(nameof(HighCardCases))]
+        [MemberData(nameof(PairCases))]
+        [MemberData(nameof(TwoPairsCases))]
+        [MemberData(nameof(ThreeOfAKindCases))]
+        [MemberData(nameof(StraightCases))]
+        [MemberData(nameof(FlushCases))]
+        [MemberData(nameof(FullHouseCases))]
+        [MemberData(nameof(FourOfAKindCases))]
+        [MemberData(nameof(StraightFlushCases))]
         public void GetRankTypeShouldWorkCorrectly(ICollection<Card> playerCards, HandRankType expectedHandRankType, ICollection<CardType> expectedBestHandCards)
         {
             IHandEvaluator handEvaluator = new HandEvaluator();
             var bestHand = handEvaluator.GetBestHand(playerCards.Shuffle().ToList());
-            Assert.AreEqual(expectedHandRankType, bestHand.RankType);
-            CollectionAssert.AreEquivalent(expectedBestHandCards, bestHand.Cards);
+            Assert.Equal(expectedHandRankType, bestHand.RankType);
+            Assert.Equal(expectedBestHandCards, bestHand.Cards);
         }
     }
 }

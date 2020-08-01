@@ -3,25 +3,25 @@
     using System;
     using System.Collections.Generic;
 
-    using NUnit.Framework;
-
     using TexasHoldem.Logic.Cards;
 
-    [TestFixture]
+    using Xunit;
+
     public class CardTests
     {
-        [Test]
+        [Fact]
         public void ConstructorShouldUpdatePropertyValues()
         {
             var card = new Card(CardSuit.Spade, CardType.Queen);
-            Assert.AreEqual(CardSuit.Spade, card.Suit);
-            Assert.AreEqual(CardType.Queen, card.Type);
+            Assert.Equal(CardSuit.Spade, card.Suit);
+            Assert.Equal(CardType.Queen, card.Type);
         }
 
-        [TestCase(true, CardSuit.Spade, CardType.Ace, CardSuit.Spade, CardType.Ace)]
-        [TestCase(false, CardSuit.Heart, CardType.Jack, CardSuit.Heart, CardType.Queen)]
-        [TestCase(false, CardSuit.Heart, CardType.King, CardSuit.Spade, CardType.King)]
-        [TestCase(false, CardSuit.Heart, CardType.Nine, CardSuit.Spade, CardType.Ten)]
+        [Theory]
+        [InlineData(true, CardSuit.Spade, CardType.Ace, CardSuit.Spade, CardType.Ace)]
+        [InlineData(false, CardSuit.Heart, CardType.Jack, CardSuit.Heart, CardType.Queen)]
+        [InlineData(false, CardSuit.Heart, CardType.King, CardSuit.Spade, CardType.King)]
+        [InlineData(false, CardSuit.Heart, CardType.Nine, CardSuit.Spade, CardType.Ten)]
         public void EqualsShouldWorkCorrectly(
             bool expectedValue,
             CardSuit firstCardSuit,
@@ -31,29 +31,29 @@
         {
             var firstCard = new Card(firstCardSuit, firstCardType);
             var secondCard = new Card(secondCardSuit, secondCardType);
-            Assert.AreEqual(expectedValue, firstCard.Equals(secondCard));
-            Assert.AreEqual(expectedValue, secondCard.Equals(firstCard));
+            Assert.Equal(expectedValue, firstCard.Equals(secondCard));
+            Assert.Equal(expectedValue, secondCard.Equals(firstCard));
         }
 
-        [Test]
+        [Fact]
         public void EqualsShouldReturnFalseWhenGivenNullValue()
         {
             var card = new Card(CardSuit.Club, CardType.Nine);
             var areEqual = card.Equals(null);
-            Assert.IsFalse(areEqual);
+            Assert.False(areEqual);
         }
 
-        [Test]
+        [Fact]
         public void EqualsShouldReturnFalseWhenGivenNonCardObject()
         {
             var card = new Card(CardSuit.Club, CardType.Nine);
 
             // ReSharper disable once SuspiciousTypeConversion.Global
             var areEqual = card.Equals(new CardTests());
-            Assert.IsFalse(areEqual);
+            Assert.False(areEqual);
         }
 
-        [Test]
+        [Fact]
         public void GetHashCodeShouldReturnDifferentValidValueForEachCardCombination()
         {
             var values = new HashSet<int>();
@@ -63,7 +63,7 @@
                 {
                     var card = new Card(cardSuitValue, cardTypeValue);
                     var cardHashCode = card.GetHashCode();
-                    Assert.IsFalse(
+                    Assert.False(
                         values.Contains(cardHashCode),
                         $"Duplicate hash code \"{cardHashCode}\" for card \"{card}\"");
                     values.Add(cardHashCode);
@@ -71,7 +71,7 @@
             }
         }
 
-        [Test]
+        [Fact]
         public void ToStringShouldReturnDifferentValidValueForEachCardCombination()
         {
             var values = new HashSet<string>();
@@ -81,7 +81,7 @@
                 {
                     var card = new Card(cardSuitValue, cardTypeValue);
                     var cardToString = card.ToString();
-                    Assert.IsFalse(
+                    Assert.False(
                         values.Contains(cardToString),
                         $"Duplicate string value \"{cardToString}\" for card \"{card}\"");
                     values.Add(cardToString);
@@ -89,43 +89,43 @@
             }
         }
 
-        [Test]
+        [Fact]
         public void CloneShouldReturnDifferentReference()
         {
             var card = new Card(CardSuit.Diamond, CardType.Queen);
             var newCard = card.DeepClone();
-            Assert.AreNotSame(card, newCard);
+            Assert.NotSame(card, newCard);
         }
 
-        [Test]
+        [Fact]
         public void CloneShouldReturnObjectOfTypeCard()
         {
             var card = new Card(CardSuit.Diamond, CardType.Queen);
             var newCard = card.DeepClone();
-            Assert.IsInstanceOf<Card>(newCard);
+            Assert.IsType<Card>(newCard);
         }
 
-        [Test]
+        [Fact]
         public void CloneShouldReturnEqualObjectWithEqualProperties()
         {
             var card = new Card(CardSuit.Club, CardType.Ace);
             var newCard = card.DeepClone();
-            Assert.IsNotNull(newCard);
-            Assert.IsTrue(card.Equals(newCard));
-            Assert.AreEqual(card.Suit, newCard.Suit);
-            Assert.AreEqual(card.Type, newCard.Type);
+            Assert.NotNull(newCard);
+            Assert.True(card.Equals(newCard));
+            Assert.Equal(card.Suit, newCard.Suit);
+            Assert.Equal(card.Type, newCard.Type);
         }
 
-        [Test]
+        [Fact]
         public void CloneShouldReturnObjectWithTheSameHashCode()
         {
             var card = new Card(CardSuit.Spade, CardType.Nine);
             var newCard = card.DeepClone();
-            Assert.IsNotNull(newCard);
-            Assert.AreEqual(card.GetHashCode(), newCard.GetHashCode());
+            Assert.NotNull(newCard);
+            Assert.Equal(card.GetHashCode(), newCard.GetHashCode());
         }
 
-        [Test]
+        [Fact]
         public void FromHashCodeShouldCreateCardsWithTheGivenHashCode()
         {
             foreach (CardSuit cardSuitValue in Enum.GetValues(typeof(CardSuit)))
@@ -135,31 +135,32 @@
                     var card = new Card(cardSuitValue, cardTypeValue);
                     var hashCode = card.GetHashCode();
                     var newCard = Card.FromHashCode(hashCode);
-                    Assert.AreEqual(card, newCard);
+                    Assert.Equal(card, newCard);
                 }
             }
         }
 
-        [TestCase(0, CardSuit.Club, CardType.Two)]
-        [TestCase(1, CardSuit.Club, CardType.Three)]
-        [TestCase(11, CardSuit.Club, CardType.King)]
-        [TestCase(12, CardSuit.Club, CardType.Ace)]
-        [TestCase(13, CardSuit.Diamond, CardType.Two)]
-        [TestCase(24, CardSuit.Diamond, CardType.King)]
-        [TestCase(25, CardSuit.Diamond, CardType.Ace)]
-        [TestCase(26, CardSuit.Heart, CardType.Two)]
-        [TestCase(27, CardSuit.Heart, CardType.Three)]
-        [TestCase(37, CardSuit.Heart, CardType.King)]
-        [TestCase(38, CardSuit.Heart, CardType.Ace)]
-        [TestCase(39, CardSuit.Spade, CardType.Two)]
-        [TestCase(44, CardSuit.Spade, CardType.Seven)]
-        [TestCase(50, CardSuit.Spade, CardType.King)]
-        [TestCase(51, CardSuit.Spade, CardType.Ace)]
+        [Theory]
+        [InlineData(0, CardSuit.Club, CardType.Two)]
+        [InlineData(1, CardSuit.Club, CardType.Three)]
+        [InlineData(11, CardSuit.Club, CardType.King)]
+        [InlineData(12, CardSuit.Club, CardType.Ace)]
+        [InlineData(13, CardSuit.Diamond, CardType.Two)]
+        [InlineData(24, CardSuit.Diamond, CardType.King)]
+        [InlineData(25, CardSuit.Diamond, CardType.Ace)]
+        [InlineData(26, CardSuit.Heart, CardType.Two)]
+        [InlineData(27, CardSuit.Heart, CardType.Three)]
+        [InlineData(37, CardSuit.Heart, CardType.King)]
+        [InlineData(38, CardSuit.Heart, CardType.Ace)]
+        [InlineData(39, CardSuit.Spade, CardType.Two)]
+        [InlineData(44, CardSuit.Spade, CardType.Seven)]
+        [InlineData(50, CardSuit.Spade, CardType.King)]
+        [InlineData(51, CardSuit.Spade, CardType.Ace)]
         public void GetHashCodeShouldReturn52ForKingOfSpades(int expectedHashCode, CardSuit cardSuit, CardType cardType)
         {
             var card = new Card(cardSuit, cardType);
             var hashCode = card.GetHashCode();
-            Assert.AreEqual(expectedHashCode, hashCode);
+            Assert.Equal(expectedHashCode, hashCode);
         }
     }
 }

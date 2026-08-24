@@ -4,7 +4,7 @@ Texas Hold 'em Poker Game Engine
 
 ## Build status
 
-[![Build Status](https://nikolayit.visualstudio.com/TexasHoldemGameEngine/_apis/build/status/NikolayIT.TexasHoldemGameEngine?branchName=master)](https://nikolayit.visualstudio.com/TexasHoldemGameEngine/_build/latest?definitionId=18&branchName=master)
+[![Build](https://github.com/NikolayIT/TexasHoldemGameEngine/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/NikolayIT/TexasHoldemGameEngine/actions/workflows/build.yml)
 
 ## NuGet
 

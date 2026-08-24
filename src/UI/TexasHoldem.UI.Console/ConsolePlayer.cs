@@ -83,14 +83,14 @@
                 return moneyLeft - moneyToCall;
             }
 
-            var perfix = $"Raise amount [{wholeMinRaise}-{moneyLeft + myMoneyInTheRound}]:";
+            var prefix = $"Raise amount [{wholeMinRaise}-{moneyLeft + myMoneyInTheRound}]:";
 
             do
             {
                 ConsoleHelper.WriteOnConsole(this.row + 2, 2, new string(' ', Console.WindowWidth - 3));
-                ConsoleHelper.WriteOnConsole(this.row + 2, 2, perfix);
+                ConsoleHelper.WriteOnConsole(this.row + 2, 2, prefix);
 
-                var text = ConsoleHelper.UserInput(this.row + 2, perfix.Length + 3);
+                var text = ConsoleHelper.UserInput(this.row + 2, prefix.Length + 3);
                 int result;
 
                 if (int.TryParse(text, out result))
